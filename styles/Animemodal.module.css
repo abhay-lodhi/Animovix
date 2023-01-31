@@ -1,0 +1,21 @@
+.main{
+    display: flex;
+    height: 400px;
+    align-items: center;
+    border-radius: 15px;
+}
+
+.image{
+    border-radius: 15px;
+    margin-top: 3rem;
+    
+}
+.content{
+    display: flex;
+    padding: 1rem;
+    justify-content: center;
+    /* align-items: center; */
+    margin-top: 3rem ;
+    height: 450px;
+    width: 650px;
+}

@@ -1,11 +1,33 @@
 import Head from 'next/head'
+import { useEffect, useState } from 'react'
+import dynamic from 'next/dynamic';
+
+
 import Image from 'next/image'
 import { Inter } from '@next/font/google'
 import styles from '@/styles/Home.module.css'
+import { Card, Text, Button, Row } from "@nextui-org/react";
+import Presscard from '@/Components/Presscard'
 
 const inter = Inter({ subsets: ['latin'] })
 
-export default function Home() {
+export default function Home({quotes}) {
+
+  const[quote, setQuote] = useState(quotes)
+
+  // useEffect(() => {
+  //   fetch("https://animechan.vercel.app/api/random")
+  //   .then((response) => response.json())
+  //   .then((q) => {
+  //     console.log(q)
+  //     // console.log("asd")
+  //     setQuote(q)
+  //   });
+  
+    
+  // }, [])
+  
+  
   return (
     <>
       <Head>
@@ -14,110 +36,62 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className={styles.main}>
-        <div className={styles.description}>
-          <p>
-            Get started by editing&nbsp;
-            <code className={styles.code}>pages/index.js</code>
-          </p>
-          <div>
-            <a
-              href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              By{' '}
-              <Image
-                src="/vercel.svg"
-                alt="Vercel Logo"
-                className={styles.vercelLogo}
-                width={100}
-                height={24}
-                priority
-              />
-            </a>
+      {/* <main className={styles.main}>
+        
+      </main> */}
+      <div className={styles.main}>
+      <div className={styles.quote}>
+
+
+       <Card variant="bordered" className={styles.card}>
+        <div className={styles.blur}>
+          {/* <img src="quote_background.webp" /> */}
+          <Card.Header >
+            <Text  size={25} color=" #f0d5f6 ">{quote.anime} </Text>
+          </Card.Header>
+          <Card.Divider css={{border:"1px groove whitesmoke"}}/>
+          <Card.Body css={{ py: "$10"}} >
+            
+            <Text b size={20} color=" #7bf1e9 " >
+             {quote.quote}
+            </Text>
+           
+    <Row justify="flex-end">
+              <Text b size={17} color=" #fc3291">--- {quote.character} </Text>
+              
+            </Row>
+          </Card.Body>
+          
+          <Card.Footer>
+            
+          </Card.Footer>
           </div>
-        </div>
-
-        <div className={styles.center}>
-          <Image
-            className={styles.logo}
-            src="/next.svg"
-            alt="Next.js Logo"
-            width={180}
-            height={37}
-            priority
-          />
-          <div className={styles.thirteen}>
-            <Image
-              src="/thirteen.svg"
-              alt="13"
-              width={40}
-              height={31}
-              priority
-            />
-          </div>
-        </div>
-
-        <div className={styles.grid}>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              Docs <span>-&gt;</span>
-            </h2>
-            <p className={inter.className}>
-              Find in-depth information about Next.js features and&nbsp;API.
-            </p>
-          </a>
-
-          <a
-            href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              Learn <span>-&gt;</span>
-            </h2>
-            <p className={inter.className}>
-              Learn about Next.js in an interactive course with&nbsp;quizzes!
-            </p>
-          </a>
-
-          <a
-            href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              Templates <span>-&gt;</span>
-            </h2>
-            <p className={inter.className}>
-              Discover and deploy boilerplate example Next.js&nbsp;projects.
-            </p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              Deploy <span>-&gt;</span>
-            </h2>
-            <p className={inter.className}>
-              Instantly deploy your Next.js site to a shareable URL
-              with&nbsp;Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
+        </Card>
+      </div>
+      
+      <div className={styles.presscards}>
+        <div className={styles.blur2}>
+      <Presscard src="press_anime_2.webp" content="Anime Recommendations" link="Anime"/>
+      <Presscard src="press_movies.jpeg" content="Movies Recommendations" link="Movies"/>
+      <Presscard src="press_series.jpg" content="Series Recommendations" link="Tvseries"/>
+      </div>
+      </div>
+      </div>
     </>
   )
+}
+
+export async function getStaticProps() {
+  // Call an external API endpoint to get posts.
+  // You can use any data fetching library
+  const res = await fetch('https://animechan.vercel.app/api/random')
+  const quotes = await res.json()
+
+  // By returning { props: { posts } }, the Blog component
+  // will receive `posts` as a prop at build time
+  return {
+    props: {
+      quotes,
+    },
+  }
 }
