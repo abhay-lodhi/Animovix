@@ -4,16 +4,11 @@ import dynamic from 'next/dynamic';
 import {Modal, Card,Checkbox, Row,Input, Col, Text, Button, Container, Badge, Tooltip} from "@nextui-org/react"
 import { BsFillInfoCircleFill } from 'react-icons/bs';
 // import Animemodal from './animemodal';
-const Animemodal = dynamic(() => import('./Animemodal'), {
+const Moviemodal = dynamic(() => import('./Moviemodal'), {
     ssr: false,
   });
-  
-// import { Modal, Text, Row, Container, Col, Input, Button } from '@nextui-org/react'
 
-
-
-const Animeresultcard = ({detail}) => {
-
+const Movieresultcard = ({detail}) => {
     const [visible, setVisible] = useState(false);
     const closeHandler = () => {
         setVisible(false);
@@ -22,7 +17,7 @@ const Animeresultcard = ({detail}) => {
 
   return (
     <div style={{display:"block", margin:"1rem"}}>
-        <Card isPressable onPress={()=>setVisible(true)} css={{ w: "20vw", h: "480px", backgroundColor:"#222" }} >
+        <Card isPressable onPress={()=>setVisible(true)} css={{ w: "20vw", h: "500px", backgroundColor:"#222" }} >
     <Card.Header css={{ position: "absolute", zIndex: 1, top: 5 }}>
       <Col>
         
@@ -34,7 +29,7 @@ const Animeresultcard = ({detail}) => {
     </Card.Header>
     <Card.Body css={{ p: 0 }}>
       <Card.Image
-        src={detail.Image_link}
+        src={`https://image.tmdb.org/t/p/original${detail.poster_path}`}
         objectFit="cover"
         width="100%"
         height="100%"
@@ -44,10 +39,10 @@ const Animeresultcard = ({detail}) => {
    
     <Card.Footer css={{ justifyItems: "flex-start", backgroundColor:" #222 ", p:"0.5rem 01rem" }}>
               <Row  justify="space-between" align="center">
-                <Text css={{marginRight:" 1rem"}} color=' #c2b9c4 ' b size={18} >{detail.English}</Text>
+                <Text css={{marginRight:" 1rem"}} color=' #c2b9c4 ' b size={18} >{detail.title}</Text>
                
               <Text css={{ color: "$accents7", fontWeight: "$semibold", fontSize: "$sm" }}>
-              {detail.Type}
+              {detail.release_date.substr(0,4)}
                 </Text>
               </Row>     
               
@@ -57,21 +52,21 @@ const Animeresultcard = ({detail}) => {
                 <Col css={{ m:"0.5rem 0 "}}>
                 <div >
                     {
-                        detail.Genres.split(",").map(gen=>{
+                        detail.genres.split("-").map(gen=>{
                            if(gen!=="Unknown") return <Badge size="sm" css={{margin:"0.1rem 0.2rem"}} enableShadow  isSquared color="secondary" variant="flat">
                             {gen}
                           </Badge>
                         })
                         
                     }
-                     {
+                     {/* {
                         detail.Themes.split(",").map(gen=>{
                            if(gen!=="Unknown") return <Badge size="sm" css={{margin:"0.1rem 0.2rem"}} enableShadow  isSquared color="secondary" variant="flat">
                             {gen}
                           </Badge>
                         })
                         
-                    }
+                    } */}
                 </div>
                 <Container css = {{display: "flex",justifyContent:"space-between", m:"0.2rem 0 0.5rem"}}>
                 <Text color=' #c2b9c4 ' b size={12}  css={{ justifyItems:"flex-end", m:"0.2rem 0 0.5rem"}}>
@@ -93,7 +88,7 @@ const Animeresultcard = ({detail}) => {
        
          
 
-                {detail.Episodes===1 ?<Text color=' #c2b9c4 ' b size={12}  css={{ justifyItems:"flex-end", m:"0.2rem 0 0.5rem"}}>Movie</Text>:<Text color=' #c2b9c4 ' b size={12}  css={{ justifyItems:"flex-end", m:"0.2rem 0 0.5rem"}}>Episodes:&nbsp;{detail.Episodes}</Text>}
+                <Text color=' #c2b9c4 ' b size={12}  css={{ justifyItems:"flex-end", m:"0.2rem 0 0.5rem"}}>Runtime:&nbsp;{detail.runtime} min</Text>
                 
                
                 </Container>
@@ -118,7 +113,7 @@ const Animeresultcard = ({detail}) => {
     
     <Modal.Body>
 
-    <Animemodal detail={detail}/>
+    <Moviemodal detail={detail}/>
       
     </Modal.Body>
     {/* <Modal.Footer>
@@ -135,6 +130,7 @@ const Animeresultcard = ({detail}) => {
 
     </div>
   )
+
 }
 
-export default Animeresultcard
+export default Movieresultcard

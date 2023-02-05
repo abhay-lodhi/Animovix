@@ -18,7 +18,7 @@ const Animemodal = ({detail}) => {
             
         <div className={styles.main}>
             <div className={styles.image}>
-            <Image css={{borderRadius:"5px"}} src={detail.Image_link} width={250} height={350}/>
+            <Image css={{borderRadius:"5px"}} src={detail.Image_link} width={200} height={300}/>
             </div>
             <div className={styles.content}>
                 <Container>

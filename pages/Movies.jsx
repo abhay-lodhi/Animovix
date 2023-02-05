@@ -2,17 +2,14 @@ import React, { useState, useEffect } from 'react'
 import { Button, Container, Pagination, Card, Col, Row , Text, Loading} from '@nextui-org/react'
 import Image from 'next/image'
 import axios from 'axios'
-import data from "../../public/anime_list"
-import Animecardquery from '@/Components/Animecardquery'
-import Animeresultcard from '@/Components/Animeresultcard'
+import movies_list from "../public/movie_list"
+import Moviecardquery from '@/Components/Moviecardquery'
+import Movieresultcard from '@/Components/Movieresultcard'
 // import Searchanime from '../../Components/Searchanime'
-import styles from "../../styles/Search.module.css"
+import styles from "../styles/Search.module.css"
 import { ReactSearchAutocomplete } from 'react-search-autocomplete'
 
-
-
-const Anime = () => {
-
+const Movies = () => {
   const[bars, setBars] = useState([{value:""}])
   const[results, setResults] = useState([])
   const[curpage, setCurpage] = useState(1)
@@ -20,7 +17,9 @@ const Anime = () => {
   const[loading, setLoading] = useState(false);
   const[ask, setAsk] = useState(false);
   const itemcount = 20;
-
+  const poster_array = ['/avatar2.jpg', '/moonknight.jpg', '/movie1.jpg']
+  const [big_img,setBig_img] = useState(poster_array[Math.floor(Math.random()*3)])
+  console.log(big_img)
 
   useEffect(() => {
     console.log(curpage)
@@ -69,9 +68,9 @@ const Anime = () => {
     return (
       <>
       <div css={{display:"flex"}}>
-        <span style={{ display: 'flex', textAlign: 'left' }}>{item.English}&nbsp;({item.Type})</span>
-        {item.Premiered!=="Unknown" && <span style={{ display: 'flex', textAlign: 'left' }}>Premiered in : {item.Premiered}</span>}
-        <span style={{ display: 'flex', textAlign: 'right' }}><Image src={item.Image_link} css={{position:"sticky"}} width={50} height={65} alt="poster"/></span>
+        <span style={{ display: 'flex', textAlign: 'left' }}>{item.title}&nbsp;</span>
+        {item.release_date!=="Unknown" && <span style={{ display: 'flex', textAlign: 'left' }}>Released in : {item.release_date.substr(0,4)}</span>}
+        <span style={{ display: 'flex', textAlign: 'right' }}><Image src={`https://image.tmdb.org/t/p/original${item.poster_path}`} css={{position:"sticky"}} width={50} height={65} alt="poster"/></span>
         
         </div>
       </>
@@ -104,12 +103,12 @@ const Anime = () => {
     var names = [];
   // if(bars.length===1 && !bars[0].English)window.alert("Please Select some Anime")
   for (var i = 0; i < bars.length; i++){
-    if(bars[i].English)names.push(bars[i].English);
+    if(bars[i].title)names.push(bars[i].title);
   }
 
   var query = names.join("|");
   if(query.trim()===""){
-    window.alert("Please Select some Anime")
+    window.alert("Please Select some Movie")
     setAsk(false)
   }
   
@@ -118,7 +117,7 @@ const Anime = () => {
     setAsk(true)
     setLoading(true)
     console.log(query)
-    axios.post('https://animovixrecommendations.onrender.com/anime', {
+    axios.post('https://animovixrecommendations.onrender.com/movies', {
       names:query
     })
     .then(function (response) {
@@ -153,7 +152,7 @@ const Anime = () => {
                 color: "whitesmoke",
                 height: "3rem",
               }}
-                items={data}
+                items={movies_list}
                 value = {val}
                 id = {i}
                 onSearch={handleOnSearch}
@@ -161,10 +160,10 @@ const Anime = () => {
                 onSelect={(item)=>handleOnSelect(i, item)}
                 onFocus={handleOnFocus}
                 autoFocus
-                placeholder={`Search Anime ${i+1}...`}
+                placeholder={`Search Movie ${i+1}...`}
                 maxResults={4}
-                resultStringKeyName="English"
-                fuseOptions={{ keys: ["English"] }}
+                resultStringKeyName="title"
+                fuseOptions={{ keys: ["title"] }}
                 formatResult={formatResult}
               />
             </Container>
@@ -172,11 +171,11 @@ const Anime = () => {
       })}
   <div className={styles.btngrp}>
   <Button bordered className={styles.btn} color="gradient" auto onPress={addBar}>
-          Add Anime
+          Add Movie
         </Button>
 
         <Button bordered className={styles.btn} color="error" auto onPress={removeBar}>
-          Remove Anime
+          Remove Movie
         </Button>
         </div>
         <Container>
@@ -185,7 +184,7 @@ const Anime = () => {
         </Button>
         </Container>
       </div>
-      <Image className={styles.img} src="/kakashi.jpg" css={{position:"sticky"}} width={500} height={700}/>
+      <Image  className={styles.img} src={big_img} css={{position:"sticky",opacity:"0.9"}} width={500} height={700}/>
     </div>
     {ask &&<Container className={styles.recommendcon} fluid display='flex'  justify='space-evenly'>
       { <Container  fluid>
@@ -195,7 +194,7 @@ const Anime = () => {
           <h4 className={styles.h3}  >Recommendations matching with :</h4><br />
           <div className={styles.queries}>
         {bars.map((item, i)=>{
-                 return item.English && <Animecardquery item={item}/>
+                 return item.title && <Moviecardquery item={item}/>
                 })}
                 </div>
                 </div>
@@ -207,7 +206,7 @@ const Anime = () => {
       {console.log(results)}
         <div className={styles.results}>
           {results && results.map(result=>{
-                    return <Animeresultcard detail={result}/>
+                    return <Movieresultcard detail={result}/>
 
           })}
         
@@ -223,6 +222,4 @@ const Anime = () => {
   )
 }
 
-
-
-export default Anime
+export default Movies
