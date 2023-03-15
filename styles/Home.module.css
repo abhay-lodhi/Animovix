@@ -129,21 +129,23 @@
   }
 
   .carousal{
-    height: 40vh;
+    height: 45vh;
+    overflow-y: scroll;
+    
     width: 100vw;
-    margin-bottom: 2rem;
+    margin-bottom: 5rem;
   }
   .carousal::before{
-    height: 40vh;
+    height: 45vh;
   }
   
   .quote{
     margin: 1rem;
-    font-size: small;
+    font-size: smaller;
   }
 
   .card{
-    height: 28vh;
+    height: fit-content;
     
     
   }
