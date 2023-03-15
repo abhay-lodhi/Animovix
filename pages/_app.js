@@ -3,6 +3,11 @@ import {createTheme, NextUIProvider } from "@nextui-org/react";
 import Bar from "../Components/Navbar"
 import {SSRProvider} from '@react-aria/ssr'; 
 
+export function reportWebVitals(metric) {
+  console.log(metric)
+}
+
+
 export default function App({ Component, pageProps }) {
 
   const theme = createTheme({

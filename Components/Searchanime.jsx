@@ -1,22 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { ReactSearchAutocomplete } from 'react-search-autocomplete'
 import data from '../public/anime_list.js'
 
 const Searchanime = () => {
 
-  // const[data, setData] = useState(data);
-
-  useEffect(() => {
-    // fetch('../nameslist/anime_list.json')
-    // .then(response => {
-    //   return response.json();
-    // }).then(d => {
-    //   console.log(data)
-    //   setData(d);
-    // })
-  
-    
-  }, [])
   
   
 

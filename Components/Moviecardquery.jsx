@@ -1,11 +1,11 @@
 import React from 'react'
-import { Card, Row, Text, Col, Button, Container } from '@nextui-org/react'
+import { Card,  Text,   Container } from '@nextui-org/react'
 import styles from '../styles/Animecardquery.module.css'
 
 const Moviecardquery = (props) => {
     return (
         <Container display='flex'>
-        <Card css={{ w: "200px", h: "250px", m:"1rem" }}>
+        <Card css={{ w: "200px", h: "250px", m:"0.2rem 0rem" }} className = {styles.qrycard}>
     <Card.Header css={{ position: "absolute", zIndex: 1, top: 5 }}>
       {/* <Col>
         <Text size={12} weight="bold" transform="uppercase" color="#ffffffAA">
@@ -22,7 +22,8 @@ const Moviecardquery = (props) => {
         width="100%"
         height="100%"
         objectFit="cover"
-        alt="Card example background"
+        alt="Movie background"
+        // quality={50}
       />
     </Card.Body>
     <Card.Footer
@@ -40,25 +41,7 @@ const Moviecardquery = (props) => {
           <Text  b color=" #442754  " size={20}>
             {props.item.title}
           </Text>
-          {/* <Text color="#000" size={12}>
-            Get notified.
-          </Text> */}
-        {/* </Col> */}
-        {/* <Col> */}
-          {/* <Row justify="flex-end"> */}
-            {/* <Button flat auto rounded color="secondary">
-              <Text
-                css={{ color: "inherit" }}
-                size={12}
-                weight="bold"
-                transform="uppercase"
-              >
-                Notify Me
-              </Text>
-            </Button> */}
-          {/* </Row> */}
-        {/* </Col> */}
-      {/* </Row> */}
+          
     </Card.Footer>
   </Card>
   </Container>

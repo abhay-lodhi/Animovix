@@ -79,11 +79,43 @@
 }
 
 .main{
-  /* display: flex; */
+  display: block;
   /* justify-content: center; */
   align-items: center;
   background-color: rgba(0,0,0,0.5);
 
+}
+
+.modal{
+  width: 1450px;
+  height: 750px;
+  /* justify-content: space-bwet; */
+}
+
+.carousal{
+  /* display: flex; */
+  margin-top: 2rem;
+  margin-bottom: 4rem;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  justify-self: center;
+  justify-items: center;
+  width: 100vw;
+  height:80vh;
+}
+
+.carousal::before{
+  content: '';
+  background: url('/mixanime.jpg') 
+      no-repeat center center/cover;
+  position: absolute;
+  opacity: 0.1;
+  top: 0px;
+  left: 0px;
+  width: 100vw;
+  height: 80vh;
+  z-index: 1;
 }
 
 @media only screen and (max-width: 600px) {
@@ -95,8 +127,33 @@
     padding: 0;
     
   }
+
+  .carousal{
+    height: 40vh;
+    width: 100vw;
+    margin-bottom: 2rem;
+  }
+  .carousal::before{
+    height: 40vh;
+  }
   
   .quote{
-    margin: 3rem;
+    margin: 1rem;
+    font-size: small;
+  }
+
+  .card{
+    height: 28vh;
+    
+    
+  }
+
+  .blur2{
+    display: inline;
+  }
+
+  .pressdiv{
+    margin: 5rem .5rem 5rem -1rem;
+    
   }
 }

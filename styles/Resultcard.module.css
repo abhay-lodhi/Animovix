@@ -1,0 +1,28 @@
+.card{
+    width: 20vw;
+    height:500px;
+}
+
+.badges{
+    margin: 0.1rem 0.2rem;
+}
+
+.footer2{
+    display: flex;
+    justify-items: flex-start;
+    justify-content: space-between;
+    justify-items: flex-end;
+    background-color:" #222"
+}
+
+@media only screen and (max-width: 600px) {
+    .card{
+        width: 42vw;
+        height: 35vh !important;
+        font-size: smaller !important;
+    }
+    .footer2{
+        display: none;
+    }
+   
+}

@@ -5,8 +5,8 @@ import styles from '../styles/Animecardquery.module.css'
 const Animecardquery = (props) => {
     console.log(props.Image_link)
   return (
-        <Container display='flex'>
-        <Card css={{ w: "200px", h: "250px", m:"1rem" }}>
+        <Container >
+        <Card  css={{ w: "200px", h: "250px", m:"0.2rem 0rem" }} className = {styles.qrycard}>
     <Card.Header css={{ position: "absolute", zIndex: 1, top: 5 }}>
       {/* <Col>
         <Text size={12} weight="bold" transform="uppercase" color="#ffffffAA">
@@ -18,6 +18,7 @@ const Animecardquery = (props) => {
       </Col> */}
     </Card.Header>
     <Card.Body css={{ p: 0 }}>
+      
       <Card.Image
         src={`${props.item.Image_link}`}
         width="100%"
@@ -25,6 +26,7 @@ const Animecardquery = (props) => {
         objectFit="cover"
         alt="Card example background"
       />
+      
     </Card.Body>
     <Card.Footer
       isBlurred

@@ -1,14 +1,13 @@
 import React, {useState} from 'react'
 import dynamic from 'next/dynamic';
-
-import {Modal, Card,Checkbox, Row,Input, Col, Text, Button, Container, Badge, Tooltip} from "@nextui-org/react"
+import styles from '../styles/Resultcard.module.css'
+import {Modal, Card, Row, Col, Text,  Container, Badge, Tooltip} from "@nextui-org/react"
 import { BsFillInfoCircleFill } from 'react-icons/bs';
-// import Animemodal from './animemodal';
+
 const Animemodal = dynamic(() => import('./Animemodal'), {
     ssr: false,
   });
   
-// import { Modal, Text, Row, Container, Col, Input, Button } from '@nextui-org/react'
 
 
 
@@ -22,7 +21,7 @@ const Animeresultcard = ({detail}) => {
 
   return (
     <div style={{display:"block", margin:"1rem"}}>
-        <Card isPressable onPress={()=>setVisible(true)} css={{ w: "20vw", h: "480px", backgroundColor:"#222" }} >
+        <Card isPressable onPress={()=>setVisible(true)} className={styles.card}  >
     <Card.Header css={{ position: "absolute", zIndex: 1, top: 5 }}>
       <Col>
         
@@ -38,11 +37,12 @@ const Animeresultcard = ({detail}) => {
         objectFit="cover"
         width="100%"
         height="100%"
-        alt="Relaxing app background"
+        alt="Anime Poster"
+        quality={100}
       />
     </Card.Body>
    
-    <Card.Footer css={{ justifyItems: "flex-start", backgroundColor:" #222 ", p:"0.5rem 01rem" }}>
+    <Card.Footer css={{ justifyItems: "flex-start", p:"0.5rem 01rem" }}>
               <Row  justify="space-between" align="center">
                 <Text css={{marginRight:" 1rem"}} color=' #c2b9c4 ' b size={18} >{detail.English}</Text>
                
@@ -53,20 +53,20 @@ const Animeresultcard = ({detail}) => {
               
             </Card.Footer>
             
-            <Card.Footer css={{display:"flex",justifyItems: "flex-start",justifyContent:"space-evenly", justifyItems: "flex-end", backgroundColor:" #222 " }}>
+            <Card.Footer className={styles.footer2}>
                 <Col css={{ m:"0.5rem 0 "}}>
                 <div >
                     {
-                        detail.Genres.split(",").map(gen=>{
-                           if(gen!=="Unknown") return <Badge size="sm" css={{margin:"0.1rem 0.2rem"}} enableShadow  isSquared color="secondary" variant="flat">
+                        detail.Genres.split(",").map((gen,i)=>{
+                           if(gen!=="Unknown") return <Badge key={i} size="sm" css={{margin:"0.1rem 0.2rem"}} enableShadow  isSquared color="secondary" variant="flat">
                             {gen}
                           </Badge>
                         })
                         
                     }
                      {
-                        detail.Themes.split(",").map(gen=>{
-                           if(gen!=="Unknown") return <Badge size="sm" css={{margin:"0.1rem 0.2rem"}} enableShadow  isSquared color="secondary" variant="flat">
+                        detail.Themes.split(",").map((gen,i)=>{
+                           if(gen!=="Unknown") return <Badge key={i} size="sm" css={{margin:"0.1rem 0.2rem"}} enableShadow  isSquared color="secondary" variant="flat">
                             {gen}
                           </Badge>
                         })
@@ -104,13 +104,12 @@ const Animeresultcard = ({detail}) => {
 
   <Modal
     closeButton
-    noPadding
+    // noPadding
     // preventClose
-    width='1000px'
+    width='1350px'
     // height='1000px'
     blur
-    css={{height:"500px", justifyContent:"center"}}
-    
+    css={{width:"1350px" , height:"600px", justifyContent:"center"}}
     aria-labelledby="modal-title"
     open={visible}
     onClose={closeHandler}
@@ -121,15 +120,7 @@ const Animeresultcard = ({detail}) => {
     <Animemodal detail={detail}/>
       
     </Modal.Body>
-    {/* <Modal.Footer>
-      <Button auto flat color="error" onPress={closeHandler}>
-        Close
-      </Button>
-      <Button auto onPress={closeHandler}>
-        Sign in
-      </Button>
-    </Modal.Footer> */}
-  </Modal>
+  </Modal>
   
     
 
