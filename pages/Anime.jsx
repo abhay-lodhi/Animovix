@@ -30,7 +30,7 @@ const Anime = () => {
     return () => {
       console.log("Cleanup function ");
     };
-  }, [curpage]);
+  }, [curpage, recommendations]);
 
   const handleOnSearch = (string, results) => {
     // onSearch will have as the first callback parameter

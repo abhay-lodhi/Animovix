@@ -29,7 +29,7 @@ const Movies = () => {
     return () => {
       console.log("Cleanup function ");
     };
-  }, [curpage]);
+  }, [curpage, recommendations]);
 
   const handleOnSelect = (i, item) => {
     console.log(i, item);

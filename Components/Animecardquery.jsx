@@ -8,14 +8,7 @@ const Animecardquery = (props) => {
         <Container >
         <Card  css={{ w: "200px", h: "250px", m:"0.2rem 0rem" }} className = {styles.qrycard}>
     <Card.Header css={{ position: "absolute", zIndex: 1, top: 5 }}>
-      {/* <Col>
-        <Text size={12} weight="bold" transform="uppercase" color="#ffffffAA">
-          New
-        </Text>
-        <Text h3 color="black">
-          Acme camera
-        </Text>
-      </Col> */}
+      
     </Card.Header>
     <Card.Body css={{ p: 0 }}>
       
@@ -38,30 +31,10 @@ const Animecardquery = (props) => {
         zIndex: 1,
       }}
     >
-      {/* <Row> */}
-        {/* <Col> */}
           <Text  b color=" #442754  " size={20}>
             {props.item.English}
           </Text>
-          {/* <Text color="#000" size={12}>
-            Get notified.
-          </Text> */}
-        {/* </Col> */}
-        {/* <Col> */}
-          {/* <Row justify="flex-end"> */}
-            {/* <Button flat auto rounded color="secondary">
-              <Text
-                css={{ color: "inherit" }}
-                size={12}
-                weight="bold"
-                transform="uppercase"
-              >
-                Notify Me
-              </Text>
-            </Button> */}
-          {/* </Row> */}
-        {/* </Col> */}
-      {/* </Row> */}
+          
     </Card.Footer>
   </Card>
   </Container>
