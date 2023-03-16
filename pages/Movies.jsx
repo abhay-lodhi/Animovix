@@ -63,7 +63,7 @@ const Movies = () => {
               css={{ position: "sticky" }}
               width={50}
               height={65}
-              alt="poster"
+              alt="N/A"
               quality={10}
             />
           </span>

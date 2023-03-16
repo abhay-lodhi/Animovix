@@ -73,16 +73,16 @@ const Anime = () => {
               Premiered in : {item.Premiered}
             </span>
           )}
-          <span style={{ display: "flex", textAlign: "right" }}>
+         {item.Image_link && <span style={{ display: "flex", textAlign: "right" }}>
             <Image
               src={item.Image_link}
               css={{ position: "sticky" }}
               width={50}
               height={65}
-              alt="poster"
+              alt="N/A"
               quality={20}
             />
-          </span>
+          </span>}
         </div>
       </>
     );
