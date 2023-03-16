@@ -2,6 +2,7 @@ import "@/styles/globals.css";
 import {createTheme, NextUIProvider } from "@nextui-org/react";
 import Bar from "../Components/Navbar"
 import {SSRProvider} from '@react-aria/ssr'; 
+import { Analytics } from '@vercel/analytics/react';
 
 export function reportWebVitals(metric) {
   console.log(metric)
@@ -43,7 +44,7 @@ export default function App({ Component, pageProps }) {
     <NextUIProvider theme={theme}>
       <Bar />
       <Component {...pageProps} />
-      
+      <Analytics />
     </NextUIProvider>
     </SSRProvider>
   );
