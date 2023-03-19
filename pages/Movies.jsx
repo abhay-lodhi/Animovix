@@ -48,6 +48,13 @@ const Movies = () => {
   const formatResult = (item) => {
     return (
       <>
+       <Head>
+        <title>🎬 Movies Recommendations</title>
+        <meta name="description" content="Anime and Movies Recommendation system and can also be used for recommendations based on multiple anime or movies input. It is a static website and user can use this website to get recommendations for their next Anime to watch or next Movie to watch." />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        
+      </Head>
+
         <div css={{ display: "flex" }}>
           <span style={{ display: "flex", textAlign: "left" }}>
             {item.title}&nbsp;
