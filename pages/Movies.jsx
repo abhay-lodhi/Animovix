@@ -1,3 +1,4 @@
+import Head from 'next/head'
 import React, { useState, useEffect } from "react";
 import { Button, Container, Pagination, Loading } from "@nextui-org/react";
 import Image from "next/image";
