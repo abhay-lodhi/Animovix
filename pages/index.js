@@ -73,7 +73,7 @@ export default function Home({quotes}) {
 export async function getStaticProps() {
   
   axios.get('https://animovixrecommendations.onrender.com/')
-  const res = await fetch('https://animechan.vercel.app/api/random')
+  const res = await fetch('https://animechan.xyz/api/random')
   const quotes = await res.json()
 
   return {

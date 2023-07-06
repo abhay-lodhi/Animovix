@@ -3,6 +3,8 @@ import {createTheme, NextUIProvider } from "@nextui-org/react";
 import Bar from "../Components/Navbar"
 import {SSRProvider} from '@react-aria/ssr'; 
 import { Analytics } from '@vercel/analytics/react';
+import {extendTheme, ChakraProvider } from '@chakra-ui/react'
+import { FirebaseProvider } from "../context/firebaseContext";
 
 export function reportWebVitals(metric) {
   console.log(metric)
@@ -39,13 +41,22 @@ export default function App({ Component, pageProps }) {
       fonts: {}
     }
   })
+
+
   return (
+    <FirebaseProvider>
     <SSRProvider>
+    
     <NextUIProvider theme={theme}>
+   
       <Bar />
       <Component {...pageProps} />
       <Analytics />
+     
     </NextUIProvider>
+   
+   
     </SSRProvider>
+    </FirebaseProvider>
   );
 }
