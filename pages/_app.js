@@ -54,8 +54,6 @@ export default function App({ Component, pageProps }) {
       <Analytics />
      
     </NextUIProvider>
-   
-   
     </SSRProvider>
     </FirebaseProvider>
   );

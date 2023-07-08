@@ -3,6 +3,7 @@ import dynamic from 'next/dynamic';
 import styles from '../styles/Resultcard.module.css'
 import {Modal, Card, Row, Col, Text,  Container, Badge, Tooltip} from "@nextui-org/react"
 import { BsFillInfoCircleFill } from 'react-icons/bs';
+import Link from 'next/link';
 
 const Animemodal = dynamic(() => import('./Animemodal'), {
     ssr: false,
@@ -19,8 +20,18 @@ const Animeresultcard = ({detail}) => {
         console.log("closed");
       };
 
+//       React.useEffect(()=>{
+// console.log(detail);
+// },[])
+    
+      const handleOnClick= ()=>{
+        
+      }
+
   return (
-    <div style={{display:"block", margin:"1rem"}}>
+    <Link legacyBehavior href={`/AnimeSeries/${detail.ID}`} passHref>
+  <a target="_blank" rel="noopener noreferrer">
+  <div style={{display:"block", margin:"1rem"}} onClick={handleOnClick}>
         <Card isPressable onPress={()=>setVisible(true)} className={styles.card}  >
     <Card.Header css={{ position: "absolute", zIndex: 1, top: 5 }}>
       <Col>
@@ -102,7 +113,7 @@ const Animeresultcard = ({detail}) => {
             
   </Card>
 
-  <Modal
+  {/* <Modal
     closeButton
     // noPadding
     // preventClose
@@ -120,11 +131,14 @@ const Animeresultcard = ({detail}) => {
     <Animemodal detail={detail}/>
       
     </Modal.Body>
-  </Modal>
+  </Modal> */}
   
     
 
     </div>
+  </a>
+</Link>
+   
   )
 }
 

@@ -11,6 +11,7 @@ import {
     query,
     where,
     serverTimestamp,
+    onSnapshot,
   } from "firebase/firestore";
   import {
     onAuthStateChanged,
@@ -32,17 +33,16 @@ export function useFirebase() {
 
 export function FirebaseProvider({ children }) {
     const [loading, setLoading] = useState(false);
-    //const [user, setUser] = useState();
+    const [anime, setAnime] = useState();
 
-    async function getAnime(id){   
+    async function getAnime(id){ 
+
         try {
           const docRef = doc(db, "anime",id);
 
-          const data= await getDoc(docRef);
-            
-          console.log(data.id);
-          if(data.exists()) return data.data();
-
+          const detail= await getDoc(docRef);
+          return detail.data();
+   
         } catch (error) {
            console.log(error);
         }
@@ -55,138 +55,75 @@ export function FirebaseProvider({ children }) {
        try{
 
         const ref= doc(db,"users",user.email);
+        const data={
+          imageUrl: details.Image_Link,
+          title:details.English,
+          episodes: details.Episodes,
+          genre: details.genre,
+          id:details.Id,
+        } ;
 
         if(favourites!=0){
           if(favourites==1){
             await updateDoc(ref, {
-              favourites: arrayUnion({
-                imageUrl: details.Image_Link,
-                title:details.English,
-                episodes: details.Episodes,
-                genre: details.genre,
-                id:details.Id,
-              }  )
+              favourites: arrayUnion(data )
           });
         }else{
           await updateDoc(ref, {
-            favourites: arrayRemove({
-              imageUrl: details.Image_Link,
-              title:details.English,
-              episodes: details.Episodes,
-              genre: details.genre,
-              id:details.Id,
-            }  )
+            favourites: arrayRemove(data  )
         });  }
         }
          if(completed!=0){
           if(completed==1){
             await updateDoc(ref, {
-              completed: arrayUnion({
-                imageUrl: details.Image_Link,
-                title:details.English,
-                episodes: details.Episodes,
-                genre: details.genre,
-                id:details.Id,
-              }  )
+              completed: arrayUnion(data )
           });
         }else{
           await updateDoc(ref, {
-            completed: arrayRemove({
-              imageUrl: details.Image_Link,
-              title:details.English,
-              episodes: details.Episodes,
-              genre: details.genre,
-              id:details.Id,
-            }  )
+            completed: arrayRemove(data )
         });  }
         }
 
          if(dropped!=0){
           if(dropped==1){
             await updateDoc(ref, {
-              dropped: arrayUnion({
-                imageUrl: details.Image_Link,
-                title:details.English,
-                episodes: details.Episodes,
-                genre: details.genre,
-                id:details.Id,
-              }  )
+              dropped: arrayUnion(data )
           });
         }else{
           await updateDoc(ref, {
-            dropped: arrayRemove({
-              imageUrl: details.Image_Link,
-              title:details.English,
-              episodes: details.Episodes,
-              genre: details.genre,
-              id:details.Id,
-            }  )
+            dropped: arrayRemove(data )
         });  }
         }
          if(onHold!=0){
           if(onHold==1){
             await updateDoc(ref, {
-              onHold: arrayUnion({
-                imageUrl: details.Image_Link,
-                title:details.English,
-                episodes: details.Episodes,
-                genre: details.genre,
-                id:details.Id,
-              }  )
+              onHold: arrayUnion(data )
           });
         }else{
           await updateDoc(ref, {
-            onHold: arrayRemove({
-              imageUrl: details.Image_Link,
-              title:details.English,
-              episodes: details.Episodes,
-              genre: details.genre,
-              id:details.Id,
-            }  )
+            onHold: arrayRemove(data  )
         });  }
         }
          if(planToWatch!=0){
           if(planToWatch==1){
             await updateDoc(ref, {
-              planToWatch: arrayUnion({
-                imageUrl: details.Image_Link,
-                title:details.English,
-                episodes: details.Episodes,
-                genre: details.genre,
-                id:details.Id,
-              }  )
+              planToWatch: arrayUnion(data )
           });
         }else{
           await updateDoc(ref, {
-            planToWatch: arrayRemove({
-              imageUrl: details.Image_Link,
-              title:details.English,
-              episodes: details.Episodes,
-              genre: details.genre,
-              id:details.Id,
-            }  )
+            planToWatch: arrayRemove(data  )
         });  }
         }
+
+
          if(watching!=0){
           if(watching==1){
             await updateDoc(ref, {
-              watching: arrayUnion({
-                imageUrl: details.Image_Link,
-                title:details.English,
-                episodes: details.Episodes,
-                genre: details.genre,
-                id:details.Id,
-              }  )
+              watching: arrayUnion(data  )
           });
         }else{
           await updateDoc(ref, {
-            watching: arrayRemove({
-              imageUrl: details.Image_Link,
-              title:details.English,
-              episodes: details.Episodes,
-              genre: details.genre,
-              id:details.Id,
-            }  )
+            watching: arrayRemove(data  )
         });  }
         }
 
@@ -247,6 +184,9 @@ export function FirebaseProvider({ children }) {
 
         })
       }
+     
+      window.location.reload();
+      //console.log(auth.currentUser);
 
     } catch (error) {
       console.log(error)
@@ -349,6 +289,7 @@ export function FirebaseProvider({ children }) {
     signOut(auth).then(() => {
            // setUser(null);
             console.log("sign out succesful", auth);
+            window.location.reload();
       }).catch((error) => {
         // An error happened.
         console.log(error);
@@ -396,7 +337,8 @@ export function FirebaseProvider({ children }) {
             auth,
             getUserData,
             updateUserLists,
-            getComments
+            getComments,
+            anime
         };
 
     return (

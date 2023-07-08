@@ -6,6 +6,7 @@ import {
   Pagination,
   Loading,
 } from "@nextui-org/react";
+import { Link } from 'next/link';
 import Image from "next/image";
 import axios from "axios";
 import data from "../public/anime_list";
@@ -283,7 +284,10 @@ const Anime = () => {
               <div className={styles.results}>
                 {results &&
                   results.map((result, i) => {
-                    return <Animeresultcard key={i} detail={result} />;
+
+                    return (
+                    <Animeresultcard key={i} detail={result} />
+                    );
                   })}
               </div>
               <Pagination

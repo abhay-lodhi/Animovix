@@ -23,13 +23,13 @@ export default function Home({quotes}) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         
       </Head>
-      <div className={styles.main}>
+       <div className={styles.main}>
         <div className="parcar" style={{display:"flex", justifyContent:"center"}}>
         <div className={styles.carousal}>
         <div className={styles.quote}>
 
 
-<Card variant="bordered" className={styles.card}>
+{/* <Card variant="bordered" className={styles.card}>
  <div className={styles.blur}>
    <Card.Header >
      <Text  size={25} color=" #f0d5f6 ">{quote.anime} </Text>
@@ -51,7 +51,7 @@ export default function Home({quotes}) {
      
    </Card.Footer>
    </div>
- </Card>
+ </Card> */}
 </div>
         </div>
         </div>
@@ -70,16 +70,16 @@ export default function Home({quotes}) {
   )
 }
 
-export async function getStaticProps() {
+// export async function getStaticProps() {
   
-  axios.get('https://animovixrecommendations.onrender.com/')
-  const res = await fetch('https://animechan.xyz/api/random')
-  const quotes = await res.json()
+//   axios.get('https://animovixrecommendations.onrender.com/')
+//   const res = await fetch('https://animechan.xyz/api/random')
+//   const quotes = await res.json()
 
-  return {
-    props: {
-      quotes,
-    },
-    revalidate: 100,
-  }
-}
+//   return {
+//     props: {
+//       quotes,
+//     },
+//     revalidate: 100,
+//   }
+// }
