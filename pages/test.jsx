@@ -1,5 +1,5 @@
 import React from 'react'
-import { useEffect } from 'react'
+import { useEffect ,useState} from 'react'
 import {
     collection,
     doc,
@@ -10,20 +10,49 @@ import {
   } from "firebase/firestore";
   import {useFirebase} from "../context/firebaseContext"
   import {db} from "../firebase/firebaseinit"
+import CommentsSection from '@/Components/discussion/CommentsSection';
 
  const test = () => {
-    const {getAnime, signIn,user, addComment, signout, getComments}= useFirebase();
+     const {getComments,addComment}=useFirebase();
+  // const [comments,setComments]= useState(null);
+  // const [root,setRoot]=useState();
+  
+  // // root && root.map(d=>{
+  // //   console.log(d.data());
+  // // })
+  // useEffect(()=>{
+  //   let rootData=null;
+
+  //   if(comments!=null)
+  //   rootData= comments.filter((d)=>d.data().parentId===null);
+
+  //   setRoot(rootData);
+  
+  // },[comments])
+  
+  // useEffect(()=>{
+  //   const id="1000";
+  //     getComments(id).then((data)=>{
+  //       setComments(data.docs);
+  //       console.log(data.docs);
+  //     });
+     
+  // },[]);
+
     
     //console.log(details)
     const getData= async ()=>{
       try {
-        const animeId="10";
-        const text= "hey my first comment";
+        const animeId="1000";
+        const text= "hey my 6 comment";
         const needReply= true;
-        const commentId="snklbZMbBRdRLNwt9lyj";
-       const data= await getComments(animeId,commentId,needReply);
+        const commentId="waguT4tEn38Cgnb5pGAI";
+        const data= await addComment(text,animeId,commentId);
 
-       console.log(data.docs[0].data());
+        // data.forEach((doc) => {
+        //   console.log(doc.id, " => ", doc.data());
+        // });
+       console.log(data);
         
       } catch (error) {
         console.log(error);
@@ -32,10 +61,8 @@ import {
 
   return (
     <>
-    <div><button onClick={getData}>click me</button></div>
-    <div><button onClick={signIn}>sign in</button></div>
-    <div><button onClick={signout}>signout</button></div>
-    <div><button onClick={getData}>get comments</button></div>
+     <CommentsSection id={"1"} />
+     {/* <button onClick={getData}>click</button> */}
     </>
   )
 }

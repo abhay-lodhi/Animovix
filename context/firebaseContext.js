@@ -11,6 +11,7 @@ import {
     query,
     where,
     serverTimestamp,
+    collectionGroup, 
     onSnapshot,
   } from "firebase/firestore";
   import {
@@ -34,6 +35,7 @@ export function useFirebase() {
 export function FirebaseProvider({ children }) {
     const [loading, setLoading] = useState(false);
     const [anime, setAnime] = useState();
+    const [getCommentsAgain,setGetCommentsAgain]= useState(false);
 
     async function getAnime(id){ 
 
@@ -135,14 +137,17 @@ export function FirebaseProvider({ children }) {
 
     async function getUserData(){
       try {
-        const docRef = doc(db, "users",auth.email);
+        if(auth.currentUser==null) return null;
+
+        const docRef = doc(db, "users",auth.currentUser.email);
 
         const data= await getDoc(docRef);
           
         if(data.exists()) return data.data();
 
       } catch (error) {
-         console.log(error);
+        console.log("erroror: ",error);
+        // console.log(error);
       }
       return false;
 
@@ -197,47 +202,72 @@ export function FirebaseProvider({ children }) {
     }
   }
 
-  const addComment = async (text, animeId, isReply=false, commentId=null)=>{
-    const user= auth.currentUser;
+  // const addComment = async (text, animeId, isReply=false, commentId=null)=>{
+  //   const user= auth.currentUser;
 
-    if(user==undefined) return false;
+  //   if(user==undefined) return false;
 
 
-   if(isReply){
-    if(!commentId){ 
-      console.log("Please Provide commendId to add Reply !!");
-      return null;
+  //  if(isReply){
+  //   if(!commentId){ 
+  //     console.log("Please Provide commendId to add Reply !!");
+  //     return null;
+  //   }
+  //   const replyRef = await addDoc(collection(db, "discussion", animeId, 'comments', commentId, 'replies'), {
+  //     isEdited: false,
+  //     text,
+  //     userEmail: user.email,
+  //     userName: user.displayName,
+  //     commentedOn: serverTimestamp(),
+  //     parentId: commentId
+  //   });
+  //   console.log("Reply written with ID: ", replyRef.id);
+  //   return replyRef;
+  //  }
+
+  //  else{
+  //   console.log(auth.currentUser)
+  //   const commentRef = await addDoc(collection(db, "discussion", animeId, 'comments'), {
+  //     isEdited: false,
+  //     text,
+  //     userEmail: user.email,
+  //     userName: user.displayName,
+  //     commentedOn: serverTimestamp(),
+  //   });
+  //   console.log("Comment written with ID: ", commentRef.id);
+  //   return commentRef;
+  //  }  
+  // }
+
+  const addComment= async(text,animeId, parentId=null)=>{
+   // console.log(text,animeId,parentId);
+    try{
+      
+      const userData= await getUserData();
+
+      if(userData==null) return false;
+
+          const commentRef = await addDoc(collection(db, "discussion", animeId, 'comments'), {
+            isEdited: false,
+            text,
+            userEmail: userData.email,
+            userName: userData.username,
+            commentedOn: serverTimestamp(),
+            parentId: parentId
+          });
+
+          console.log("Comment written with ID: ", commentRef.id);
+          
+          return commentRef;
+    }catch(e){
+      console.log(e);
     }
-    const replyRef = await addDoc(collection(db, "discussion", animeId, 'comments', commentId, 'replies'), {
-      isEdited: false,
-      text,
-      userEmail: user.email,
-      userName: user.displayName,
-      commentedOn: serverTimestamp(),
-      parentId: commentId
-    });
-    console.log("Reply written with ID: ", replyRef.id);
-    return replyRef;
-   }
-
-   else{
-    console.log(auth.currentUser)
-    const commentRef = await addDoc(collection(db, "discussion", animeId, 'comments'), {
-      isEdited: false,
-      text,
-      userEmail: user.email,
-      userName: user.displayName,
-      commentedOn: serverTimestamp(),
-    });
-    console.log("Comment written with ID: ", commentRef.id);
-    return commentRef;
-   }  
+    return undefined;
   }
 
 
-
   const editComment = async(text,animeId, commentId, replyId=null, isReply=false)=>{
-
+//needs to be updated
     const user= auth.currentUser;
 
     if(user==undefined) return false;
@@ -296,26 +326,15 @@ export function FirebaseProvider({ children }) {
       });
   }
 
-  async function getComments( animeId,commentId=undefined,needReplies=false ){
-    console.log(animeId);
+  async function getComments( animeId){
+   // console.log(animeId);
     try{
-      if(needReplies){
-        const ref= collection(db,"discussion",animeId,"comments",commentId,"replies");
-
-        const res= await getDocs(ref);
-
-        return res;
-      }else{
         const ref= collection(db,"discussion",animeId,"comments");
-
         const res= await getDocs(ref);
-
         return res;
-      }
     }catch(e){
       console.log(e);
     }
-
     return false;
   }
 
@@ -338,7 +357,9 @@ export function FirebaseProvider({ children }) {
             getUserData,
             updateUserLists,
             getComments,
-            anime
+            anime,
+            getCommentsAgain,
+            setGetCommentsAgain
         };
 
     return (
