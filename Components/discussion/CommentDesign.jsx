@@ -1,15 +1,60 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
+import { useFirebase } from '@/context/firebaseContext';
 import {  auth } from "../../firebase/firebaseinit";
+import { Avatar } from '@nextui-org/react';
+import styles from "../../styles/CommentDesign.module.css"
+import ReactTimeAgo from 'react-time-ago'
 
-const CommentDesign = ({key,comment,animeId}) => {
-     
+
+const CommentDesign = ({comment,animeId}) => {
+  // const {getOthersData}=useFirebase();
+  // const [user,setUser]=useState(null);
+
  // console.log(comment);
+
+
+  // useEffect(()=>{
+  //  getOthersData(comment.userRef).then((data)=>{
+  //   setUser(data);
+  //   //console.log(data);
+  //  })
+  // },[])
+  
   return (
-    <>
-    <div>{comment.userName}</div>
-    <div>{comment.text}</div>
-    </>
+    // <>{user && (
+    // <>
+    // <div>{user.username}</div>
+    // <div>{comment.text}</div>
+    // </>
+    // )}
+    // </>
+    <div className={styles.main} >
+    <div className={styles.image} >
+    <Avatar
+      squared
+      color="secondary"
+      size="lg"
+      src={comment.userPhoto}
+          />
+    </div>  
+    <div className={styles.commentBody}>
+    <div className={styles.titleHead}>
+      <div className={styles.title}>{comment.userName}</div>
+      <div className={styles.timeAgo}><ReactTimeAgo
+                                    date={
+                                      new Date(
+                                        comment.commentedOn.seconds * 1000 +
+                                          comment.commentedOn.nanoseconds / 1000000
+                                      )
+                                    }
+                                    locale="en-US"
+                                  /></div>
+    </div>
+    <div className={styles.text}>{comment.text}</div>
+    </div>
+
+    </div>
   )
 }
 

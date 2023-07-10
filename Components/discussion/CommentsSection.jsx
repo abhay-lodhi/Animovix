@@ -3,45 +3,30 @@ import { useFirebase } from '@/context/firebaseContext';
 import Comment from './Comment';
 import CommentForm from './CommentForm';
 
-const CommentsSection = ({id}) => {
-    const {getComments,getCommentsAgain,setGetCommentsAgain,addComment}=useFirebase();
-    const [comments,setComments]= useState(null);
+const CommentsSection = ({id,comments}) => {
+    
     const [root,setRoot]=useState();
-    const [text,setText]=useState();
+
+    //console.log(comments);
   
     useEffect(()=>{
       let rootData=null;
-  
+
       if(comments!=null)
       rootData= comments.filter((d)=>d.data().parentId===null);
-  
       setRoot(rootData);
     
     },[comments])
     
-    useEffect(()=>{
-        getComments(id).then((data)=>{
-          setComments(data.docs);
-        });
-       
-    },[getCommentsAgain]);
+   
 
-    const postComment= async()=>{
-      const res= await addComment(text,id);
-     
-      
-      
-      if(res===false) console.log("error");
-      else setGetCommentsAgain(!getCommentsAgain);
-
-
-    }
-  
 
   return (
-     <div> 
-      <input onChange={e=>setText(e.target.value)} value={text} placeholder='add Comment'></input>
-      <button onClick={postComment}>Post</button>
+     <div style={{display:"flex", flexDirection:"column", alignItems:"center"}}>
+      <div style={{marginLeft:"1rem"}}> 
+      <CommentForm commentId={null} animeId={id} setOpenReplies={null} setOpenBox={null} placeholder={"Join the discussion..."}/>
+      </div>
+      
        {root && root.map(doc=>(
         <Comment key={doc.id} data={comments} currComment={doc} animeId={id}/>
        ))}

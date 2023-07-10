@@ -14,24 +14,25 @@ import {
 
 
 const Bar= () => {
+  
   const [variant, setVariant] = React.useState("default");
   const [activeColor, setActiveColor] = React.useState("primary");
-  const {signIn, signout,auth}= useFirebase();
+  const {signIn, signout,auth,getUserCookies}= useFirebase();
   const {isDark} = useTheme();
   const [ user, setUser ]=React.useState();
 
-  React.useEffect(()=>{
-      //console.log("heyy");
-     
+  React.useEffect(()=>{ 
+      const useData=getUserCookies();
+      setUser(useData.details);
       
-      const listener = onAuthStateChanged(auth, async (user) => {
-       // console.log(user);
-        setUser(!!user);
-      });
+      // const listener = onAuthStateChanged(auth, async (user) => {
+      //  // console.log(user);
+      
+      // });
     
-      return () => {
-        listener();
-      };
+      // return () => {
+      //   listener();
+      // };
     
   },[])
 
@@ -50,7 +51,7 @@ const Bar= () => {
     <div >
          <Navbar height={100} shouldHideOnScroll variant="sticky">
         <Navbar.Brand>
-          <Text b color="inherit"  size={25} style={{textDecoration:"underline"}}>
+          <Text b color="inherit" size={25} style={{textDecoration:"underline"}}>
             ANIMOVIX
           </Text>
         </Navbar.Brand>
@@ -77,7 +78,7 @@ const Bar= () => {
                     as="button"
                     color="secondary"
                     size="md"
-                    src={auth.currentUser.photoURL}
+                    src={user.photo}
                   />
                 </Dropdown.Trigger>
               </Navbar.Item>
@@ -91,7 +92,7 @@ const Bar= () => {
                     Signed in as
                   </Text>
                   <Text b color="inherit" css={{ d: "flex" }}>
-                    {auth.currentUser.displayName}
+                    {user.name}
                   </Text>
                 </Dropdown.Item>
                 <Dropdown.Item key="settings" withDivider>

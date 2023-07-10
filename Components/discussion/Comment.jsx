@@ -2,8 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { useFirebase } from '@/context/firebaseContext';
 import CommentDesign from './CommentDesign';
 import CommentForm from './CommentForm';
+import styles from "../../styles/comment.module.css"
+import { Button } from '@nextui-org/react';
+import {BsReplyFill} from 'react-icons/bs';
 
-const Comment = ({key,data,currComment,animeId}) => {
+const Comment = ({data,currComment,animeId}) => {
      const [replies,setReplies]= useState();
      const [openReplies,setOpenReplies]=useState(false);
      const [openBox,setOpenBox]=useState(false);
@@ -19,22 +22,35 @@ const Comment = ({key,data,currComment,animeId}) => {
 
 
   return (
-    <div style={{marginLeft:"1.8rem"}}><CommentDesign comment={currComment.data()} animeId={animeId} />
-    <button onClick={()=>{setOpenReplies(!openReplies)}}> 
-        {openReplies? (<>Hide Replies</>):(<>Show Replies</>)}
-    </button>
-    <button onClick={()=>setOpenBox(!openBox)}>Reply</button>
+    <div className={styles.main} >
+      
+    <div className={styles.commentContainer}>
+
+      <CommentDesign comment={currComment.data()} animeId={animeId} />
+    <div className={styles.buttonContainer}>
+    <Button
+     size="xs"
+     onClick={()=>{setOpenReplies(!openReplies)}}> 
+     {openReplies? (<>Hide Replies</>):(<>Show Replies</>)}
+    </Button>
+
+    <Button 
+    size="xs"
+    icon={<BsReplyFill/>}
+    onClick={()=>setOpenBox(!openBox)}>Reply</Button>
+    </div>
     {openBox&&
-        <CommentForm commentId={currComment.id} animeId={animeId} setOpenReplies={setOpenReplies} setOpenBox={setOpenBox} />
+        <CommentForm commentId={currComment.id} animeId={animeId} setOpenReplies={setOpenReplies} setOpenBox={setOpenBox} placeholder={"Write a reply"}/>
     }
 
     {openReplies &&
-        (<div style={{marginLeft:"3rem"}}>{
+        (<div className={styles.replies}>{
            replies.length>0? (replies.map((d)=>(
            <CommentDesign key={d.id} comment={d.data()} animeId={animeId}/>
         ))) :(<>No Replies</>)
     }</div>)}
     
+    </div>
     </div>
   )
 }

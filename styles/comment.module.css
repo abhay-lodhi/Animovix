@@ -1,0 +1,29 @@
+.main{
+    width: auto;
+
+}
+
+.commentContainer{
+    width: fit-content;
+    
+}
+
+.buttonContainer{
+    display: flex;
+    width: fit-content;
+    margin-left: 0.8rem;
+   
+}
+
+.buttonContainer Button{
+    background-color: transparent;
+    padding: 3px;
+    margin-top: 0px;
+    padding: 0px;
+    margin-left: 0.8rem;
+}
+
+.replies{
+    width: fit-content;
+    margin-left: 3rem;
+}

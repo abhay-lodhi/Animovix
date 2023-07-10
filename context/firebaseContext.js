@@ -50,6 +50,20 @@ export function FirebaseProvider({ children }) {
         }
         return false;
     }
+
+    async function getOthersData(ref){
+      try{
+
+        const data= await getDoc(ref);
+          
+        if(data.exists()) return data.data();
+
+      }catch(e){
+        console.log(e);
+      }
+
+      return false;
+    }
     
     async function updateUserLists(details, favourites=0,completed=0, dropped=0,onHold=0, planToWatch=0,watching=0){
        const user= auth.currentUser;
@@ -166,9 +180,6 @@ export function FirebaseProvider({ children }) {
       const credential = GoogleAuthProvider.credentialFromResult(result);
       const token = credential.accessToken;
 
-      //result.user&& setUser(result.user);
-
-      //console.log(auth);
     
       const checkUser= await getDoc(doc(db,"users", result.user.email));
 
@@ -187,11 +198,35 @@ export function FirebaseProvider({ children }) {
           onHold:[],
           dropped:[],
 
-        })
+        });
+
+         Cookies.set(
+        "user",
+        JSON.stringify({
+          token: token,
+          email: result.user.email,
+          name: result.user.displayName,
+          photo: result.user.photoURL,
+        }),
+        { expires: 7 }
+      );
+
+      }else{
+
+         Cookies.set(
+        "user",
+        JSON.stringify({
+          token: token,
+          email: checkUser.data().email,
+          name: checkUser.data().username,
+          photo: checkUser.data().photoUrl,
+        }),
+        { expires: 7 }
+      );
+
       }
      
       window.location.reload();
-      //console.log(auth.currentUser);
 
     } catch (error) {
       console.log(error)
@@ -202,56 +237,20 @@ export function FirebaseProvider({ children }) {
     }
   }
 
-  // const addComment = async (text, animeId, isReply=false, commentId=null)=>{
-  //   const user= auth.currentUser;
-
-  //   if(user==undefined) return false;
-
-
-  //  if(isReply){
-  //   if(!commentId){ 
-  //     console.log("Please Provide commendId to add Reply !!");
-  //     return null;
-  //   }
-  //   const replyRef = await addDoc(collection(db, "discussion", animeId, 'comments', commentId, 'replies'), {
-  //     isEdited: false,
-  //     text,
-  //     userEmail: user.email,
-  //     userName: user.displayName,
-  //     commentedOn: serverTimestamp(),
-  //     parentId: commentId
-  //   });
-  //   console.log("Reply written with ID: ", replyRef.id);
-  //   return replyRef;
-  //  }
-
-  //  else{
-  //   console.log(auth.currentUser)
-  //   const commentRef = await addDoc(collection(db, "discussion", animeId, 'comments'), {
-  //     isEdited: false,
-  //     text,
-  //     userEmail: user.email,
-  //     userName: user.displayName,
-  //     commentedOn: serverTimestamp(),
-  //   });
-  //   console.log("Comment written with ID: ", commentRef.id);
-  //   return commentRef;
-  //  }  
-  // }
+  
 
   const addComment= async(text,animeId, parentId=null)=>{
    // console.log(text,animeId,parentId);
     try{
-      
       const userData= await getUserData();
 
       if(userData==null) return false;
-
           const commentRef = await addDoc(collection(db, "discussion", animeId, 'comments'), {
             isEdited: false,
             text,
-            userEmail: userData.email,
-            userName: userData.username,
+            userName:userData.username,
+            userEmail:userData.email,
+            userPhoto:userData.photoUrl,
             commentedOn: serverTimestamp(),
             parentId: parentId
           });
@@ -318,7 +317,7 @@ export function FirebaseProvider({ children }) {
 
     signOut(auth).then(() => {
            // setUser(null);
-            console.log("sign out succesful", auth);
+            Cookies.remove("user", { expires: 7 });
             window.location.reload();
       }).catch((error) => {
         // An error happened.
@@ -338,13 +337,50 @@ export function FirebaseProvider({ children }) {
     return false;
   }
 
-  // function getUserCookies() {
-  //   const user = Cookies.get("user");
-  //   if (user) {
-  //     const details = JSON.parse(user);
-  //     return { details };
+  function getUserCookies() {
+    const user = Cookies.get("user");
+    if (user) {
+      const details = JSON.parse(user);
+      return { details };
+    }
+    return false;
+  }
+
+  // const addComment = async (text, animeId, isReply=false, commentId=null)=>{
+  //   const user= auth.currentUser;
+
+  //   if(user==undefined) return false;
+
+
+  //  if(isReply){
+  //   if(!commentId){ 
+  //     console.log("Please Provide commendId to add Reply !!");
+  //     return null;
   //   }
-  //   return false;
+  //   const replyRef = await addDoc(collection(db, "discussion", animeId, 'comments', commentId, 'replies'), {
+  //     isEdited: false,
+  //     text,
+  //     userEmail: user.email,
+  //     userName: user.displayName,
+  //     commentedOn: serverTimestamp(),
+  //     parentId: commentId
+  //   });
+  //   console.log("Reply written with ID: ", replyRef.id);
+  //   return replyRef;
+  //  }
+
+  //  else{
+  //   console.log(auth.currentUser)
+  //   const commentRef = await addDoc(collection(db, "discussion", animeId, 'comments'), {
+  //     isEdited: false,
+  //     text,
+  //     userEmail: user.email,
+  //     userName: user.displayName,
+  //     commentedOn: serverTimestamp(),
+  //   });
+  //   console.log("Comment written with ID: ", commentRef.id);
+  //   return commentRef;
+  //  }  
   // }
 
     const value={
@@ -359,7 +395,9 @@ export function FirebaseProvider({ children }) {
             getComments,
             anime,
             getCommentsAgain,
-            setGetCommentsAgain
+            setGetCommentsAgain,
+            getUserCookies,
+            getOthersData
         };
 
     return (

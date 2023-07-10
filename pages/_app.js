@@ -5,6 +5,13 @@ import {SSRProvider} from '@react-aria/ssr';
 import { Analytics } from '@vercel/analytics/react';
 import {extendTheme, ChakraProvider } from '@chakra-ui/react'
 import { FirebaseProvider } from "../context/firebaseContext";
+import TimeAgo from 'javascript-time-ago'
+
+import en from 'javascript-time-ago/locale/en.json'
+import ru from 'javascript-time-ago/locale/ru.json'
+
+TimeAgo.addDefaultLocale(en)
+TimeAgo.addLocale(ru)
 
 export function reportWebVitals(metric) {
   console.log(metric)
