@@ -25,7 +25,7 @@ const Comment = ({data,currComment,animeId}) => {
     <div className={styles.main} >
       
     <div className={styles.commentContainer}>
-
+      <div>
       <CommentDesign comment={currComment.data()} animeId={animeId} />
     <div className={styles.buttonContainer}>
     <Button
@@ -39,16 +39,18 @@ const Comment = ({data,currComment,animeId}) => {
     icon={<BsReplyFill/>}
     onClick={()=>setOpenBox(!openBox)}>Reply</Button>
     </div>
+    </div>
     {openBox&&
         <CommentForm commentId={currComment.id} animeId={animeId} setOpenReplies={setOpenReplies} setOpenBox={setOpenBox} placeholder={"Write a reply"}/>
     }
-
+    <div className={styles.replies}>
     {openReplies &&
-        (<div className={styles.replies}>{
+        (<div className={styles.reply}>{
            replies.length>0? (replies.map((d)=>(
            <CommentDesign key={d.id} comment={d.data()} animeId={animeId}/>
         ))) :(<>No Replies</>)
     }</div>)}
+    </div>
     
     </div>
     </div>

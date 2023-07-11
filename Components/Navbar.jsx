@@ -5,6 +5,7 @@ import { Navbar, Link, Text, Avatar, Dropdown, useTheme, Button, red } from "@ne
 
 //import {db, auth} from "../firebase/firebaseinit"
 import {useFirebase} from "../context/firebaseContext"
+import styles from "../styles/Navbar.module.css"
 
 import {
   getAuth,
@@ -25,6 +26,7 @@ const Bar= () => {
       const useData=getUserCookies();
       setUser(useData.details);
       
+      //console.log("current", auth)
       // const listener = onAuthStateChanged(auth, async (user) => {
       //  // console.log(user);
       
@@ -48,8 +50,8 @@ const Bar= () => {
 
   const colors = ["primary", "secondary", "success", "warning", "error"];
   return (
-    <div >
-         <Navbar height={100} shouldHideOnScroll variant="sticky">
+   
+         <Navbar height={100} maxWidth={100}  shouldHideOnScroll={true} variant="sticky">
         <Navbar.Brand>
           <Text b color="inherit" size={25} style={{textDecoration:"underline"}}>
             ANIMOVIX
@@ -119,7 +121,6 @@ const Bar= () => {
           </Navbar.Content>
       </Navbar>
      
-    </div>
   )
 }
 

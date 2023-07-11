@@ -2,9 +2,12 @@
     color: red;
    }
 
-.test{
-    background-color: red;
-    height: 80px;
+.main{
+    background-color: rgb(23, 22, 22);
+    width: 100vw !important;
+}
+.Navbar{
+    width: 100vw !important;
 }
 
 .nextui-c-egxOLa{

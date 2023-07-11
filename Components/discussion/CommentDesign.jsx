@@ -34,7 +34,7 @@ const CommentDesign = ({comment,animeId}) => {
     <Avatar
       squared
       color="secondary"
-      size="lg"
+      size="sm"
       src={comment.userPhoto}
           />
     </div>  

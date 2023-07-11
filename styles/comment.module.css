@@ -1,18 +1,20 @@
 .main{
-    width: auto;
+   
 
 }
 
 .commentContainer{
-    width: fit-content;
-    
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    align-items: center;
+    justify-content: center; 
 }
 
 .buttonContainer{
     display: flex;
     width: fit-content;
     margin-left: 0.8rem;
-   
 }
 
 .buttonContainer Button{
@@ -23,7 +25,10 @@
     margin-left: 0.8rem;
 }
 
-.replies{
+.reply{
     width: fit-content;
-    margin-left: 3rem;
+}
+.replies{
+    margin-left: 10rem;
+    
 }

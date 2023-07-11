@@ -61,6 +61,10 @@
     color: #86888D;
 }
 
+.badges{
+    display: flex;
+}
+
 .bod{
     font-size: 14px;
     color: #FFFFFF;

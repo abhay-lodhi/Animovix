@@ -1,12 +1,62 @@
-import React from 'react'
-import {  Text, Badge } from '@nextui-org/react'
+import React, { useEffect,useState } from 'react'
+import {  Text, Badge,Dropdown } from '@nextui-org/react'
 import Image from 'next/image'
 import styles from '../styles/Animemodal.module.css'
+import { useFirebase } from '@/context/firebaseContext'
 
 const Animemodal = ({detail}) => {
+  const [selected, setSelected] = useState(new Set(["Select"]));
+  const [favourite,setFavourite]= useState(false);
+  const {updateUserLists}= useFirebase();
+  const mapVal= {
+    "Watching":"watching",
+    "Completed":"completed",
+    "On Hold":"onHold",
+    "Dropped":"dropped",
+    "Plan To Watch":"planToWatch"
+  }
 
+  const selectedValue = React.useMemo(
+    () => Array.from(selected).join(", ").replaceAll("_", " "),
+    [selected]
+  );
     var val=0;
     var val2=0;
+
+
+  const updateList= async (key)=>{
+
+    const remove= JSON.parse(localStorage.getItem(mapVal[selectedValue])) || [];
+
+    const add= JSON.parse(localStorage.getItem(mapVal[key])) || [];
+    const index = remove.indexOf(detail.id);
+    if (index > -1) 
+      remove.splice(index, 1); 
+
+    add.push(detail.id);
+  
+    await updateUserLists(detail,mapVal[key],mapVal[selectedValue]);
+
+    localStorage.setItem(mapVal[selectedValue],JSON.stringify(remove));
+    localStorage.setItem(mapVal[key],JSON.stringify(add));
+
+  }
+
+  useEffect(()=>{
+    const favourites= JSON.parse(localStorage.getItem("favourites"));
+    const completed= JSON.parse(localStorage.getItem("completed"));
+    const dropped= JSON.parse(localStorage.getItem("dropped"));
+    const onHold= JSON.parse(localStorage.getItem("onHold"));
+    const planToWatch= JSON.parse(localStorage.getItem("planToWatch"));
+    const watching= JSON.parse(localStorage.getItem("watching"));
+
+    completed.find(e=> e==detail.id) && setSelected(new Set(["Completed"]));
+    dropped.find(e=> e==detail.id) && setSelected(new Set(["Dropped"]));
+    onHold.find(e=> e==detail.id) && setSelected(new Set(["On Hold"]));
+    planToWatch.find(e=> e==detail.id) && setSelected(new Set(["Plan To Watch"]));
+    watching.find(e=> e==detail.id) && setSelected(new Set(["Watching"]));
+    
+  },[])
 
   return (
   
@@ -20,9 +70,30 @@ const Animemodal = ({detail}) => {
 
           
                 <Text css={{marginRight:"1rem", width:"800px", marginTop:"2rem", marginBottom:"0rem", fontWeight:"600", wordWrap:"break-word"}} color='white' b size={40} className={styles.title}>{detail.title_english}</Text>
-            
+      <div className={styles.badges}>
          <Badge size="md" css={{  margin:"0.1rem 0.2rem 1.5rem 0", padding:"0.5rem 1rem 0.5rem 1rem"}} color="primary" variant="flat" className={styles.head2}>{detail.rating}</Badge>
 
+         <Dropdown>
+      <Dropdown.Button flat color="secondary" css={{ tt: "capitalize" ,borderRadius:"35px", height:"32px"}}>
+        {selectedValue}
+      </Dropdown.Button>
+      <Dropdown.Menu
+        aria-label="Single selection actions"
+        color="secondary"
+        disallowEmptySelection
+        selectionMode="single"
+        selectedKeys={selected}
+        onSelectionChange={setSelected}
+        onAction={(key)=>updateList(key)}
+      >
+        <Dropdown.Item key="Watching">Watching</Dropdown.Item>
+        <Dropdown.Item key="Dropped">Dropped</Dropdown.Item>
+        <Dropdown.Item key="Plan To Watch">Plan To Watch</Dropdown.Item>
+        <Dropdown.Item key="On Hold">On Hold</Dropdown.Item>
+        <Dropdown.Item key="Completed">Completed</Dropdown.Item>
+      </Dropdown.Menu>
+    </Dropdown>
+            </div>
             <div className={styles.lY}>
              
              

@@ -1,6 +1,6 @@
 import {  auth,db } from "../firebase/firebaseinit";
 import Cookies from "js-cookie";
-import {useContext, useState, createContext} from 'react';
+import {useContext, useState, createContext, useEffect} from 'react';
 import {
     collection,
     doc,
@@ -8,6 +8,9 @@ import {
     setDoc,
     addDoc,
     getDocs,
+    updateDoc,
+    arrayUnion,
+    arrayRemove,
     query,
     where,
     serverTimestamp,
@@ -36,6 +39,68 @@ export function FirebaseProvider({ children }) {
     const [loading, setLoading] = useState(false);
     const [anime, setAnime] = useState();
     const [getCommentsAgain,setGetCommentsAgain]= useState(false);
+    const [user,setCurrentUser]= useState();
+
+    useEffect(()=>{
+      const unsubscribe = onAuthStateChanged(auth, user=>{
+          setCurrentUser(user)
+          setLoading(false)   
+      })
+
+      return unsubscribe
+  }, [])
+
+    //console.log("hyyy",user);
+
+    useEffect(()=>{
+      //console.log("listerer", auth.currentUser);
+      auth.currentUser && getUserData().then((data)=>{
+        const favourites=[];
+        data.favourites.map(val=>{
+          favourites.push(val.id);
+        })
+        const completed=[];
+        data.completed.map(val=>{
+          completed.push(val.id);
+        })
+
+        const dropped=[];
+        data.dropped.map(val=>{
+          dropped.push(val.id);
+        })
+
+        const onHold=[];
+        data.onHold.map(val=>{
+          onHold.push(val.id);
+        });
+
+        const planToWatch=[];
+        data.planToWatch.map(val=>{
+          planToWatch.push(val.id);
+        });
+
+        const watching=[];
+        data.watching.map(val=>{
+          watching.push(val.id);
+        });
+
+
+
+        //console.log("hey",favourite);
+
+        localStorage.setItem("favourites",JSON.stringify(favourites));
+        localStorage.setItem("completed",JSON.stringify(completed));
+        localStorage.setItem("dropped",JSON.stringify(dropped));
+        localStorage.setItem("onHold",JSON.stringify(onHold));
+        localStorage.setItem("planToWatch",JSON.stringify(planToWatch));
+        localStorage.setItem("watching",JSON.stringify(watching)); 
+
+        
+        //console.log("userdata: ",localStorage.getItem("favourites"));
+      }).catch(e=>{
+         console.log(e); 
+      })       
+    },[auth.currentUser]);
 
     async function getAnime(id){ 
 
@@ -65,103 +130,120 @@ export function FirebaseProvider({ children }) {
       return false;
     }
     
-    async function updateUserLists(details, favourites=0,completed=0, dropped=0,onHold=0, planToWatch=0,watching=0){
-       const user= auth.currentUser;
+    async function updateUserLists(details, add,remove){
+
        const prev="-1";
+       if(user===null) return false;
+
+      // console.log(details.id,add,remove);
        try{
 
         const ref= doc(db,"users",user.email);
         const data={
-          imageUrl: details.Image_Link,
-          title:details.English,
-          episodes: details.Episodes,
-          genre: details.genre,
-          id:details.Id,
+          id:details.id,
+          imageUrl: details.main_picture,
+          title:details.title_english,
+          episodes: details.episodes,
+          synopsis:details.synopsis,
         } ;
 
-        if(favourites!=0){
-          if(favourites==1){
-            await updateDoc(ref, {
-              favourites: arrayUnion(data )
-          });
-        }else{
+        if(remove==="favourites"){
+         
           await updateDoc(ref, {
             favourites: arrayRemove(data  )
-        });  }
+        });
+        }else if(add==="favourites"){
+          
+          await updateDoc(ref, {
+            favourites: arrayUnion(data )
+        });
         }
-         if(completed!=0){
-          if(completed==1){
+        
+         if(add==="completed"){
+         
             await updateDoc(ref, {
               completed: arrayUnion(data )
           });
-        }else{
+        }else if(remove==="completed"){
           await updateDoc(ref, {
             completed: arrayRemove(data )
         });  }
-        }
+        
 
-         if(dropped!=0){
-          if(dropped==1){
+         if(add==="dropped"){
+          
             await updateDoc(ref, {
               dropped: arrayUnion(data )
           });
-        }else{
+        }else if(remove==="dropped"){
           await updateDoc(ref, {
             dropped: arrayRemove(data )
-        });  }
+        });
         }
-         if(onHold!=0){
-          if(onHold==1){
+        
+         if(add==="onHold"){
             await updateDoc(ref, {
               onHold: arrayUnion(data )
           });
-        }else{
+        }else if(remove==="onHold"){
           await updateDoc(ref, {
-            onHold: arrayRemove(data  )
-        });  }
+            onHold: arrayRemove(data)
+        });  
         }
-         if(planToWatch!=0){
-          if(planToWatch==1){
+        
+         if(add==="planToWatch"){
+         
             await updateDoc(ref, {
               planToWatch: arrayUnion(data )
           });
-        }else{
+        }else if(remove==="planToWatch"){
           await updateDoc(ref, {
             planToWatch: arrayRemove(data  )
-        });  }
+        });  
         }
 
 
-         if(watching!=0){
-          if(watching==1){
+         if(add==="watching"){
             await updateDoc(ref, {
-              watching: arrayUnion(data  )
+              watching: arrayUnion(data)
           });
-        }else{
+        }else if(remove==="watching"){
           await updateDoc(ref, {
             watching: arrayRemove(data  )
-        });  }
+        });  
         }
 
+        console.log("done");
       }catch(error){
           console.log(error);
       }
 
     }
 
+  
+
     async function getUserData(){
       try {
-        if(auth.currentUser==null) return null;
+      
+      
+        //
+        //
+        //console.log(user);
 
-        const docRef = doc(db, "users",auth.currentUser.email);
+                  
+       
+        if(user==null) return null;
+
+        const docRef = doc(db, "users",user.email);
 
         const data= await getDoc(docRef);
           
+        //console.log("heyy");
         if(data.exists()) return data.data();
+
 
       } catch (error) {
         console.log("erroror: ",error);
-        // console.log(error);
       }
       return false;
 
@@ -319,6 +401,7 @@ export function FirebaseProvider({ children }) {
            // setUser(null);
             Cookies.remove("user", { expires: 7 });
             window.location.reload();
+            localStorage.clear();
       }).catch((error) => {
         // An error happened.
         console.log(error);

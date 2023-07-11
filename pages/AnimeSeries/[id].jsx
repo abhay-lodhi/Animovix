@@ -33,17 +33,13 @@ const animewithID = () => {
 
    useEffect(()=>{
 
-    //console.log(id+ "hiiiiii");
      getAnime(id).then((details)=>{
         setDetails(details);
-        //console.log(details);
-     })
+     });
 
    },[id]);
 
    useEffect(()=>{
-    // console.log("hiiiii");
-
     if(details) 
      axios
      .post("https://animovixrecommendations.onrender.com/anime", {
@@ -59,8 +55,7 @@ const animewithID = () => {
      });
  },[details])
 
-   //console.log(comments);
-
+  
    useEffect(()=>{
 
     getComments(id).then((data)=>{
@@ -73,7 +68,8 @@ const animewithID = () => {
   return (
 
     
-    <div className={styles.main} >{details?  (<>
+    <div className={styles.main} >
+      {details ?  (<>
        <Animemodal detail={details}/>
        <div className={styles.tabs}>
        <button 
@@ -95,8 +91,18 @@ const animewithID = () => {
 
        </div>
        
-       {tab?(<>{!loading &&
-       <Recommendations results={results} name={details.title_english}/>}
+       {tab?(<>{!loading ?(<Recommendations results={results} name={details.title_english}/>):((<div style={{display:'flex', width:"100%",alignItems:"center", justifyContent: "center", justifyItems:"center"}}>
+        <Loading
+              color="secondary"
+              type="gradient"
+              loadingCss={{
+                $$loadingSize: "100px",
+                $$loadingBorder: "10px",
+                margin: "10vw auto",
+              }}
+            />
+    </div>))
+       }
        </>):(<>{status &&(
        <CommentsSection id={id} comments={comments}/>)}
        </>)}
@@ -112,7 +118,20 @@ const animewithID = () => {
               }}
             />
     </div>)
-            }</div>
+            }
+
+  <div class="container">
+	<div class="tabs">
+		<input type="radio" id="radio-1" name="tabs" checked />
+		<label class="tab" for="radio-1">Upcoming<span class="notification">2</span></label>
+		<input type="radio" id="radio-2" name="tabs" />
+		<label class="tab" for="radio-2">Development</label>
+		<input type="radio" id="radio-3" name="tabs" />
+		<label class="tab" for="radio-3">Completed</label>
+		<span class="glider"></span>
+	</div>
+</div>
+            </div>
   )
 }
 

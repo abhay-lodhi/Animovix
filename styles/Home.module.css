@@ -8,6 +8,14 @@
   /* width: 100%; */
 }
 
+.searchbar{
+  width: 500px;
+  margin-left: 8rem;
+  align-self: center;
+  margin-bottom: 15rem;
+  
+}
+
 .card{
   max-width: 90vw;
   background: rgba(255, 255, 255, 0.2);
@@ -93,16 +101,17 @@
 }
 
 .carousal{
-  /* display: flex; */
+  display: flex;
   margin-top: 2rem;
   margin-bottom: 4rem;
   position: relative;
-  justify-content: center;
+  /* justify-content: center;
   align-items: center;
   justify-self: center;
-  justify-items: center;
+  justify-items: center; */
   width: 100vw;
   height:80vh;
+
 }
 
 .carousal::before{

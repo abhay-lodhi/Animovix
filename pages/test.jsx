@@ -11,6 +11,7 @@ import {
   import {useFirebase} from "../context/firebaseContext"
   import {db} from "../firebase/firebaseinit"
 import CommentsSection from '@/Components/discussion/CommentsSection';
+import Tab from '@/Components/Tab';
 
  const test = () => {
      const {getComments,addComment}=useFirebase();
@@ -61,7 +62,7 @@ import CommentsSection from '@/Components/discussion/CommentsSection';
 
   return (
     <>
-     <CommentsSection id={"1"} />
+     <Tab/>
      {/* <button onClick={getData}>click</button> */}
     </>
   )

@@ -6,11 +6,11 @@ import { Text } from '@nextui-org/react';
 
 const Recommendations = ({results,name}) => {
    
-    console.log(results,name);
+    // console.log(results,name);
 
    
   return (
-    <div>
+    <div style={{minHeight:"200px"}}>
         <Text size={20} style={{marginLeft:"3rem", fontFamily:"bold"}}>Anime Similar to {name}</Text>
 
 
