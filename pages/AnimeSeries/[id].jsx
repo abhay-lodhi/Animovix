@@ -27,7 +27,8 @@ const animewithID = () => {
    const [comments,setComments]= useState(null);
    const[status,setStatus]=useState(false);
    const [results, setResults] = useState([]);
-   const [loading, setLoading] = useState(false);
+   const [loading, setLoading] = useState(true);
+   const [loaad2,setLoad]=useState(false);
    const itemcount = 20;
 
 
@@ -46,7 +47,6 @@ const animewithID = () => {
        names:details.title_english ,
      })
      .then(function (response) {
-       //console.log(response.data);
        setLoading(false);
        setResults(response.data.slice(0, 20));
      })
@@ -71,27 +71,33 @@ const animewithID = () => {
     <div className={styles.main} >
       {details ?  (<>
        <Animemodal detail={details}/>
+       <div className={styles.second}>
        <div className={styles.tabs}>
-       <button 
+       <Button 
+       size="md"
        onClick={()=>setTab(true)}
-       className={`relative rounded-full px-3 py-1.5 text-sm font-medium text-white outline-2 outline-sky-400 focus-visible:outline`}
+       color={tab?"success":"#808080"}
+       className={styles.button}
        >
         {/* {tab && } */}
        Recommendations
 
-       </button>
+       </Button>
 
-       <button 
+       <Button 
        onClick={()=>setTab(false)}
-       className={`relative rounded-full px-3 py-1.5 text-sm font-medium text-white outline-2 outline-sky-400 focus-visible:outline`}
+       color={(!tab)?"success":"#808080"}
+       className={styles.button}
        >
        Discussion
 
-       </button>
+       </Button>
 
        </div>
        
-       {tab?(<>{!loading ?(<Recommendations results={results} name={details.title_english}/>):((<div style={{display:'flex', width:"100%",alignItems:"center", justifyContent: "center", justifyItems:"center"}}>
+       {tab?
+       (<>{(!loading) ?(<Recommendations results={results} name={details.title_english}/>):
+       ((<div style={{display:'flex', width:"100%",alignItems:"center", justifyContent: "center", justifyItems:"center"}}>
         <Loading
               color="secondary"
               type="gradient"
@@ -106,6 +112,7 @@ const animewithID = () => {
        </>):(<>{status &&(
        <CommentsSection id={id} comments={comments}/>)}
        </>)}
+       </div>
     
     </>):(<div style={{display:'flex', width:"100%",alignItems:"center", justifyContent: "center", justifyItems:"center"}}>
         <Loading
@@ -119,18 +126,6 @@ const animewithID = () => {
             />
     </div>)
             }
-
-  <div class="container">
-	<div class="tabs">
-		<input type="radio" id="radio-1" name="tabs" checked />
-		<label class="tab" for="radio-1">Upcoming<span class="notification">2</span></label>
-		<input type="radio" id="radio-2" name="tabs" />
-		<label class="tab" for="radio-2">Development</label>
-		<input type="radio" id="radio-3" name="tabs" />
-		<label class="tab" for="radio-3">Completed</label>
-		<span class="glider"></span>
-	</div>
-</div>
             </div>
   )
 }

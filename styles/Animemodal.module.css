@@ -13,6 +13,11 @@
    
     
 }
+
+.fav{
+    width: 2rem;
+    height: 2rem;
+}
 .content{
     display: flex;
     width: 100%;
@@ -63,6 +68,8 @@
 
 .badges{
     display: flex;
+    width: 13vw;
+    justify-content: space-between;
 }
 
 .bod{
@@ -128,13 +135,23 @@
         margin-left:1rem;
     }
     
+    .fav{
+       margin-right: 0rem;
+       margin-left: 0.5rem;
+        width:  2rem;
+        height: 2rem;
+    }
+
+    .fav :hover{
+        
+    }
     .title{
       
         margin-top: 0rem; 
        margin-left: 1rem;
         font-size: 35px;
         font-weight: 100;
-        width: 400px;
+        width: 80vw;
         
     }
     .scroll{

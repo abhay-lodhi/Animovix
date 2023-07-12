@@ -145,6 +145,7 @@ export function FirebaseProvider({ children }) {
           title:details.title_english,
           episodes: details.episodes,
           synopsis:details.synopsis,
+          type:details.type,
         } ;
 
         if(remove==="favourites"){

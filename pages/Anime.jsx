@@ -15,6 +15,7 @@ import Animeresultcard from "@/Components/Animeresultcard";
 // import Searchanime from '../../Components/Searchanime'
 import styles from "../styles/Search.module.css";
 import { ReactSearchAutocomplete } from "react-search-autocomplete";
+import { Center } from '@chakra-ui/react';
 
 const Anime = () => {
   const [bars, setBars] = useState([{ value: "" }]);
@@ -162,12 +163,8 @@ const Anime = () => {
             return (
               <Container
               key={i}
-                style={{
-                  width: "900",
-                  borderRadius: "10px",
-                  margin: "5.5rem 1.5rem",
-                }}
-                className="container"
+               
+                className={styles.reactsearch}
               >
                 <ReactSearchAutocomplete
                   styling={{

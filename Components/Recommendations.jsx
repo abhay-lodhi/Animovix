@@ -10,11 +10,11 @@ const Recommendations = ({results,name}) => {
 
    
   return (
-    <div style={{minHeight:"200px"}}>
-        <Text size={20} style={{marginLeft:"3rem", fontFamily:"bold"}}>Anime Similar to {name}</Text>
+    <div style={{minHeight:"200px",display:"flex",flexDirection:"column" }}>
+        <Text size={30} style={{marginLeft:"4rem", fontFamily:"bold"}}>Animes Similar to: {name}</Text>
 
 
-<div style={{display:"flex",justifyContent:"space-evenly", flexWrap:"wrap"}}>
+<div style={{display:"flex",justifyContent:"space-evenly", flexWrap:"wrap", alignSelf:"center",justifySelf:"center",width:"90vw"}}>
                 {results &&
                   results.map((result, i) => {
 

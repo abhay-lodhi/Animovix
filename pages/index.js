@@ -8,12 +8,17 @@ import Presscard from '@/Components/Presscard'
 import data from "../public/anime_list";
 import { ReactSearchAutocomplete } from "react-search-autocomplete";
 import Image from "next/image";
+import {ImSearch} from "react-icons/im"
+import {AiOutlineArrowRight} from "react-icons/ai"
+import { useRouter } from 'next/navigation'
+import { Center } from '@chakra-ui/react'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home({quotes}) {
 
-  const[quote, setQuote] = useState(quotes)
+  const[anime, setAnime] = useState(null);
+  const router=useRouter();
 
   const handleOnSearch = (string, results) => {
     // onSearch will have as the first callback parameter
@@ -23,12 +28,22 @@ export default function Home({quotes}) {
     // the item hovered
   };
   const handleOnSelect = (item) => {
-    console.log(item);
+    setAnime(item.id);
   }
 
+
+
   const handleOnFocus = () => {
-    // console.log('Focused')
+    
   };
+
+  const searchAnime=()=>{
+    if(anime===null){
+      window.alert("Please Select some Anime");
+    }else{
+      router.push(`/AnimeSeries/${anime}`);
+    }
+  }
   
   const formatResult = (item) => {
     return (
@@ -77,6 +92,8 @@ export default function Home({quotes}) {
        <div className={styles.main}>
         <div className="parcar" style={{display:"flex", justifyContent:"center"}}>
         <div className={styles.carousal}>
+          <div style={{display:"flex", width:'85vw', flexDirection:"column", alignItems:"center", justifyContent:"center"}}>
+            <div style={{display:"flex"}}>
           <div className={styles.searchbar}>
         <ReactSearchAutocomplete
                   styling={{
@@ -98,12 +115,26 @@ export default function Home({quotes}) {
                   onFocus={handleOnFocus}
                   autoFocus
                   placeholder={`Search Anime...`}
-                  maxResults={2}
+                  maxResults={3}
                   resultStringKeyName="English"
                   fuseOptions={{ keys: ["English"] }}
                   formatResult={formatResult}
                 />
+               
           </div>
+          <div className={styles.searchIcon} onClick={searchAnime}>
+           <ImSearch size={25} />
+           </div>
+           <div className={styles.image}>
+           <Image src={"https://aniwatch.to/images/anw-min.webp"} width={520} height={450}/>
+           </div>
+           </div>
+           <div className={styles.bottombanner}>
+            Try Recommendation system
+            <AiOutlineArrowRight style={{marginLeft:"0.5rem"}} size={20} />
+           </div>
+           </div>
+           
         </div>
         </div>
 

@@ -20,12 +20,11 @@ const Bar= () => {
   const [activeColor, setActiveColor] = React.useState("primary");
   const {signIn, signout,auth,getUserCookies}= useFirebase();
   const {isDark} = useTheme();
-  const [ user, setUser ]=React.useState();
+  const [ user, setUser ]=React.useState(null);
 
   React.useEffect(()=>{ 
       const useData=getUserCookies();
-      setUser(useData.details);
-      
+      setUser(useData.details);    
       //console.log("current", auth)
       // const listener = onAuthStateChanged(auth, async (user) => {
       //  // console.log(user);
@@ -48,23 +47,49 @@ const Bar= () => {
     "underline-rounded",
   ];
 
+  const collapseItems = [
+    "Home",
+    "Anime",
+    "Movies",
+  ];
+
   const colors = ["primary", "secondary", "success", "warning", "error"];
   return (
    
          <Navbar height={100} maxWidth={100}  shouldHideOnScroll={true} variant="sticky">
-        <Navbar.Brand>
+          
+          <Navbar.Toggle showIn="xs" />
+          <Navbar.Brand
+          css={{
+            "@xs": {
+              w: "12%",
+            },
+          }}
+        >
+        <Navbar.Content activeColor={activeColor}  variant={variant}>
+        <Navbar.Link href="/">
           <Text b color="inherit" size={25} style={{textDecoration:"underline"}}>
             ANIMOVIX
           </Text>
+          </Navbar.Link>
+          </Navbar.Content>
+        
         </Navbar.Brand>
 
-        <Navbar.Content activeColor={activeColor}  variant={variant}>
-
+        <Navbar.Content  
+          enableCursorHighlight
+          activeColor="secondary"
+          hideIn="xs"
+          variant="highlight-rounded">
+       
           <Navbar.Link href="/"><Text size={20}>Home</Text></Navbar.Link>
           <Navbar.Link href="/Anime"><Text size={20}> Anime</Text></Navbar.Link>
           <Navbar.Link href="/Movies"><Text size={20}>Moveis</Text></Navbar.Link>
+          </Navbar.Content>
+
           {user? 
-           ( <Navbar.Content
+           ( 
+           <Navbar.Content
             css={{
               "@xs": {
                 w: "12%",
@@ -97,7 +122,8 @@ const Bar= () => {
                     {user.name}
                   </Text>
                 </Dropdown.Item>
-                <Dropdown.Item key="settings" withDivider>
+
+                <Dropdown.Item key="settings" hideIn="xs" withDivider>
                   Profile
                 </Dropdown.Item>
                 <Dropdown.Item key="help_and_feedback" withDivider>
@@ -109,16 +135,38 @@ const Bar= () => {
                 </Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
-          </Navbar.Content>)
+          </Navbar.Content>
+          )
           :
-          (<Navbar.Item>
+          (
+          <Navbar.Content>
+          <Navbar.Item>
             <Button auto flat as={Link} color={activeColor} onPress={signIn}>
               Sign In
             </Button>
-          </Navbar.Item>)
+          </Navbar.Item>
+          </Navbar.Content> 
+          )
         }
+        <Navbar.Collapse>
+          {collapseItems.map((item, index) => (
+            <Navbar.CollapseItem
+              key={item}
+            >  
+              <Link
+                color="inherit"
+                css={{
+                  minWidth: "100%",
+                }}
+                href={item=="Home"?"/":item}
+               >
+                {item}
+              </Link>
+            </Navbar.CollapseItem>
+          ))}
+        </Navbar.Collapse>
         
-          </Navbar.Content>
+         
       </Navbar>
      
   )

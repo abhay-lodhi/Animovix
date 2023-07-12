@@ -22,7 +22,7 @@ const CommentsSection = ({id,comments}) => {
 
 
   return (
-     <div style={{display:"flex", flexDirection:"column", alignItems:"center" ,minHeight:"300px"}}>
+     <div style={{display:"flex", flexDirection:"column", alignItems:"center" ,minHeight:"40vh", marginBottom:"5vh", marginTop:"5vh"}}>
       <div style={{marginLeft:"1rem"}}> 
       <CommentForm commentId={null} animeId={id} setOpenReplies={null} setOpenBox={null} placeholder={"Join the discussion..."}/>
       </div>

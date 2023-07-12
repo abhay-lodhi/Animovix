@@ -3,9 +3,11 @@ import {  Text, Badge,Dropdown } from '@nextui-org/react'
 import Image from 'next/image'
 import styles from '../styles/Animemodal.module.css'
 import { useFirebase } from '@/context/firebaseContext'
+import {AiOutlineHeart} from "react-icons/ai"
+import {AiFillHeart} from "react-icons/ai"
 
 const Animemodal = ({detail}) => {
-  const [selected, setSelected] = useState(new Set(["Select"]));
+  const [selected, setSelected] = useState(new Set(["Status"]));
   const [favourite,setFavourite]= useState(false);
   const {updateUserLists}= useFirebase();
   const mapVal= {
@@ -23,6 +25,24 @@ const Animemodal = ({detail}) => {
     var val=0;
     var val2=0;
 
+  const updateFavourite= async (key)=>{
+    const ref= JSON.parse(localStorage.getItem("favourites")) || [];
+     if(favourite){
+      setFavourite(false);
+      const index = ref.indexOf(detail.id);
+      if (index > -1) 
+        ref.splice(index, 1); 
+
+        //await updateUserLists(detail,null,"favourite");
+     }else{
+      setFavourite(true);
+      ref.push(detail.id);
+      //await updateUserLists(detail,"favourite",null);
+
+     }
+
+     localStorage.setItem("favourite",JSON.stringify(ref));
+  }
 
   const updateList= async (key)=>{
 
@@ -35,7 +55,7 @@ const Animemodal = ({detail}) => {
 
     add.push(detail.id);
   
-    await updateUserLists(detail,mapVal[key],mapVal[selectedValue]);
+    //await updateUserLists(detail,mapVal[key],mapVal[selectedValue]);
 
     localStorage.setItem(mapVal[selectedValue],JSON.stringify(remove));
     localStorage.setItem(mapVal[key],JSON.stringify(add));
@@ -55,6 +75,7 @@ const Animemodal = ({detail}) => {
     onHold.find(e=> e==detail.id) && setSelected(new Set(["On Hold"]));
     planToWatch.find(e=> e==detail.id) && setSelected(new Set(["Plan To Watch"]));
     watching.find(e=> e==detail.id) && setSelected(new Set(["Watching"]));
+    favourites.find(e=> e==detail.id) && setFavourite(true);
     
   },[])
 
@@ -69,8 +90,13 @@ const Animemodal = ({detail}) => {
            <div className={styles.contentM}>
 
           
-                <Text css={{marginRight:"1rem", width:"800px", marginTop:"2rem", marginBottom:"0rem", fontWeight:"600", wordWrap:"break-word"}} color='white' b size={40} className={styles.title}>{detail.title_english}</Text>
+      <Text css={{marginRight:"1rem", width:"800px", marginTop:"2rem", marginBottom:"0rem", fontWeight:"600", wordWrap:"break-word"}} color='white' b size={40} className={styles.title}>{detail.title_english}</Text>
+
       <div className={styles.badges}>
+      <div className={styles.fav} onClick={updateFavourite}>
+       {favourite?(<AiFillHeart color='red' className={styles.fav}/>):(<AiOutlineHeart  color='red' className={styles.fav}/>)}
+      </div>
+        
          <Badge size="md" css={{  margin:"0.1rem 0.2rem 1.5rem 0", padding:"0.5rem 1rem 0.5rem 1rem"}} color="primary" variant="flat" className={styles.head2}>{detail.rating}</Badge>
 
          <Dropdown>
@@ -93,6 +119,7 @@ const Animemodal = ({detail}) => {
         <Dropdown.Item key="Completed">Completed</Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>
+   
             </div>
             <div className={styles.lY}>
              

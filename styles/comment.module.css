@@ -29,6 +29,11 @@
     width: fit-content;
 }
 .replies{
-    margin-left: 10rem;
-    
+    margin-left: 10vw;
+}
+
+@media only screen and (max-width: 600px) {
+    .replies{
+        margin-left: 20vw;
+    }
 }

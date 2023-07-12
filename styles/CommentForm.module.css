@@ -23,14 +23,14 @@
     }
     
     .main Textarea{
-        width: 250px;
+        width: 55vw;
       
     }
     
     .main Button{
-     width: 1rem;
+     width: 2vw;
      margin-left: 0.5rem;
-     height: 3rem;
+     
     }
 
 }
