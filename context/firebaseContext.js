@@ -55,6 +55,7 @@ export function FirebaseProvider({ children }) {
     useEffect(()=>{
       //console.log("listerer", auth.currentUser);
       auth.currentUser && getUserData().then((data)=>{
+        //console.log(data);
         const favourites=[];
         data.favourites.map(val=>{
           favourites.push(val.id);

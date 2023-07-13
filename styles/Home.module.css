@@ -23,7 +23,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #380469;
+  background: #120121;
   border-radius: 0px 0px 25px 25px;
   height: 3.8rem;
   width: 74vw;
@@ -34,7 +34,7 @@
 
 .searchIcon{
   display: flex;
-  background: #380469;
+  background: #120121;
   width: 2.8rem;
   height: 2.8rem;
   border-radius: 22px;

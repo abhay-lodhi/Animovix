@@ -33,11 +33,11 @@ const Animemodal = ({detail}) => {
       if (index > -1) 
         ref.splice(index, 1); 
 
-        //await updateUserLists(detail,null,"favourite");
+        await updateUserLists(detail,null,"favourite");
      }else{
       setFavourite(true);
       ref.push(detail.id);
-      //await updateUserLists(detail,"favourite",null);
+      await updateUserLists(detail,"favourite",null);
 
      }
 
@@ -55,7 +55,7 @@ const Animemodal = ({detail}) => {
 
     add.push(detail.id);
   
-    //await updateUserLists(detail,mapVal[key],mapVal[selectedValue]);
+    await updateUserLists(detail,mapVal[key],mapVal[selectedValue]);
 
     localStorage.setItem(mapVal[selectedValue],JSON.stringify(remove));
     localStorage.setItem(mapVal[key],JSON.stringify(add));
