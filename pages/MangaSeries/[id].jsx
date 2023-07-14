@@ -11,19 +11,18 @@ import {
 import CommentsSection from '@/Components/discussion/CommentsSection';
 import { Center } from '@chakra-ui/react';
 import styles from "../../styles/AnimeSeries.module.css"
-import Recommendations from '@/Components/Recommendations';
+import Recommendations from '@/Components/Mangarecommendations';
 
-const Animemodal = dynamic(() => import('../../Components/Animemodal'), {
+const Mangamodal = dynamic(() => import('../../Components/Mangamodal'), {
     ssr: false,
   });
 
-const animewithID = () => {
+const mangawithID = () => {
    const router= useRouter();
    const id= router.query.id;
-   const {getAnime}=useFirebase();
    const [details,setDetails]=useState();
    const [tab,setTab]=useState(true);
-   const {getComments,getCommentsAgain}=useFirebase();
+   const {getComments,getCommentsAgain,getManga}=useFirebase();
    const [comments,setComments]= useState(null);
    const[status,setStatus]=useState(false);
    const [results, setResults] = useState([]);
@@ -35,20 +34,19 @@ const animewithID = () => {
 
    useEffect(()=>{
 
-     getAnime(id).then((details)=>{
+     getManga(id).then((details)=>{
         if(details===undefined){
           setError(true);
         }
-        //console.log(details);
         setDetails(details);
-     });
-
+       // console.log(details);
+         });
    },[id]);
 
    useEffect(()=>{
     if(details) 
      axios
-     .post("https://animovixrecommendations.onrender.com/anime", {
+     .post("https://animovixrecommendations.onrender.com/manga", {
        names:details.title_english?(details.title_english):(details.title)
      })
      .then(function (response) {
@@ -63,7 +61,7 @@ const animewithID = () => {
   
    useEffect(()=>{
 
-    getComments(id).then((data)=>{
+    getComments("m"+id).then((data)=>{
       setComments(data.docs);
       setStatus(true);
     });
@@ -76,7 +74,7 @@ const animewithID = () => {
     <div className={styles.main} >
       
       {details ?  (<>
-       <Animemodal detail={details}/>
+       <Mangamodal detail={details}/>
        <div className={styles.second}>
        <div className={styles.tabs}>
        <Button 
@@ -103,7 +101,10 @@ const animewithID = () => {
        </div>
        
        {tab?
-       (<>{(!loading) ?(<Recommendations results={results} name={details.title_english}/>):
+       (<>{(!loading) ?(
+        // <div>heyyy</div>
+       <Recommendations results={results} name={details.title_english}/>
+       ):
        ((<div style={{display:'flex', width:"100%",alignItems:"center", justifyContent: "center", justifyItems:"center"}}>
         <Loading
               color="secondary"
@@ -117,7 +118,7 @@ const animewithID = () => {
     </div>))
        }
        </>):(<>{status &&(
-       <CommentsSection id={id} comments={comments}/>)}
+       <CommentsSection id={"m"+id} comments={comments}/>)}
        </>)}
        </div>
     
@@ -141,22 +142,22 @@ const animewithID = () => {
   )
 }
 
-export default animewithID;
+export default mangawithID;
 
 export async function getStaticProps() {
-  axios.post("https://animovixrecommendations.onrender.com/anime", {
-    names: "one piece",
-  });
-
-  return {
-    props: {},
-  };
-}
+    axios.post("https://animovixrecommendations.onrender.com/manga", {
+      names: "Neo Fujiyama",
+    });
+  
+    return {
+      props: {},
+    };
+  }
 
 export const getStaticPaths = async () => {
 
-  return {
-      paths: [], //indicates that no page needs be created at build time
-      fallback: 'blocking' //indicates the type of fallback
+    return {
+        paths: [], //indicates that no page needs be created at build time
+        fallback: 'blocking' //indicates the type of fallback
+    }
   }
-}

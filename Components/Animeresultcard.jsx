@@ -17,7 +17,7 @@ const Animeresultcard = ({detail}) => {
     const [visible, setVisible] = useState(false);
     const closeHandler = () => {
         setVisible(false);
-        console.log("closed");
+       // console.log("closed");
       };
 
 //       React.useEffect(()=>{

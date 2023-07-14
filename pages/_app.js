@@ -15,7 +15,7 @@ TimeAgo.addDefaultLocale(en)
 TimeAgo.addLocale(ru)
 
 export function reportWebVitals(metric) {
-  console.log(metric)
+ // console.log(metric)
 }
 
 

@@ -106,14 +106,14 @@
         align-items: center;
         display: flex;
         flex-direction: column;
-        width: 100%;
+        padding: 4vw;
+        width: 100vw;
     }
 
     .image{
         border-radius: 15px;
         align-self: center;
-        margin-top: 2rem;
-        margin-left: 0.5rem;   
+        margin-top: 2rem;  
         width:100;
         height: 250;
          
@@ -127,24 +127,20 @@
         margin-left: 0rem;
         margin-top:1rem;
         margin-bottom: 2rem;
-        margin-right: 0.5rem;
+        margin-right: 0rem;
         
     }
     .head2{
        
-        margin-left:1rem;
+        margin-left:0rem;
     }
     
-    .fav{
-       margin-right: 0rem;
-       margin-left: 0.5rem;
+    .fav{   
         width:  2rem;
         height: 2rem;
     }
 
-    .fav :hover{
-        
-    }
+   
     .title{
       
         margin-top: 0rem; 
@@ -155,7 +151,7 @@
         
     }
     .scroll{
-        width:350px;
+        width: 100%;
         height:200px;
         word-wrap: break-word;
         text-align: justify;
@@ -168,7 +164,7 @@
     .last{
         align-self: center;
         justify-content: center;
-        margin-left: 1.2rem;
+        margin-left: 1vw;
     }
     
     
@@ -177,7 +173,7 @@
       }
     .car{
         margin-right: 0.5rem ;
-        margin-left: 1rem;
+        margin-left: 1vw;
     
     }
   }

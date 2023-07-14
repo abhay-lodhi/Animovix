@@ -112,7 +112,7 @@ const Bar= () => {
               <Dropdown.Menu
                 aria-label="User menu actions"
                 color="secondary"
-                onAction={(actionKey) => console.log({ actionKey })}
+                // onAction={(actionKey) => console.log({ actionKey })}
               >
                 <Dropdown.Item key="profile" css={{ height: "$18" }}>
                   <Text b color="inherit" css={{ d: "flex" }}>

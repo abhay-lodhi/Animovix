@@ -27,11 +27,11 @@ const Anime = () => {
   const itemcount = 20;
 
   useEffect(() => {
-    console.log(curpage);
+    //console.log(curpage);
     setResults(recommendations.slice((curpage - 1) * 20, 20 * curpage));
     axios.get("https://animovixrecommendations.onrender.com/");
     return () => {
-      console.log("Cleanup function ");
+      //console.log("Cleanup function ");
     };
   }, [curpage, recommendations]);
 
@@ -44,7 +44,7 @@ const Anime = () => {
   };
 
   const handleOnSelect = (i, item) => {
-    console.log(i, item);
+    //console.log(i, item);
     setBars((s) => {
       const newArr = s.slice();
       newArr[i] = item;
@@ -120,7 +120,7 @@ const Anime = () => {
   const getRecommendations = () => {
     setCurpage(1);
 
-    console.log("query names", bars);
+    //console.log("query names", bars);
     var names = [];
     // if(bars.length===1 && !bars[0].English)window.alert("Please Select some Anime")
     for (var i = 0; i < bars.length; i++) {
@@ -134,13 +134,13 @@ const Anime = () => {
     } else {
       setAsk(true);
       setLoading(true);
-      console.log(query);
+     // console.log(query);
       axios
         .post("https://animovixrecommendations.onrender.com/anime", {
           names: query,
         })
         .then(function (response) {
-          console.log(response.data);
+          //console.log(response.data);
           setRecommendations(response.data);
           setLoading(false);
           setResults(response.data.slice(0, 20));
@@ -277,7 +277,7 @@ const Anime = () => {
                 onChange={(page) => setCurpage(page)}
               />
 
-              {console.log(results)}
+              {/* {console.log(results)} */}
               <div className={styles.results}>
                 {results &&
                   results.map((result, i) => {

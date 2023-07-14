@@ -1,24 +1,39 @@
 import React, {useState} from 'react'
 import dynamic from 'next/dynamic';
-import styles from '@/styles/Resultcard.module.css'
-import {Modal, Card, Row, Col, Text, Container, Badge, Tooltip} from "@nextui-org/react"
+import styles from '../styles/Resultcard.module.css'
+import {Modal, Card, Row, Col, Text,  Container, Badge, Tooltip} from "@nextui-org/react"
 import { BsFillInfoCircleFill } from 'react-icons/bs';
-// import Animemodal from './animemodal';
-const Moviemodal = dynamic(() => import('./Moviemodal'), {
+import Link from 'next/link';
+
+
+const Mangamodal = dynamic(() => import('./Animemodal'), {
     ssr: false,
   });
+  
 
-const Movieresultcard = ({detail}) => {
+
+
+const Mangaresultcard = ({detail}) => {
+
     const [visible, setVisible] = useState(false);
     const closeHandler = () => {
         setVisible(false);
-        //console.log("closed");
+       // console.log("closed");
       };
 
-      
+//       React.useEffect(()=>{
+// console.log(detail);
+// },[])
+    
+      const handleOnClick= ()=>{
+        
+      }
+
   return (
-    <div style={{display:"block", margin:"1rem"}}>
-        <Card isPressable onPress={()=>setVisible(true)}  className={styles.card}>
+    <Link legacyBehavior href={`/MangaSeries/${detail.manga_id}`} passHref>
+  <a target="_blank" rel="noopener noreferrer">
+  <div style={{display:"block", margin:"1rem"}} onClick={handleOnClick}>
+        <Card isPressable onPress={()=>setVisible(true)} className={styles.card}  >
     <Card.Header css={{ position: "absolute", zIndex: 1, top: 5 }}>
       <Col>
         
@@ -30,37 +45,45 @@ const Movieresultcard = ({detail}) => {
     </Card.Header>
     <Card.Body css={{ p: 0 }}>
       <Card.Image
-        src={`https://image.tmdb.org/t/p/w300${detail.poster_path}`}
+        src={detail.main_picture}
         objectFit="cover"
         width="100%"
         height="100%"
-        alt="Relaxing app background"
+        alt="Anime Poster"
+        quality={100}
       />
     </Card.Body>
    
     <Card.Footer css={{ justifyItems: "flex-start", p:"0.5rem 01rem" }}>
               <Row  justify="space-between" align="center">
-                <Text css={{marginRight:" 1rem"}} color=' #c2b9c4 ' b size={18} >{detail.title}</Text>
+                <Text css={{marginRight:" 1rem"}} color=' #c2b9c4 ' b size={18} >{detail.title_english?detail.title_english:detail.title}</Text>
                
               <Text css={{ color: "$accents7", fontWeight: "$semibold", fontSize: "$sm" }}>
-              {detail.release_date.substr(0,4)}
+              {detail.type}
                 </Text>
               </Row>     
               
             </Card.Footer>
             
-            <Card.Footer className={styles.footer2} >
+            <Card.Footer className={styles.footer2}>
                 <Col css={{ m:"0.5rem 0 "}}>
                 <div >
                     {
-                        detail.genres.split("-").map((gen,i)=>{
-                           if(gen!=="Unknown") return <Badge className={styles.badges} key={i} size="sm"  enableShadow  isSquared color="secondary" variant="flat">
+                        detail.genres.map((gen,i)=>{
+                           if(gen!=="Unknown") return <Badge key={i} size="sm" css={{margin:"0.1rem 0.2rem"}} enableShadow  isSquared color="secondary" variant="flat">
                             {gen}
                           </Badge>
                         })
                         
                     }
-                    
+                     {
+                        detail.themes.map((gen,i)=>{
+                           if(gen!=="Unknown") return <Badge key={i} size="sm" css={{margin:"0.1rem 0.2rem"}} enableShadow  isSquared color="secondary" variant="flat">
+                            {gen}
+                          </Badge>
+                        })
+                        
+                    }
                 </div>
                 <Container css = {{display: "flex",justifyContent:"space-between", m:"0.2rem 0 0.5rem"}}>
                 <Text color=' #c2b9c4 ' b size={12}  css={{ justifyItems:"flex-end", m:"0.2rem 0 0.5rem"}}>
@@ -82,7 +105,7 @@ const Movieresultcard = ({detail}) => {
        
          
 
-                <Text color=' #c2b9c4 ' b size={12}  css={{ justifyItems:"flex-end", m:"0.2rem 0 0.5rem"}}>Runtime:&nbsp;{detail.runtime} min</Text>
+                <Text color=' #c2b9c4 ' b size={12}  css={{ justifyItems:"flex-end", m:"0.2rem 0 0.5rem"}}>chapters:&nbsp;{detail.chapters}</Text>
                 
                
                 </Container>
@@ -91,43 +114,32 @@ const Movieresultcard = ({detail}) => {
             
   </Card>
 
-  <Modal
-  
+  {/* <Modal
     closeButton
-    // fullScreen={true}
     // noPadding
     // preventClose
-    width="1350px"
+    width='1350px'
     // height='1000px'
     blur
-    css={{ width:"1350px" , height:"600px", justifyContent:"center"}}
+    css={{width:"1350px" , height:"600px", justifyContent:"center"}}
     aria-labelledby="modal-title"
     open={visible}
-    // className={styles.modal}
     onClose={closeHandler}
   >
     
     <Modal.Body>
 
-    <Moviemodal detail={detail}/>
+    <Mangamodal detail={detail}/>
       
     </Modal.Body>
-
-    {/* <Modal.Footer>
-      <Button auto flat color="error" onPress={closeHandler}>
-        Close
-      </Button>
-      <Button auto onPress={closeHandler}>
-        Sign in
-      </Button>
-    </Modal.Footer> */}
-  </Modal>
+  </Modal> */}
   
-    
 
     </div>
+  </a>
+</Link>
+   
   )
-
 }
 
-export default Movieresultcard
+export default Mangaresultcard;

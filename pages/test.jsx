@@ -12,6 +12,7 @@ import {
   import {db} from "../firebase/firebaseinit"
 import CommentsSection from '@/Components/discussion/CommentsSection';
 import Tab from '@/Components/Tab';
+import {IoPizzaOutline} from "react-icons/io5"
 
  const test = () => {
      const {getComments,addComment}=useFirebase();
@@ -62,7 +63,7 @@ import Tab from '@/Components/Tab';
 
   return (
     <>
-     <Tab/>
+     <IoPizzaOutline size={20} />
      {/* <button onClick={getData}>click</button> */}
     </>
   )

@@ -55,6 +55,7 @@ export function FirebaseProvider({ children }) {
     useEffect(()=>{
       //console.log("listerer", auth.currentUser);
       auth.currentUser && getUserData().then((data)=>{
+
         //console.log(data);
         const favourites=[];
         data.favourites.map(val=>{
@@ -85,6 +86,35 @@ export function FirebaseProvider({ children }) {
           watching.push(val.id);
         });
 
+        const Mfavourites=[];
+        data.Mfavourites.map(val=>{
+          Mfavourites.push(val.id);
+        })
+        const Mcompleted=[];
+        data.Mcompleted.map(val=>{
+          Mcompleted.push(val.id);
+        })
+
+        const Mdropped=[];
+        data.Mdropped.map(val=>{
+          Mdropped.push(val.id);
+        })
+
+        const MonHold=[];
+        data.MonHold.map(val=>{
+          MonHold.push(val.id);
+        });
+
+        const MplanToRead=[];
+        data.MplanToRead.map(val=>{
+          MplanToRead.push(val.id);
+        });
+
+        const Mreading=[];
+        data.Mreading.map(val=>{
+          Mreading.push(val.id);
+        });
+
 
 
         //console.log("hey",favourite);
@@ -94,10 +124,17 @@ export function FirebaseProvider({ children }) {
         localStorage.setItem("dropped",JSON.stringify(dropped));
         localStorage.setItem("onHold",JSON.stringify(onHold));
         localStorage.setItem("planToWatch",JSON.stringify(planToWatch));
-        localStorage.setItem("watching",JSON.stringify(watching)); 
+        localStorage.setItem("watching",JSON.stringify(watching));
+        
+        localStorage.setItem("Mfavourites",JSON.stringify(Mfavourites));
+        localStorage.setItem("Mcompleted",JSON.stringify(Mcompleted));
+        localStorage.setItem("Mdropped",JSON.stringify(Mdropped));
+        localStorage.setItem("MonHold",JSON.stringify(MonHold));
+        localStorage.setItem("MplanToRead",JSON.stringify(MplanToRead));
+        localStorage.setItem("Mreading",JSON.stringify(Mreading));
 
         
-        //console.log("userdata: ",localStorage.getItem("favourites"));
+      //  console.log("userdata: ",localStorage.getItem("Mfavourites"));
       }).catch(e=>{
          console.log(e); 
       })       
@@ -117,6 +154,20 @@ export function FirebaseProvider({ children }) {
         return false;
     }
 
+    async function getManga(id){ 
+
+      try {
+        const docRef = doc(db, "manga",id);
+
+        const detail= await getDoc(docRef);
+        return detail.data();
+ 
+      } catch (error) {
+         console.log(error);
+      }
+      return false;
+  }
+
     async function getOthersData(ref){
       try{
 
@@ -131,21 +182,23 @@ export function FirebaseProvider({ children }) {
       return false;
     }
     
-    async function updateUserLists(details, add,remove){
+    async function updateUserLists(details, add,remove, flag=true){
 
        const prev="-1";
        if(user===null) return false;
 
-      // console.log(details.id,add,remove);
+     //console.log(details,add,remove,flag);
        try{
 
         const ref= doc(db,"users",user.email);
+
+        if(flag){
         const data={
           id:details.id,
           imageUrl: details.main_picture,
           title:details.title_english,
           episodes: details.episodes,
-          synopsis:details.synopsis,
+          synopsis: details.synopsis,
           type:details.type,
         } ;
 
@@ -214,8 +267,84 @@ export function FirebaseProvider({ children }) {
             watching: arrayRemove(data  )
         });  
         }
+      }else{
 
-        console.log("done");
+        const data={
+          id:details.manga_id,
+          imageUrl: details.main_picture,
+          title:details.title_english?details.title_english:details.title,
+          chapters: details.chapters,
+          type:details.type,
+        } ;
+
+        if(remove==="Mfavourites"){
+         
+          await updateDoc(ref, {
+            Mfavourites: arrayRemove(data  )
+        });
+        }else if(add==="Mfavourites"){
+          
+          await updateDoc(ref, {
+            Mfavourites: arrayUnion(data )
+        });
+        }
+        
+         if(add==="Mcompleted"){
+         
+            await updateDoc(ref, {
+              Mcompleted: arrayUnion(data )
+          });
+        }else if(remove==="Mcompleted"){
+          await updateDoc(ref, {
+            Mcompleted: arrayRemove(data )
+        });  }
+        
+
+         if(add==="Mdropped"){
+          
+            await updateDoc(ref, {
+              Mdropped: arrayUnion(data )
+          });
+        }else if(remove==="Mdropped"){
+          await updateDoc(ref, {
+            Mdropped: arrayRemove(data )
+        });
+        }
+        
+         if(add==="MonHold"){
+            await updateDoc(ref, {
+              MonHold: arrayUnion(data)
+          });
+        }else if(remove==="MonHold"){
+          await updateDoc(ref, {
+            MonHold: arrayRemove(data)
+        });  
+        }
+        
+         if(add==="MplanToRead"){
+         
+            await updateDoc(ref, {
+              MplanToRead: arrayUnion(data)
+          });
+        }else if(remove==="MplanToRead"){
+          await updateDoc(ref, {
+            MplanToRead: arrayRemove(data)
+        });  
+        }
+
+        if(add==="Mreading"){
+            await updateDoc(ref, {
+              Mreading: arrayUnion(data)
+          });
+        }else if(remove==="Mreading"){
+          await updateDoc(ref, {
+            Mreading: arrayRemove(data  )
+        });  
+        }
+      }
+   
+      return true;
+        //console.log("done");
       }catch(error){
           console.log(error);
       }
@@ -281,6 +410,12 @@ export function FirebaseProvider({ children }) {
           planToWatch:[],
           onHold:[],
           dropped:[],
+          Mfavourites:[],
+          Mcompleted: [],
+          Mreading:[],
+          MplanToRead:[],
+          MonHold:[],
+          Mdropped:[],
 
         });
 
@@ -339,7 +474,7 @@ export function FirebaseProvider({ children }) {
             parentId: parentId
           });
 
-          console.log("Comment written with ID: ", commentRef.id);
+          //console.log("Comment written with ID: ", commentRef.id);
           
           return commentRef;
     }catch(e){
@@ -358,7 +493,7 @@ export function FirebaseProvider({ children }) {
     if(isReply){
 
       if(!commentId || !replyId){
-        console.log("Please Provide commendId and replyId !!");
+       // console.log("Please Provide commendId and replyId !!");
         return null;
       }
       const user= auth.currentUser;
@@ -375,7 +510,7 @@ export function FirebaseProvider({ children }) {
 
      }, { merge: true });
 
-     console.log("Reply edited with ID: ", replyRef.id);
+     //console.log("Reply edited with ID: ", replyRef.id);
      return replyRef;
     }
 
@@ -391,7 +526,7 @@ export function FirebaseProvider({ children }) {
 
      }, { merge: true });
 
-     console.log("Comment edited with ID: ", commentRef.id);
+     //console.log("Comment edited with ID: ", commentRef.id);
      return commentRef;
     }
   }
@@ -430,6 +565,15 @@ export function FirebaseProvider({ children }) {
     }
     return false;
   }
+
+  function checkUserCookies() {
+    const user = Cookies.get("user");
+    if (user) {
+      return true;
+    }
+    return false;
+  }
+   
 
   // const addComment = async (text, animeId, isReply=false, commentId=null)=>{
   //   const user= auth.currentUser;
@@ -482,7 +626,9 @@ export function FirebaseProvider({ children }) {
             getCommentsAgain,
             setGetCommentsAgain,
             getUserCookies,
-            getOthersData
+            getOthersData,
+            checkUserCookies,
+            getManga,
         };
 
     return (
