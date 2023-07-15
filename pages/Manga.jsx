@@ -1,4 +1,4 @@
-import Head from 'next/head'
+import Head from "next/head";
 import React, { useState, useEffect } from "react";
 import { Button, Container, Pagination, Loading } from "@nextui-org/react";
 import Image from "next/image";
@@ -8,8 +8,8 @@ import Moviecardquery from "@/Components/Moviecardquery";
 import Movieresultcard from "@/Components/Movieresultcard";
 import styles from "../styles/Search.module.css";
 import { ReactSearchAutocomplete } from "react-search-autocomplete";
-import Mangacardquery from '@/Components/Mangacardquery';
-import Mangaresultcard from '@/Components/Mangaresultcard';
+import Mangacardquery from "@/Components/Mangacardquery";
+import Mangaresultcard from "@/Components/Mangaresultcard";
 
 const Movies = () => {
   const [bars, setBars] = useState([{ value: "" }]);
@@ -23,14 +23,14 @@ const Movies = () => {
   const [big_img, setBig_img] = useState(
     poster_array[Math.floor(Math.random() * 3)]
   );
-//   console.log(big_img);
+  //   console.log(big_img);
 
   useEffect(() => {
     // console.log(curpage);
     setResults(recommendations.slice((curpage - 1) * 20, 20 * curpage));
     axios.get("https://animovixrecommendations.onrender.com/");
     return () => {
-    //   console.log("Cleanup function ");
+      //   console.log("Cleanup function ");
     };
   }, [curpage, recommendations]);
 
@@ -51,12 +51,14 @@ const Movies = () => {
   const formatResult = (item) => {
     return (
       <>
-       <Head>
-        <title>🎬 Manga Recommendations</title>
-        <meta name="description" content="Anime and Movies Recommendation system and can also be used for recommendations based on multiple anime or movies input. It is a static website and user can use this website to get recommendations for their next Anime to watch or next Movie to watch." />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        
-      </Head>
+        <Head>
+          <title>🎬 Manga Recommendations</title>
+          <meta
+            name="description"
+            content="Anime and Movies Recommendation system and can also be used for recommendations based on multiple anime or movies input. It is a static website and user can use this website to get recommendations for their next Anime to watch or next Movie to watch."
+          />
+          <meta name="viewport" content="width=device-width, initial-scale=1" />
+        </Head>
 
         <div css={{ display: "flex" }}>
           <span style={{ display: "flex", textAlign: "left" }}>
@@ -117,7 +119,7 @@ const Movies = () => {
     } else {
       setAsk(true);
       setLoading(true);
-    //   console.log(query);
+      //   console.log(query);
       axios
         .post("https://animovixrecommendations.onrender.com/manga", {
           names: query,
@@ -170,7 +172,7 @@ const Movies = () => {
                   id={i}
                   onSelect={(item) => handleOnSelect(i, item)}
                   autoFocus
-                  placeholder={`Search Movie ${i + 1}...`}
+                  placeholder={`Search Manga ${i + 1}...`}
                   maxResults={4}
                   resultStringKeyName="title"
                   fuseOptions={{ keys: ["title"] }}
@@ -187,7 +189,7 @@ const Movies = () => {
               auto
               onPress={addBar}
             >
-              Add Movie
+              Add Manga
             </Button>
 
             <Button
@@ -197,7 +199,7 @@ const Movies = () => {
               auto
               onPress={removeBar}
             >
-              Remove Movie
+              Remove Manga
             </Button>
           </div>
           <Container>
@@ -214,7 +216,6 @@ const Movies = () => {
               ) : (
                 `Show Recommendations`
               )}
-              
             </Button>
           </Container>
         </div>
@@ -260,9 +261,6 @@ const Movies = () => {
                 onChange={(page) => setCurpage(page)}
               />
 
-
-
-
               {/* {console.log(results)} */}
               <div className={styles.results}>
                 {results &&
@@ -270,10 +268,6 @@ const Movies = () => {
                     return <Mangaresultcard key={i} detail={result} />;
                   })}
               </div>
-
-
-
-
 
               <Pagination
                 bordered
@@ -285,11 +279,6 @@ const Movies = () => {
                 initialPage={1}
                 onChange={(page) => setCurpage(page)}
               />
-
-
-
-
-
             </Container>
           ) : (
             <Loading

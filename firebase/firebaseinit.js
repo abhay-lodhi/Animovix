@@ -16,12 +16,12 @@ const firebaseConfig = {
   storageBucket: "animovix-8ac08.appspot.com",
   messagingSenderId: "247864058709",
   appId: "1:247864058709:web:3ecee239424662136945dc",
-  measurementId: "G-7P6MV8WVMK"
+  measurementId: "G-7P6MV8WVMK",
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
- const db= getFirestore(app);
+const db = getFirestore(app);
 
- export {auth,db};
+export { auth, db };

@@ -1,69 +1,66 @@
-.tabs{
+.tabs {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  justify-self: center;
+  align-self: center;
+  width: 45vw;
+  margin-top: 8vh;
+  margin-bottom: 5vh;
+}
+
+.second {
+  align-self: center;
+  justify-content: center;
+  border-radius: 2rem;
+  margin-top: 5vh;
+  margin-right: 1vw;
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(12, 12, 12);
+  width: 95vw;
+  margin-bottom: 5vh;
+}
+
+.button {
+  width: 22vw;
+  height: 6vh;
+  font-size: larger;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+}
+
+@media only screen and (max-width: 600px) {
+  .button {
+    width: 5vw;
+    height: 5vh;
+    font-size: medium;
+  }
+
+  .tabs {
     display: flex;
     align-items: center;
     justify-content: space-between;
     justify-self: center;
     align-self: center;
-    width: 45vw;
-    margin-top: 8vh;
-    margin-bottom: 5vh;
-}
+    width: 83vw;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+  }
 
-.second{
+  .second {
     align-self: center;
     justify-content: center;
-    border-radius: 2rem;
+    border-radius: 10px;
     margin-top: 5vh;
-    margin-right: 1vw;
+    margin-left: 1.5vw;
     display: flex;
     flex-direction: column;
     background-color: rgb(12, 12, 12);
     width: 95vw;
     margin-bottom: 5vh;
+  }
 }
-
-.button{
-    width: 22vw;
-    height: 6vh;
-    font-size: larger;  
-}
-
-
-.main{
-    display: flex;
-    flex-direction: column;
-}
-
-@media only screen and (max-width: 600px) {
-    .button{
-        width: 5vw;
-        height: 5vh;  
-        font-size: medium;
-    }
-
-    .tabs{
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        justify-self: center;
-        align-self: center;
-        width: 83vw;
-        margin-top: 2rem;
-        margin-bottom: 2rem;
-    }
-
-    .second{
-        align-self: center;
-        justify-content: center;
-        border-radius: 10px;
-        margin-top: 5vh;
-        margin-left: 1.5vw;
-        display: flex;
-        flex-direction: column;
-        background-color: rgb(12, 12, 12);
-        width: 95vw;
-        margin-bottom: 5vh;
-    
-    }
-}
-

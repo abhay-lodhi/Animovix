@@ -1,12 +1,7 @@
-import Head from 'next/head'
-import React, {useState, useEffect } from "react";
-import {
-  Button,
-  Container,
-  Pagination,
-  Loading,
-} from "@nextui-org/react";
-import { Link } from 'next/link';
+import Head from "next/head";
+import React, { useState, useEffect } from "react";
+import { Button, Container, Pagination, Loading } from "@nextui-org/react";
+import { Link } from "next/link";
 import Image from "next/image";
 import axios from "axios";
 import data from "../public/anime_list";
@@ -15,7 +10,7 @@ import Animeresultcard from "@/Components/Animeresultcard";
 // import Searchanime from '../../Components/Searchanime'
 import styles from "../styles/Search.module.css";
 import { ReactSearchAutocomplete } from "react-search-autocomplete";
-import { Center } from '@chakra-ui/react';
+import { Center } from "@chakra-ui/react";
 
 const Anime = () => {
   const [bars, setBars] = useState([{ value: "" }]);
@@ -67,13 +62,14 @@ const Anime = () => {
   const formatResult = (item) => {
     return (
       <>
-       <Head>
-        <title>🎬 Anime Recommendations</title>
-        <meta name="description" content="Anime and Movies Recommendation system and can also be used for recommendations based on multiple anime or movies input. It is a static website and user can use this website to get recommendations for their next Anime to watch or next Movie to watch." />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        
-      </Head>
-
+        <Head>
+          <title>🎬 Anime Recommendations</title>
+          <meta
+            name="description"
+            content="Anime and Movies Recommendation system and can also be used for recommendations based on multiple anime or movies input. It is a static website and user can use this website to get recommendations for their next Anime to watch or next Movie to watch."
+          />
+          <meta name="viewport" content="width=device-width, initial-scale=1" />
+        </Head>
 
         <div css={{ display: "flex" }}>
           <span style={{ display: "flex", textAlign: "left" }}>
@@ -84,16 +80,18 @@ const Anime = () => {
               Premiered in : {item.Premiered}
             </span>
           )}
-         {item.Image_link && <span style={{ display: "flex", textAlign: "right" }}>
-            <Image
-              src={item.Image_link}
-              css={{ position: "sticky" }}
-              width={50}
-              height={65}
-              alt="N/A"
-              quality={20}
-            />
-          </span>}
+          {item.Image_link && (
+            <span style={{ display: "flex", textAlign: "right" }}>
+              <Image
+                src={item.Image_link}
+                css={{ position: "sticky" }}
+                width={50}
+                height={65}
+                alt="N/A"
+                quality={20}
+              />
+            </span>
+          )}
         </div>
       </>
     );
@@ -134,7 +132,7 @@ const Anime = () => {
     } else {
       setAsk(true);
       setLoading(true);
-     // console.log(query);
+      // console.log(query);
       axios
         .post("https://animovixrecommendations.onrender.com/anime", {
           names: query,
@@ -161,11 +159,7 @@ const Anime = () => {
           {/* <Searchanime/> */}
           {bars.map((val, i) => {
             return (
-              <Container
-              key={i}
-               
-                className={styles.reactsearch}
-              >
+              <Container key={i} className={styles.reactsearch}>
                 <ReactSearchAutocomplete
                   styling={{
                     borderRadius: "5px solid white",
@@ -281,10 +275,7 @@ const Anime = () => {
               <div className={styles.results}>
                 {results &&
                   results.map((result, i) => {
-
-                    return (
-                    <Animeresultcard key={i} detail={result} />
-                    );
+                    return <Animeresultcard key={i} detail={result} />;
                   })}
               </div>
               <Pagination

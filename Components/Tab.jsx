@@ -2,6 +2,8 @@ import React from 'react'
 
 
 const Tab = () => {
+
+	https://masteranime.tv/anime/watch/${detail.title_english.slice(0,8).replace(" ","-")}
     
   return (<>
      
