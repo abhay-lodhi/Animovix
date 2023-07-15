@@ -22,6 +22,7 @@ export default function Home({ quotes }) {
   const [anime, setAnime] = useState(null);
   const [manga, setManga] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [isChecked, setIsChecked] = useState(true)
   const router = useRouter();
 
   const handleOnSearch = (string, results) => {
@@ -150,12 +151,24 @@ export default function Home({ quotes }) {
               content="width=device-width, initial-scale=1"
             />
           </Head>
+
+          
           <div className={styles.main}>
             <div
               className="parcar"
               style={{ display: "flex", justifyContent: "center" }}
             >
               <div className={styles.carousal}>
+              <div className={styles.tab}>
+              <label className={styles.switch}>
+                  <input
+                    type="checkbox"
+                    checked={tab}
+                    onChange={() => { setTab(!tab)}}
+                  />
+                  <span className={styles.slider}></span>
+                </label>
+                </div>
                 <div
                   style={{
                     display: "flex",
@@ -165,6 +178,7 @@ export default function Home({ quotes }) {
                     justifyContent: "center",
                   }}
                 >
+                  
                   <div style={{ display: "flex" }}>
                     <div className={styles.searchbar} onKeyDown={handleKeyDown}>
                       <ReactSearchAutocomplete

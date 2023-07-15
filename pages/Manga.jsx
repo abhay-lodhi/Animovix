@@ -19,9 +19,9 @@ const Movies = () => {
   const [loading, setLoading] = useState(false);
   const [ask, setAsk] = useState(false);
   const itemcount = 20;
-  const poster_array = ["/avatar2.jpg", "/moonknight.jpg", "/movie1.jpg"];
+  const poster_array = ["/kakashi.jpg"];
   const [big_img, setBig_img] = useState(
-    poster_array[Math.floor(Math.random() * 3)]
+    poster_array[Math.floor(Math.random() * 1)]
   );
   //   console.log(big_img);
 
