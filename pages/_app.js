@@ -52,8 +52,8 @@ export default function App({ Component, pageProps }) {
 
 
   return (
-    <FirebaseProvider>
     <SSRProvider>
+      <FirebaseProvider>
     
     <NextUIProvider theme={theme}>
    
@@ -62,7 +62,7 @@ export default function App({ Component, pageProps }) {
       <Analytics />
      
     </NextUIProvider>
-    </SSRProvider>
     </FirebaseProvider>
+    </SSRProvider>
   );
 }

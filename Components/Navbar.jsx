@@ -84,7 +84,7 @@ const Bar= () => {
        
           <Navbar.Link href="/"><Text size={20}>Home</Text></Navbar.Link>
           <Navbar.Link href="/Anime"><Text size={20}> Anime</Text></Navbar.Link>
-          <Navbar.Link href="/Movies"><Text size={20}>Moveis</Text></Navbar.Link>
+          <Navbar.Link href="/Movies"><Text size={20}>Movies</Text></Navbar.Link>
           </Navbar.Content>
 
           {user? 

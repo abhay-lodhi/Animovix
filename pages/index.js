@@ -49,7 +49,7 @@ export default function Home({quotes}) {
     return (
       <>
        <Head>
-        <title>🎬 Anime Recommendations</title>
+        <title>Anime Recommendations</title>
         <meta name="description" content="Anime and Movies Recommendation system and can also be used for recommendations based on multiple anime or movies input. It is a static website and user can use this website to get recommendations for their next Anime to watch or next Movie to watch." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         
@@ -57,6 +57,10 @@ export default function Home({quotes}) {
 
 
         <div css={{ display: "flex" }}>
+
+        
+
+
           <span style={{ display: "flex", textAlign: "left" }}>
             {item.English}&nbsp;({item.Type})
           </span>
@@ -80,7 +84,8 @@ export default function Home({quotes}) {
     );
   };
 
-  
+  const [isChecked, setIsChecked] = useState(true);
+    
   return (
     <>
       <Head>
@@ -90,10 +95,21 @@ export default function Home({quotes}) {
         
       </Head>
        <div className={styles.main}>
+
+       
+
         <div className="parcar" style={{display:"flex", justifyContent:"center"}}>
         <div className={styles.carousal}>
           <div style={{display:"flex", width:'85vw', flexDirection:"column", alignItems:"center", justifyContent:"center"}}>
             <div style={{display:"flex"}}>
+
+
+
+            <label className={styles.switch} >
+  <input type="checkbox" checked={!isChecked} onChange={()=>setIsChecked(!(isChecked))}/>
+  <span className={styles.slider}></span>
+</label>
+
           <div className={styles.searchbar}>
         <ReactSearchAutocomplete
                   styling={{
