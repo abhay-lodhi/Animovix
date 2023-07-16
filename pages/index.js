@@ -17,21 +17,18 @@ import { useRouter } from "next/navigation";
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home({ quotes }) {
-  const [tab, setTab] = useState(false);  
+  const [tab, setTab] = useState(false);
 
   useEffect(() => {
-    const stored_type = JSON.parse(localStorage.getItem('type'));
-    console.log(stored_type)
-    stored_type!==null && setTab(stored_type);
-  
-   
-  }, [])
-  
+    const stored_type = JSON.parse(localStorage.getItem("type"));
+    //console.log(stored_type);
+    stored_type !== null && setTab(stored_type);
+  }, []);
 
   const [anime, setAnime] = useState(null);
   const [manga, setManga] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [isChecked, setIsChecked] = useState(true)
+  const [isChecked, setIsChecked] = useState(true);
   const router = useRouter();
 
   const handleOnSearch = (string, results) => {
@@ -74,8 +71,6 @@ export default function Home({ quotes }) {
   const formatAnime = (item) => {
     return (
       <>
-        
-
         <div css={{ display: "flex" }}>
 
         
@@ -109,8 +104,6 @@ export default function Home({ quotes }) {
   const formatManga = (item) => {
     return (
       <>
-        
-
         <div css={{ display: "flex" }}>
           <span style={{ display: "flex", textAlign: "left" }}>
             {item.title}&nbsp;
@@ -151,7 +144,6 @@ export default function Home({ quotes }) {
             />
           </Head>
 
-          
           <div className={styles.main}>
             <div
               className="parcar"
@@ -167,17 +159,19 @@ export default function Home({ quotes }) {
                     justifyContent: "center",
                   }}
                 >
-                  
                   <div style={{ display: "flex" }}>
-                  <div className={styles.tab}>
-                  <label className={styles.switch}>
-                      <input
-                        type="checkbox"
-                        checked={tab}
-                        onChange={() => { setTab(!tab); localStorage.setItem('type', JSON.stringify(!tab));}}
-                      />
-                      <span className={styles.slider}></span>
-                    </label>
+                    <div className={styles.tab}>
+                      <label className={styles.switch}>
+                        <input
+                          type="checkbox"
+                          checked={tab}
+                          onChange={() => {
+                            setTab(!tab);
+                            localStorage.setItem("type", JSON.stringify(!tab));
+                          }}
+                        />
+                        <span className={styles.slider}></span>
+                      </label>
                     </div>
                     <div className={styles.searchbar} onKeyDown={handleKeyDown}>
                       <ReactSearchAutocomplete
@@ -294,16 +288,13 @@ export default function Home({ quotes }) {
   );
 }
 
-// export async function getStaticProps() {
+export async function getStaticProps() {
 
-//   axios.get('https://animovixrecommendations.onrender.com/')
-//   const res = await fetch('https://animechan.xyz/api/random')
-//   const quotes = await res.json()
-
-//   return {
-//     props: {
-//       quotes,
-//     },
-//     revalidate: 100,
-//   }
-// }
+  axios.get('https://animovixrecommendations.onrender.com/')
+  
+  return {
+    props: {  
+    },
+    revalidate: 100,
+  }
+}

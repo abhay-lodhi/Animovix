@@ -1,18 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useFirebase } from "@/context/firebaseContext";
-//import {Animemodal} from '../../Components/Animemodal';
 import dynamic from "next/dynamic";
 import axios from "axios";
 import { Button, Loading } from "@nextui-org/react";
 import CommentsSection from "@/Components/discussion/CommentsSection";
-import { Center } from "@chakra-ui/react";
 import styles from "../../styles/AnimeSeries.module.css";
 import Recommendations from "@/Components/Mangarecommendations";
+import Mangamodal from "@/Components/Mangamodal";
 
-const Mangamodal = dynamic(() => import("../../Components/Mangamodal"), {
-  ssr: false,
-});
+// const Mangamodal = dynamic(() => import("../../Components/Mangamodal"), {
+//   ssr: false,
+// });
 
 const mangawithID = () => {
   const router = useRouter();
@@ -29,13 +28,18 @@ const mangawithID = () => {
   const itemcount = 20;
 
   useEffect(() => {
+    if(localStorage.getItem("M"+id)!=null){
+     setDetails(JSON.parse(localStorage.getItem("M"+id)));
+    }else{
     getManga(id).then((details) => {
       if (details === undefined) {
         setError(true);
       }
+
+      localStorage.setItem("M"+id,JSON.stringify(details));
       setDetails(details);
       // console.log(details);
-    });
+    });}
   }, [id]);
 
   useEffect(() => {
@@ -159,19 +163,4 @@ const mangawithID = () => {
 
 export default mangawithID;
 
-export async function getStaticProps() {
-  axios.post("https://animovixrecommendations.onrender.com/manga", {
-    names: "Neo Fujiyama",
-  });
 
-  return {
-    props: {},
-  };
-}
-
-export const getStaticPaths = async () => {
-  return {
-    paths: [], //indicates that no page needs be created at build time
-    fallback: "blocking", //indicates the type of fallback
-  };
-};

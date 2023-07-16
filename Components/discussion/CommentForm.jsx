@@ -3,7 +3,6 @@ import { useFirebase } from "@/context/firebaseContext";
 import { Textarea, Button, Loading } from "@nextui-org/react";
 import styles from "../../styles/CommentForm.module.css";
 import { IoSend } from "react-icons/io5";
-import { m } from "framer-motion";
 
 const CommentForm = ({
   commentId,
@@ -19,7 +18,7 @@ const CommentForm = ({
   const [loading, setLoading] = useState(false);
 
   const postComment = async () => {
-    if (text === "") {
+    if (text.trim() === "") {
       setStatus(true);
       return false;
     }

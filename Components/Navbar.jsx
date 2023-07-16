@@ -54,11 +54,9 @@ const Bar = () => {
 
   const colors = ["primary", "secondary", "success", "warning", "error"];
   return (
-    <Navbar
-      height={100}
-      maxWidth={140}
-      shouldHideOnScroll={true}
-      variant="sticky"
+    <Navbar    
+     height={80}   
+     variant="sticky"
     >
       <Navbar.Toggle showIn="xs" />
       <Navbar.Brand
@@ -113,6 +111,7 @@ const Bar = () => {
                   color="secondary"
                   size="md"
                   src={user.photo}
+                  alt="N/A"
                 />
               </Dropdown.Trigger>
             </Navbar.Item>

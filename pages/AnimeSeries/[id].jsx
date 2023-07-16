@@ -30,13 +30,16 @@ const animewithID = () => {
   const itemcount = 20;
 
   useEffect(() => {
+    if(localStorage.getItem(id)){
+      setDetails(JSON.parse(localStorage.getItem(id)));
+    }else{
     getAnime(id).then((details) => {
       if (details === undefined) {
         setError(true);
       }
-      //console.log(details);
+      localStorage.setItem(id,JSON.stringify(details));
       setDetails(details);
-    });
+    });}
   }, [id]);
 
   useEffect(() => {
@@ -155,15 +158,5 @@ const animewithID = () => {
 };
 
 export default animewithID;
-
-export async function getStaticProps() {
-  axios.post("https://animovixrecommendations.onrender.com/anime", {
-    names: "one piece",
-  });
-
-  return {
-    props: {},
-  };
-}
 
 

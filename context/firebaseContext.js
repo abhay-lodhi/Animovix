@@ -53,7 +53,7 @@ export function FirebaseProvider({ children }) {
 
   useEffect(() => {
     //console.log("listerer", auth.currentUser);
-    auth.currentUser &&
+    localStorage.getItem("Mfavourites")==null && auth.currentUser &&
       getUserData()
         .then((data) => {
           //console.log(data);
@@ -389,7 +389,7 @@ export function FirebaseProvider({ children }) {
             name: result.user.displayName,
             photo: result.user.photoURL,
           }),
-          { expires: 7 }
+          { expires: 20 }
         );
       } else {
         Cookies.set(
@@ -400,7 +400,7 @@ export function FirebaseProvider({ children }) {
             name: checkUser.data().username,
             photo: checkUser.data().photoUrl,
           }),
-          { expires: 7 }
+          { expires: 20 }
         );
       }
 
@@ -511,7 +511,7 @@ export function FirebaseProvider({ children }) {
     signOut(auth)
       .then(() => {
         // setUser(null);
-        Cookies.remove("user", { expires: 7 });
+        Cookies.remove("user", { expires: 20 });
         window.location.reload();
         localStorage.clear();
       })

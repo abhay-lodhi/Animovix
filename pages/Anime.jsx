@@ -7,10 +7,8 @@ import axios from "axios";
 import data from "../public/anime_list";
 import Animecardquery from "@/Components/Animecardquery";
 import Animeresultcard from "@/Components/Animeresultcard";
-// import Searchanime from '../../Components/Searchanime'
 import styles from "../styles/Search.module.css";
 import { ReactSearchAutocomplete } from "react-search-autocomplete";
-import { Center } from "@chakra-ui/react";
 
 const Anime = () => {
   const [bars, setBars] = useState([{ value: "" }]);
