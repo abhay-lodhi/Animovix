@@ -30,7 +30,7 @@ const animewithID = () => {
   const itemcount = 20;
 
   useEffect(() => {
-    if(localStorage.getItem(id)!=null){
+    if(localStorage.getItem(id)){
       setDetails(JSON.parse(localStorage.getItem(id)));
     }else{
     getAnime(id).then((details) => {

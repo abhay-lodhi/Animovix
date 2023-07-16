@@ -111,6 +111,7 @@ const Bar = () => {
                   color="secondary"
                   size="md"
                   src={user.photo}
+                  alt="N/A"
                 />
               </Dropdown.Trigger>
             </Navbar.Item>
