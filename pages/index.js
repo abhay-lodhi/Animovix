@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { Inter } from "@next/font/google";
 import styles from "@/styles/Home.module.css";
@@ -19,10 +19,16 @@ const inter = Inter({ subsets: ["latin"] });
 export default function Home({ quotes }) {
   const [tab, setTab] = useState(false);
 
+  useEffect(() => {
+    const stored_type = JSON.parse(localStorage.getItem("type"));
+    //console.log(stored_type);
+    stored_type !== null && setTab(stored_type);
+  }, []);
+
   const [anime, setAnime] = useState(null);
   const [manga, setManga] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [isChecked, setIsChecked] = useState(true)
+  const [isChecked, setIsChecked] = useState(true);
   const router = useRouter();
 
   const handleOnSearch = (string, results) => {
@@ -65,15 +71,6 @@ export default function Home({ quotes }) {
   const formatAnime = (item) => {
     return (
       <>
-        <Head>
-          <title>🎬 Anime Recommendations</title>
-          <meta
-            name="description"
-            content="Anime and Movies Recommendation system and can also be used for recommendations based on multiple anime or movies input. It is a static website and user can use this website to get recommendations for their next Anime to watch or next Movie to watch."
-          />
-          <meta name="viewport" content="width=device-width, initial-scale=1" />
-        </Head>
-
         <div css={{ display: "flex" }}>
           <span style={{ display: "flex", textAlign: "left" }}>
             {item.English}&nbsp;({item.Type})
@@ -103,15 +100,6 @@ export default function Home({ quotes }) {
   const formatManga = (item) => {
     return (
       <>
-        <Head>
-          <title>🎬 Manga Recommendations</title>
-          <meta
-            name="description"
-            content="Anime and Movies Recommendation system and can also be used for recommendations based on multiple anime or movies input. It is a static website and user can use this website to get recommendations for their next Anime to watch or next Movie to watch."
-          />
-          <meta name="viewport" content="width=device-width, initial-scale=1" />
-        </Head>
-
         <div css={{ display: "flex" }}>
           <span style={{ display: "flex", textAlign: "left" }}>
             {item.title}&nbsp;
@@ -152,23 +140,12 @@ export default function Home({ quotes }) {
             />
           </Head>
 
-          
           <div className={styles.main}>
             <div
               className="parcar"
               style={{ display: "flex", justifyContent: "center" }}
             >
               <div className={styles.carousal}>
-              <div className={styles.tab}>
-              <label className={styles.switch}>
-                  <input
-                    type="checkbox"
-                    checked={tab}
-                    onChange={() => { setTab(!tab)}}
-                  />
-                  <span className={styles.slider}></span>
-                </label>
-                </div>
                 <div
                   style={{
                     display: "flex",
@@ -178,8 +155,20 @@ export default function Home({ quotes }) {
                     justifyContent: "center",
                   }}
                 >
-                  
                   <div style={{ display: "flex" }}>
+                    <div className={styles.tab}>
+                      <label className={styles.switch}>
+                        <input
+                          type="checkbox"
+                          checked={tab}
+                          onChange={() => {
+                            setTab(!tab);
+                            localStorage.setItem("type", JSON.stringify(!tab));
+                          }}
+                        />
+                        <span className={styles.slider}></span>
+                      </label>
+                    </div>
                     <div className={styles.searchbar} onKeyDown={handleKeyDown}>
                       <ReactSearchAutocomplete
                         styling={{
@@ -295,16 +284,13 @@ export default function Home({ quotes }) {
   );
 }
 
-// export async function getStaticProps() {
+export async function getStaticProps() {
 
-//   axios.get('https://animovixrecommendations.onrender.com/')
-//   const res = await fetch('https://animechan.xyz/api/random')
-//   const quotes = await res.json()
-
-//   return {
-//     props: {
-//       quotes,
-//     },
-//     revalidate: 100,
-//   }
-// }
+  axios.get('https://animovixrecommendations.onrender.com/')
+  
+  return {
+    props: {  
+    },
+    revalidate: 100,
+  }
+}

@@ -53,7 +53,7 @@ export function FirebaseProvider({ children }) {
 
   useEffect(() => {
     //console.log("listerer", auth.currentUser);
-    auth.currentUser &&
+    localStorage.getItem("Mfavourites")==null && auth.currentUser &&
       getUserData()
         .then((data) => {
           //console.log(data);
