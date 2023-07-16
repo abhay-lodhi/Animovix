@@ -14,11 +14,11 @@ import {
 import { BsFillInfoCircleFill } from "react-icons/bs";
 import Link from "next/link";
 
-const Animemodal = dynamic(() => import("./Animemodal"), {
+const Mangamodal = dynamic(() => import("./Animemodal"), {
   ssr: false,
 });
 
-const Animeresultcard = ({ detail }) => {
+const Mangaresultcard = ({ detail }) => {
   const [visible, setVisible] = useState(false);
   const closeHandler = () => {
     setVisible(false);
@@ -32,7 +32,7 @@ const Animeresultcard = ({ detail }) => {
   const handleOnClick = () => {};
 
   return (
-    <Link legacyBehavior href={`/AnimeSeries/${detail.ID}`} passHref>
+    <Link legacyBehavior href={`/MangaSeries/${detail.manga_id}`} passHref>
       <a target="_blank" rel="noopener noreferrer">
         <Card
           isPressable
@@ -48,7 +48,7 @@ const Animeresultcard = ({ detail }) => {
           </Card.Header>
           <Card.Body css={{ p: 0 }}>
             <Card.Image
-              src={detail.Image_link}
+              src={detail.main_picture}
               objectFit="cover"
               width="100%"
               height="100%"
@@ -65,7 +65,7 @@ const Animeresultcard = ({ detail }) => {
                 b
                 size={18}
               >
-                {detail.English}
+                {detail.title_english ? detail.title_english : detail.title}
               </Text>
 
               <Text
@@ -75,7 +75,7 @@ const Animeresultcard = ({ detail }) => {
                   fontSize: "$sm",
                 }}
               >
-                {detail.Type}
+                {detail.type}
               </Text>
             </Row>
           </Card.Footer>
@@ -83,7 +83,7 @@ const Animeresultcard = ({ detail }) => {
           <Card.Footer className={styles.footer2}>
             <Col css={{ m: "0.5rem 0 " }}>
               <div>
-                {detail.Genres.split(",").map((gen, i) => {
+                {detail.genres.map((gen, i) => {
                   if (gen !== "Unknown")
                     return (
                       <Badge
@@ -99,7 +99,7 @@ const Animeresultcard = ({ detail }) => {
                       </Badge>
                     );
                 })}
-                {detail.Themes.split(",").map((gen, i) => {
+                {detail.themes.map((gen, i) => {
                   if (gen !== "Unknown")
                     return (
                       <Badge
@@ -149,25 +149,14 @@ const Animeresultcard = ({ detail }) => {
                   </Tooltip>
                 </Text>
 
-                {detail.Episodes === 1 ? (
-                  <Text
-                    color=" #c2b9c4 "
-                    b
-                    size={12}
-                    css={{ justifyItems: "flex-end", m: "0.2rem 0 0.5rem" }}
-                  >
-                    Movie
-                  </Text>
-                ) : (
-                  <Text
-                    color=" #c2b9c4 "
-                    b
-                    size={12}
-                    css={{ justifyItems: "flex-end", m: "0.2rem 0 0.5rem" }}
-                  >
-                    Episodes:&nbsp;{detail.Episodes}
-                  </Text>
-                )}
+                <Text
+                  color=" #c2b9c4 "
+                  b
+                  size={12}
+                  css={{ justifyItems: "flex-end", m: "0.2rem 0 0.5rem" }}
+                >
+                  chapters:&nbsp;{detail.chapters}
+                </Text>
               </Container>
             </Col>
           </Card.Footer>
@@ -188,7 +177,7 @@ const Animeresultcard = ({ detail }) => {
     
     <Modal.Body>
 
-    <Animemodal detail={detail}/>
+    <Mangamodal detail={detail}/>
       
     </Modal.Body>
   </Modal> */}
@@ -197,4 +186,4 @@ const Animeresultcard = ({ detail }) => {
   );
 };
 
-export default Animeresultcard;
+export default Mangaresultcard;

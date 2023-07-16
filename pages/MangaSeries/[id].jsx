@@ -8,19 +8,18 @@ import { Button, Loading } from "@nextui-org/react";
 import CommentsSection from "@/Components/discussion/CommentsSection";
 import { Center } from "@chakra-ui/react";
 import styles from "../../styles/AnimeSeries.module.css";
-import Recommendations from "@/Components/Recommendations";
+import Recommendations from "@/Components/Mangarecommendations";
 
-const Animemodal = dynamic(() => import("../../Components/Animemodal"), {
+const Mangamodal = dynamic(() => import("../../Components/Mangamodal"), {
   ssr: false,
 });
 
-const animewithID = () => {
+const mangawithID = () => {
   const router = useRouter();
   const id = router.query.id;
-  const { getAnime } = useFirebase();
   const [details, setDetails] = useState();
   const [tab, setTab] = useState(true);
-  const { getComments, getCommentsAgain } = useFirebase();
+  const { getComments, getCommentsAgain, getManga } = useFirebase();
   const [comments, setComments] = useState(null);
   const [status, setStatus] = useState(false);
   const [results, setResults] = useState([]);
@@ -30,24 +29,23 @@ const animewithID = () => {
   const itemcount = 20;
 
   useEffect(() => {
-    getAnime(id).then((details) => {
+    getManga(id).then((details) => {
       if (details === undefined) {
         setError(true);
       }
-      //console.log(details);
       setDetails(details);
+      // console.log(details);
     });
   }, [id]);
 
   useEffect(() => {
     if (details) {
-      // console.log("details: ", details.title_english?(details.title_english):(details.title));
+      //console.log("name: ",details.title_english?(details.title_english):(details.title))
       axios
-        .post("https://animovixrecommendations.onrender.com/anime", {
-          names: details.title_english ? details.title_english : details.title,
+        .post("https://animovixrecommendations.onrender.com/manga", {
+          names: details.title,
         })
         .then(function (response) {
-          //console.log("res: ",response);
           setLoading(false);
           setResults(response.data.slice(0, 20));
         })
@@ -58,7 +56,7 @@ const animewithID = () => {
   }, [details]);
 
   useEffect(() => {
-    getComments(id).then((data) => {
+    getComments("m" + id).then((data) => {
       setComments(data.docs);
       setStatus(true);
     });
@@ -68,7 +66,7 @@ const animewithID = () => {
     <div className={styles.main}>
       {details ? (
         <>
-          <Animemodal detail={details} />
+          <Mangamodal detail={details} />
           <div className={styles.second}>
             <div className={styles.tabs}>
               <Button
@@ -94,6 +92,7 @@ const animewithID = () => {
             {tab ? (
               <>
                 {!loading ? (
+                  // <div>heyyy</div>
                   <Recommendations
                     results={results}
                     name={details.title_english}
@@ -121,7 +120,11 @@ const animewithID = () => {
                 )}
               </>
             ) : (
-              <>{status && <CommentsSection id={id} comments={comments} />}</>
+              <>
+                {status && (
+                  <CommentsSection id={"m" + id} comments={comments} />
+                )}
+              </>
             )}
           </div>
         </>
@@ -154,11 +157,11 @@ const animewithID = () => {
   );
 };
 
-export default animewithID;
+export default mangawithID;
 
 export async function getStaticProps() {
-  axios.post("https://animovixrecommendations.onrender.com/anime", {
-    names: "one piece",
+  axios.post("https://animovixrecommendations.onrender.com/manga", {
+    names: "Neo Fujiyama",
   });
 
   return {
@@ -166,4 +169,9 @@ export async function getStaticProps() {
   };
 }
 
-
+export const getStaticPaths = async () => {
+  return {
+    paths: [], //indicates that no page needs be created at build time
+    fallback: "blocking", //indicates the type of fallback
+  };
+};

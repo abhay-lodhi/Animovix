@@ -1,18 +1,16 @@
-.quote{
-  display: flex;
-  justify-content: center;
-  margin: 5rem;
-  background-color: rgba(0,0,0,0.5);
-
-
-  /* width: 100%; */
-}
-
 .switch {
   position: absolute;
   width: 125px;
   height: 34px;
   z-index: 4;
+ }
+ .tab{
+  align-self: flex-start;
+  width: fit-content;
+  height: fit-content;
+  margin-top: 10vh;
+  position: relative;
+  
  }
  
  .switch input {
@@ -59,7 +57,7 @@
   transform: translateX(85px);
  }
  
- /*------ ADDED CSS ---------*/
+
  .slider:after {
   content: 'MANGA';
   color: white;
@@ -77,17 +75,27 @@
   left:40%;
  }
  
- /*--------- END --------*/
 
+.quote {
+  display: flex;
+  justify-content: center;
+  margin: 5rem;
+  background-color: rgba(0, 0, 0, 0.5);
 
-.searchbar{
+  /* width: 100%; */
+}
+
+.image {
+}
+
+.searchbar {
   width: 550px;
   margin-left: 0rem;
   align-self: center;
   margin-bottom: 10rem;
 }
 
-.bottombanner{
+.bottombanner {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -96,11 +104,11 @@
   height: 3.8rem;
   width: 74vw;
   z-index: 6;
+  color: antiquewhite;
   font-weight: bolder;
 }
 
-
-.searchIcon{
+.searchIcon {
   display: flex;
   background: #120121;
   width: 2.8rem;
@@ -114,42 +122,36 @@
   z-index: 8;
 }
 
-.card{
+.card {
   max-width: 90vw;
   background: rgba(255, 255, 255, 0.2);
   border: 2px groove white;
 }
 
-.blur{
+.blur {
   /* backdrop-filter: blur(2px) opacity(0.1);
   opacity: 1;
   z-index: -1; */
-   
- 
-   
-  background: radial-gradient(
-    circle closest-corner at center 125px,
-    #222,
-    black 100%
-  ) no-repeat;
- 
- 
- 
-  /* background-color: #eec0c6; */
-/* background-image: linear-gradient(315deg, #eec0c6 0%, #7ee8fa 74%); */
 
-  
+  background: radial-gradient(
+      circle closest-corner at center 125px,
+      #222,
+      black 100%
+    )
+    no-repeat;
+
+  /* background-color: #eec0c6; */
+  /* background-image: linear-gradient(315deg, #eec0c6 0%, #7ee8fa 74%); */
 }
 
-.pressdiv{
+.pressdiv {
   display: block;
   justify-content: center;
   align-items: center;
   backdrop-filter: blur(2px);
-  
 }
 
-.presscards{
+.presscards {
   display: flex;
   /* border-radius: 15px; */
   /* margin-bottom: 3rem; */
@@ -159,14 +161,14 @@
   height: fit-content;
   /* width: 90vw; */
   align-items: center;
- 
+
   padding: 1rem;
-  
+
   /* background-image: url("../public/background_blur_2.jpg") ; */
   z-index: 0;
 }
 
-.blur2{
+.blur2 {
   display: flex;
   /* backdrop-filter: blur(2px); */
   backdrop-filter: blur(8px);
@@ -177,26 +179,24 @@
   margin: 1rem 0rem;
   width: 100vw;
   flex-direction: row;
-  
 
   /* z-index: 2; */
 }
 
-.main{
+.main {
   display: block;
   /* justify-content: center; */
   align-items: center;
-  background-color: rgba(0,0,0,0.5);
-
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
-.modal{
+.modal {
   width: 1450px;
   height: 750px;
   /* justify-content: space-bwet; */
 }
 
-.carousal{
+.carousal {
   display: flex;
   margin-top: 2rem;
   margin-bottom: 4rem;
@@ -206,14 +206,12 @@
   justify-self: center;
   justify-items: center;
   width: 100vw;
-  height:80vh;
-
+  height: 80vh;
 }
 
-.carousal::before{
-  content: '';
-  background: url('/mixanime.jpg') 
-      no-repeat center center/cover;
+.carousal::before {
+  content: "";
+  background: url("/mixanime.jpg") no-repeat center center/cover;
   position: absolute;
   opacity: 0.1;
   top: 0px;
@@ -225,48 +223,45 @@
 
 @media only screen and (max-width: 600px) {
   /* For mobile phones: */
-  .presscards{
-    display:flex;
-    flex-direction:column;
-    margin:0;
+  .presscards {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
     padding: 0;
-    
   }
 
-  .image{
+  .image {
     display: none;
   }
 
-  .carousal{
+  .carousal {
     height: 45vh;
     overflow-y: scroll;
-    
+
     width: 100vw;
     margin-bottom: 5rem;
   }
-  .carousal::before{
+  .carousal::before {
     height: 45vh;
   }
-  
-  .quote{
+
+  .quote {
     margin: 1rem;
     font-size: smaller;
   }
 
-  .card{
+  .card {
     height: fit-content;
-    
-    
   }
 
-  .searchbar{
+  .searchbar {
     width: 60vw;
     margin-left: 0rem;
     align-self: center;
     margin-bottom: 10rem;
   }
-  
-  .bottombanner{
+
+  .bottombanner {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -277,9 +272,8 @@
     z-index: 6;
     font-weight: bolder;
   }
-  
-  
-  .searchIcon{
+
+  .searchIcon {
     display: flex;
     background: #380469;
     width: 2.8rem;
@@ -292,14 +286,12 @@
     margin-left: 0.5rem;
     z-index: 8;
   }
-  
 
-  .blur2{
+  .blur2 {
     display: inline;
   }
 
-  .pressdiv{
-    margin: 5rem .5rem 5rem -1rem;
-    
+  .pressdiv {
+    margin: 5rem 0.5rem 5rem -1rem;
   }
 }

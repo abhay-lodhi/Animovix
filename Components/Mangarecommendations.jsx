@@ -1,7 +1,7 @@
 import React from "react";
 import { useEffect, useState } from "react";
 
-import Animeresultcard from "./Animeresultcard";
+import Mangaresultcard from "./Mangaresultcard";
 import { Text } from "@nextui-org/react";
 
 const Recommendations = ({ results, name }) => {
@@ -27,7 +27,7 @@ const Recommendations = ({ results, name }) => {
       >
         {results &&
           results.map((result, i) => {
-            return <Animeresultcard key={i} detail={result} />;
+            return <Mangaresultcard key={i} detail={result} />;
           })}
       </div>
     </div>

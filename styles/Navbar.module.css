@@ -1,15 +1,15 @@
 .page {
-    color: red;
-   }
-
-.main{
-    background-color: rgb(23, 22, 22);
-    width: 100vw !important;
-}
-.Navbar{
-    width: 100vw !important;
+  color: red;
 }
 
-.nextui-c-egxOLa{
-    max-width: 100% !important;
+.main {
+  background-color: rgb(23, 22, 22);
+  width: 100vw !important;
+}
+.Navbar {
+  width: 100vw !important;
+}
+
+.nextui-c-egxOLa {
+  max-width: 100% !important;
 }

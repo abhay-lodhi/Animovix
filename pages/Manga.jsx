@@ -1,13 +1,15 @@
-import Head from 'next/head'
+import Head from "next/head";
 import React, { useState, useEffect } from "react";
 import { Button, Container, Pagination, Loading } from "@nextui-org/react";
 import Image from "next/image";
 import axios from "axios";
-import movies_list from "../public/movie_list";
+import data from "../public/manga_list";
 import Moviecardquery from "@/Components/Moviecardquery";
 import Movieresultcard from "@/Components/Movieresultcard";
 import styles from "../styles/Search.module.css";
 import { ReactSearchAutocomplete } from "react-search-autocomplete";
+import Mangacardquery from "@/Components/Mangacardquery";
+import Mangaresultcard from "@/Components/Mangaresultcard";
 
 const Movies = () => {
   const [bars, setBars] = useState([{ value: "" }]);
@@ -17,23 +19,23 @@ const Movies = () => {
   const [loading, setLoading] = useState(false);
   const [ask, setAsk] = useState(false);
   const itemcount = 20;
-  const poster_array = ["/avatar2.jpg", "/moonknight.jpg", "/movie1.jpg"];
+  const poster_array = ["/kakashi.jpg"];
   const [big_img, setBig_img] = useState(
-    poster_array[Math.floor(Math.random() * 3)]
+    poster_array[Math.floor(Math.random() * 1)]
   );
-  console.log(big_img);
+  //   console.log(big_img);
 
   useEffect(() => {
-    console.log(curpage);
+    // console.log(curpage);
     setResults(recommendations.slice((curpage - 1) * 20, 20 * curpage));
     axios.get("https://animovixrecommendations.onrender.com/");
     return () => {
-      console.log("Cleanup function ");
+      //   console.log("Cleanup function ");
     };
   }, [curpage, recommendations]);
 
   const handleOnSelect = (i, item) => {
-    console.log(i, item);
+    // console.log(i, item);
     setBars((s) => {
       const newArr = s.slice();
       newArr[i] = item;
@@ -49,25 +51,27 @@ const Movies = () => {
   const formatResult = (item) => {
     return (
       <>
-       <Head>
-        <title>🎬 Movies Recommendations</title>
-        <meta name="description" content="Anime and Movies Recommendation system and can also be used for recommendations based on multiple anime or movies input. It is a static website and user can use this website to get recommendations for their next Anime to watch or next Movie to watch." />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        
-      </Head>
+        <Head>
+          <title>🎬 Manga Recommendations</title>
+          <meta
+            name="description"
+            content="Anime and Movies Recommendation system and can also be used for recommendations based on multiple anime or movies input. It is a static website and user can use this website to get recommendations for their next Anime to watch or next Movie to watch."
+          />
+          <meta name="viewport" content="width=device-width, initial-scale=1" />
+        </Head>
 
         <div css={{ display: "flex" }}>
           <span style={{ display: "flex", textAlign: "left" }}>
             {item.title}&nbsp;
           </span>
-          {item.release_date !== "Unknown" && (
+          {item.start_date !== "Unknown" && (
             <span style={{ display: "flex", textAlign: "left" }}>
-              Released in : {item.release_date.substr(0, 4)}
+              Released in : {item.start_date?.substr(0, 4)}
             </span>
           )}
           <span style={{ display: "flex", textAlign: "right" }}>
             <Image
-              src={`https://image.tmdb.org/t/p/original${item.poster_path}`}
+              src={item.main_picture}
               css={{ position: "sticky" }}
               width={50}
               height={65}
@@ -101,7 +105,7 @@ const Movies = () => {
   const getRecommendations = () => {
     setCurpage(1);
 
-    console.log("query names", bars);
+    // console.log("query names", bars);
     var names = [];
     // if(bars.length===1 && !bars[0].English)window.alert("Please Select some Anime")
     for (var i = 0; i < bars.length; i++) {
@@ -115,13 +119,13 @@ const Movies = () => {
     } else {
       setAsk(true);
       setLoading(true);
-      console.log(query);
+      //   console.log(query);
       axios
-        .post("https://animovixrecommendations.onrender.com/movies", {
+        .post("https://animovixrecommendations.onrender.com/manga", {
           names: query,
         })
         .then(function (response) {
-          console.log(response.data);
+          // console.log(response.data);
           setRecommendations(response.data);
           setLoading(false);
           setResults(response.data.slice(0, 20));
@@ -163,12 +167,12 @@ const Movies = () => {
                     color: "whitesmoke",
                     height: "3rem",
                   }}
-                  items={movies_list}
+                  items={data}
                   value={val}
                   id={i}
                   onSelect={(item) => handleOnSelect(i, item)}
                   autoFocus
-                  placeholder={`Search Movie ${i + 1}...`}
+                  placeholder={`Search Manga ${i + 1}...`}
                   maxResults={4}
                   resultStringKeyName="title"
                   fuseOptions={{ keys: ["title"] }}
@@ -185,7 +189,7 @@ const Movies = () => {
               auto
               onPress={addBar}
             >
-              Add Movie
+              Add Manga
             </Button>
 
             <Button
@@ -195,7 +199,7 @@ const Movies = () => {
               auto
               onPress={removeBar}
             >
-              Remove Movie
+              Remove Manga
             </Button>
           </div>
           <Container>
@@ -212,7 +216,6 @@ const Movies = () => {
               ) : (
                 `Show Recommendations`
               )}
-              
             </Button>
           </Container>
         </div>
@@ -239,7 +242,7 @@ const Movies = () => {
                 <br />
                 <div className={styles.queries}>
                   {bars.map((item, i) => {
-                    return item.title && <Moviecardquery key={i} item={item} />;
+                    return item.title && <Mangacardquery key={i} item={item} />;
                   })}
                 </div>
               </div>
@@ -258,20 +261,13 @@ const Movies = () => {
                 onChange={(page) => setCurpage(page)}
               />
 
-
-
-
-              {console.log(results)}
+              {/* {console.log(results)} */}
               <div className={styles.results}>
                 {results &&
                   results.map((result, i) => {
-                    return <Movieresultcard key={i} detail={result} />;
+                    return <Mangaresultcard key={i} detail={result} />;
                   })}
               </div>
-
-
-
-
 
               <Pagination
                 bordered
@@ -283,11 +279,6 @@ const Movies = () => {
                 initialPage={1}
                 onChange={(page) => setCurpage(page)}
               />
-
-
-
-
-
             </Container>
           ) : (
             <Loading
@@ -311,8 +302,8 @@ export default Movies;
 export async function getStaticProps() {
   // Call an external API endpoint to get posts.
   // You can use any data fetching library
-  axios.post("https://animovixrecommendations.onrender.com/movies", {
-    names: "drishyam",
+  axios.post("https://animovixrecommendations.onrender.com/manga", {
+    names: "School Zone",
   });
 
   return {
