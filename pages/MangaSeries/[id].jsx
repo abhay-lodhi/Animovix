@@ -28,7 +28,7 @@ const mangawithID = () => {
   const itemcount = 20;
 
   useEffect(() => {
-    if(localStorage.getItem("M"+id)!=null){
+    if(localStorage.getItem("M"+id)!==null){
      setDetails(JSON.parse(localStorage.getItem("M"+id)));
     }else{
     getManga(id).then((details) => {
