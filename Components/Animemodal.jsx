@@ -13,11 +13,11 @@ const Animemodal = ({ detail }) => {
   const { updateUserLists, checkUserCookies } = useFirebase();
 
   const mapVal = {
-    Watching: "watching",
-    Completed: "completed",
+    "Watching": "watching",
+    "Completed": "completed",
     "On Hold": "onHold",
-    Dropped: "dropped",
-    "Plan To Watch": "planToWatch",
+    "Dropped": "dropped",
+    "Plan To Watch": "plan",
   };
 
   const selectedValue = React.useMemo(
@@ -27,58 +27,44 @@ const Animemodal = ({ detail }) => {
   var val = 0;
   var val2 = 0;
 
+  //console.log("hey ",mapVal[selectedValue]);
+
   const updateFavourite = async () => {
-    const ref = JSON.parse(localStorage.getItem("favourites")) || [];
     if (favourite) {
       setFavourite(false);
-      const index = ref.indexOf(detail.id);
-      if (index > -1) ref.splice(index, 1);
-
       await updateUserLists(detail, null, "favourites");
     } else {
       setFavourite(true);
-      ref.push(detail.id);
       await updateUserLists(detail, "favourites", null);
-    }
-
-    localStorage.setItem("favourites", JSON.stringify(ref));
+    } 
   };
 
   const updateList = async (key) => {
-    const remove =
-      JSON.parse(localStorage.getItem(mapVal[selectedValue])) || [];
+    
+   await updateUserLists(detail, mapVal[key], mapVal[selectedValue]===undefined?null:mapVal[selectedValue]);
 
-    const add = JSON.parse(localStorage.getItem(mapVal[key])) || [];
-    const index = remove.indexOf(detail.id);
-    if (index > -1) remove.splice(index, 1);
-
-    add.push(detail.id);
-
-    await updateUserLists(detail, mapVal[key], mapVal[selectedValue]);
-
-    localStorage.setItem(mapVal[selectedValue], JSON.stringify(remove));
-    localStorage.setItem(mapVal[key], JSON.stringify(add));
   };
 
   useEffect(() => {
     // console.log(detail);
     if (checkUserCookies()) {
-      const favourites = JSON.parse(localStorage.getItem("favourites"));
-      const completed = JSON.parse(localStorage.getItem("completed"));
-      const dropped = JSON.parse(localStorage.getItem("dropped"));
-      const onHold = JSON.parse(localStorage.getItem("onHold"));
-      const planToWatch = JSON.parse(localStorage.getItem("planToWatch"));
-      const watching = JSON.parse(localStorage.getItem("watching"));
+     const List= JSON.parse(localStorage.getItem("userLists"));
 
-      completed.find((e) => e == detail.id) &&
+      List.completed.find((e) => e.id === Number(detail.id) && e.type2==="Anime") &&
         setSelected(new Set(["Completed"]));
-      dropped.find((e) => e == detail.id) && setSelected(new Set(["Dropped"]));
-      onHold.find((e) => e == detail.id) && setSelected(new Set(["On Hold"]));
-      planToWatch.find((e) => e == detail.id) &&
+      List.plan.find((e) => e.id ===Number(detail.id) && e.type2==="Anime") &&
         setSelected(new Set(["Plan To Watch"]));
-      watching.find((e) => e == detail.id) &&
+
+      List.watching.find((e) => e.id === Number(detail.id) && e.type2==="Anime") &&
         setSelected(new Set(["Watching"]));
-      favourites.find((e) => e == detail.id) && setFavourite(true);
+      
+      List.dropped.find((e) => e.id === Number(detail.id) && e.type2==="Anime") &&
+        setSelected(new Set(["Dropped"]));
+      
+      List.onHold.find((e) =>  e.id === Number(detail.id) && e.type2==="Anime") &&
+        setSelected(new Set(["On Hold"]));
+      
+      List.favourites.find((e) => e.id === Number(detail.id) && e.type2==="Anime") && setFavourite(true);
     }
   }, []);
 

@@ -24,6 +24,7 @@ const CommentForm = ({
     }
     setText("");
     setLoading(true);
+    
     const res = await addComment(text, animeId, commentId);
     if (res != false) {
       setLoading(false);

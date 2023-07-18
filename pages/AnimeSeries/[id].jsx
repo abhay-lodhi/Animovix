@@ -36,9 +36,10 @@ const animewithID = () => {
     getAnime(id).then((details) => {
       if (details === undefined) {
         setError(true);
-      }
+      }else{
       localStorage.setItem(id,JSON.stringify(details));
       setDetails(details);
+      }
     });}
   }, [id]);
 

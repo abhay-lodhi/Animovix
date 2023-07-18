@@ -34,10 +34,11 @@ const mangawithID = () => {
     getManga(id).then((details) => {
       if (details === undefined) {
         setError(true);
-      }
+      }else{
 
       localStorage.setItem("M"+id,JSON.stringify(details));
       setDetails(details);
+    }
       // console.log(details);
     });}
   }, [id]);

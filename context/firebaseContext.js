@@ -53,85 +53,20 @@ export function FirebaseProvider({ children }) {
 
   useEffect(() => {
     //console.log("listerer", auth.currentUser);
-    localStorage.getItem("Mfavourites")==null && auth.currentUser &&
+    localStorage.getItem("userLists")===null && auth.currentUser &&
       getUserData()
         .then((data) => {
-          //console.log(data);
-          const favourites = [];
-          data.favourites.map((val) => {
-            favourites.push(val.id);
-          });
-          const completed = [];
-          data.completed.map((val) => {
-            completed.push(val.id);
-          });
-
-          const dropped = [];
-          data.dropped.map((val) => {
-            dropped.push(val.id);
-          });
-
-          const onHold = [];
-          data.onHold.map((val) => {
-            onHold.push(val.id);
-          });
-
-          const planToWatch = [];
-          data.planToWatch.map((val) => {
-            planToWatch.push(val.id);
-          });
-
-          const watching = [];
-          data.watching.map((val) => {
-            watching.push(val.id);
-          });
-
-          const Mfavourites = [];
-          data.Mfavourites.map((val) => {
-            Mfavourites.push(val.id);
-          });
-          const Mcompleted = [];
-          data.Mcompleted.map((val) => {
-            Mcompleted.push(val.id);
-          });
-
-          const Mdropped = [];
-          data.Mdropped.map((val) => {
-            Mdropped.push(val.id);
-          });
-
-          const MonHold = [];
-          data.MonHold.map((val) => {
-            MonHold.push(val.id);
-          });
-
-          const MplanToRead = [];
-          data.MplanToRead.map((val) => {
-            MplanToRead.push(val.id);
-          });
-
-          const Mreading = [];
-          data.Mreading.map((val) => {
-            Mreading.push(val.id);
-          });
-
-          //console.log("hey",favourite);
-
-          localStorage.setItem("favourites", JSON.stringify(favourites));
-          localStorage.setItem("completed", JSON.stringify(completed));
-          localStorage.setItem("dropped", JSON.stringify(dropped));
-          localStorage.setItem("onHold", JSON.stringify(onHold));
-          localStorage.setItem("planToWatch", JSON.stringify(planToWatch));
-          localStorage.setItem("watching", JSON.stringify(watching));
-
-          localStorage.setItem("Mfavourites", JSON.stringify(Mfavourites));
-          localStorage.setItem("Mcompleted", JSON.stringify(Mcompleted));
-          localStorage.setItem("Mdropped", JSON.stringify(Mdropped));
-          localStorage.setItem("MonHold", JSON.stringify(MonHold));
-          localStorage.setItem("MplanToRead", JSON.stringify(MplanToRead));
-          localStorage.setItem("Mreading", JSON.stringify(Mreading));
-
-          //  console.log("userdata: ",localStorage.getItem("Mfavourites"));
+          //console.log("revodeing");
+          const userLists= {
+            favourites: data.favourites.concat(data.Mfavourites),
+            completed: data.completed.concat(data.Mcompleted),
+            dropped: data.dropped.concat(data.Mdropped),
+            watching: data.watching.concat(data.Mreading),
+            plan: data.planToWatch.concat(data.MplanToRead),
+            onHold: data.onHold.concat(data.MonHold),
+          }
+         // console.log("hey", userLists);
+          localStorage.setItem("userLists", JSON.stringify(userLists));
         })
         .catch((e) => {
           console.log(e);
@@ -174,6 +109,9 @@ export function FirebaseProvider({ children }) {
     return false;
   }
 
+  // JUST pass flag=false for manga and flag=true for anime, 'add' and 'remove' are strings with values from [dropped,completed,plan,watching,favourites,onHold], same for anime and manga
+
+
   async function updateUserLists(details, add, remove, flag = true) {
     const prev = "-1";
     if (user === null) return false;
@@ -189,9 +127,23 @@ export function FirebaseProvider({ children }) {
           episodes: details.episodes,
           synopsis: details.synopsis,
           type: details.type,
+          type2:"Anime",
         };
+   
+       const userLists= JSON.parse(localStorage.getItem("userLists"));
+
+       if(add!=null)
+       userLists[add].push(data);
+
+       if(remove!=null)
+       userLists[remove].splice(userLists[remove].findIndex((e)=>{
+        e.type2==="Anime" && e.id===details.id
+       }), 1);
+
+       
 
         if (remove === "favourites") {
+
           await updateDoc(ref, {
             favourites: arrayRemove(data),
           });
@@ -231,11 +183,11 @@ export function FirebaseProvider({ children }) {
           });
         }
 
-        if (add === "planToWatch") {
+        if (add === "plan") {
           await updateDoc(ref, {
             planToWatch: arrayUnion(data),
           });
-        } else if (remove === "planToWatch") {
+        } else if (remove === "plan") {
           await updateDoc(ref, {
             planToWatch: arrayRemove(data),
           });
@@ -250,76 +202,97 @@ export function FirebaseProvider({ children }) {
             watching: arrayRemove(data),
           });
         }
+
+        localStorage.setItem("userLists",JSON.stringify(userLists));
+
+
       } else {
         const data = {
           id: details.manga_id,
           imageUrl: details.main_picture,
           title: details.title_english ? details.title_english : details.title,
+          synopsis: details.synopsis,
           chapters: details.chapters,
           type: details.type,
+          type2:"Manga",
         };
 
-        if (remove === "Mfavourites") {
+       const userLists= JSON.parse(localStorage.getItem("userLists"));
+        
+       if(add!=null)
+       userLists[add].push(data);
+
+       if(remove!=null)
+       userLists[remove].splice(userLists[remove].findIndex((e)=>{
+        e.type2==="Manga" && e.id===details.id
+       }), 1);
+
+       
+
+        if (remove === "favourites") {
           await updateDoc(ref, {
             Mfavourites: arrayRemove(data),
           });
-        } else if (add === "Mfavourites") {
+        } else if (add === "favourites") {
           await updateDoc(ref, {
             Mfavourites: arrayUnion(data),
           });
         }
 
-        if (add === "Mcompleted") {
+        if (add === "completed") {
           await updateDoc(ref, {
             Mcompleted: arrayUnion(data),
           });
-        } else if (remove === "Mcompleted") {
+        } else if (remove === "completed") {
           await updateDoc(ref, {
             Mcompleted: arrayRemove(data),
           });
         }
 
-        if (add === "Mdropped") {
+        if (add === "dropped") {
           await updateDoc(ref, {
             Mdropped: arrayUnion(data),
           });
-        } else if (remove === "Mdropped") {
+        } else if (remove === "dropped") {
           await updateDoc(ref, {
             Mdropped: arrayRemove(data),
           });
         }
 
-        if (add === "MonHold") {
+        if (add === "onHold") {
           await updateDoc(ref, {
             MonHold: arrayUnion(data),
           });
-        } else if (remove === "MonHold") {
+        } else if (remove === "onHold") {
           await updateDoc(ref, {
             MonHold: arrayRemove(data),
           });
         }
 
-        if (add === "MplanToRead") {
+        if (add === "plan") {
           await updateDoc(ref, {
             MplanToRead: arrayUnion(data),
           });
-        } else if (remove === "MplanToRead") {
+        } else if (remove === "plan") {
           await updateDoc(ref, {
             MplanToRead: arrayRemove(data),
           });
         }
 
-        if (add === "Mreading") {
+        if (add === "watching") {
           await updateDoc(ref, {
             Mreading: arrayUnion(data),
           });
-        } else if (remove === "Mreading") {
+        } else if (remove === "watching") {
           await updateDoc(ref, {
             Mreading: arrayRemove(data),
           });
         }
+
+        localStorage.setItem("userLists",JSON.stringify(userLists));
       }
 
+      
       return true;
       //console.log("done");
     } catch (error) {

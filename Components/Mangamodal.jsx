@@ -14,11 +14,11 @@ const Mangamodal = ({ detail }) => {
   //console.log(detail);
 
   const mapVal = {
-    Reading: "Mreading",
-    Completed: "Mcompleted",
-    "On Hold": "MonHold",
-    Dropped: "Mdropped",
-    "Plan To Read": "MplanToRead",
+    "Reading": "watching",
+    "Completed": "completed",
+    "On Hold": "onHold",
+    "Dropped": "dropped",
+    "Plan To Read": "plan",
   };
 
   const selectedValue = React.useMemo(
@@ -29,58 +29,40 @@ const Mangamodal = ({ detail }) => {
   var val2 = 0;
 
   const updateFavourite = async () => {
-    const ref = JSON.parse(localStorage.getItem("Mfavourites")) || [];
     if (favourite) {
       setFavourite(false);
-      const index = ref.indexOf(detail.manga_id);
-      if (index > -1) ref.splice(index, 1);
-      await updateUserLists(detail, null, "Mfavourites", false);
+      await updateUserLists(detail, null, "favourites", false);
     } else {
       setFavourite(true);
-      ref.push(detail.manga_id);
-      await updateUserLists(detail, "Mfavourites", null, false);
-    }
-
-    localStorage.setItem("Mfavourites", JSON.stringify(ref));
+      await updateUserLists(detail, "favourites", null, false);
+    }   
   };
 
   const updateList = async (key) => {
-    const remove =
-      JSON.parse(localStorage.getItem(mapVal[selectedValue])) || [];
-
-    const add = JSON.parse(localStorage.getItem(mapVal[key])) || [];
-    const index = remove.indexOf(detail.manga_id);
-    if (index > -1) remove.splice(index, 1);
-
-    add.push(detail.manga_id);
-
-    await updateUserLists(detail, mapVal[key], mapVal[selectedValue], false);
-
-    localStorage.setItem(mapVal[selectedValue], JSON.stringify(remove));
-    localStorage.setItem(mapVal[key], JSON.stringify(add));
+    await updateUserLists(detail, mapVal[key], mapVal[selectedValue]===undefined?null:mapVal[selectedValue],false);
   };
 
   useEffect(() => {
     // console.log(detail);
     if (checkUserCookies()) {
-      const favourites = JSON.parse(localStorage.getItem("Mfavourites"));
-      const completed = JSON.parse(localStorage.getItem("Mcompleted"));
-      const dropped = JSON.parse(localStorage.getItem("Mdropped"));
-      const onHold = JSON.parse(localStorage.getItem("MonHold"));
-      const planToRead = JSON.parse(localStorage.getItem("MplanToRead"));
-      const reading = JSON.parse(localStorage.getItem("Mreading"));
 
-      completed.find((e) => e == detail.manga_id) &&
+      const List= JSON.parse(localStorage.getItem("userLists"));
+
+      List.completed.find((e) => e.id === Number(detail.manga_id) && e.type2==="Manga") &&
         setSelected(new Set(["Completed"]));
-      dropped.find((e) => e == detail.manga_id) &&
-        setSelected(new Set(["Dropped"]));
-      onHold.find((e) => e == detail.manga_id) &&
-        setSelected(new Set(["On Hold"]));
-      planToRead.find((e) => e == detail.manga_id) &&
+      List.plan.find((e) => e.id ===Number(detail.manga_id) && e.type2==="Manga") &&
         setSelected(new Set(["Plan To Read"]));
-      reading.find((e) => e == detail.manga_id) &&
+
+      List.watching.find((e) => e.id === Number(detail.manga_id) && e.type2==="Manga") &&
         setSelected(new Set(["Reading"]));
-      favourites.find((e) => e == detail.manga_id) && setFavourite(true);
+      
+      List.dropped.find((e) => e.id === Number(detail.manga_id) && e.type2==="Manga") &&
+        setSelected(new Set(["Dropped"]));
+      
+      List.onHold.find((e) =>  e.id === Number(detail.manga_id) && e.type2==="Manga") &&
+        setSelected(new Set(["On Hold"]));
+      
+      List.favourites.find((e) => e.id === Number(detail.manga_id) && e.type2==="Manga") && setFavourite(true);
     }
   }, []);
 
