@@ -53,19 +53,20 @@ export function FirebaseProvider({ children }) {
 
   useEffect(() => {
     //console.log("listerer", auth.currentUser);
-    localStorage.getItem("userLists")===null && auth.currentUser &&
+    localStorage.getItem("userLists") === null &&
+      auth.currentUser &&
       getUserData()
         .then((data) => {
           //console.log("revodeing");
-          const userLists= {
+          const userLists = {
             favourites: data.favourites.concat(data.Mfavourites),
             completed: data.completed.concat(data.Mcompleted),
             dropped: data.dropped.concat(data.Mdropped),
             watching: data.watching.concat(data.Mreading),
             plan: data.planToWatch.concat(data.MplanToRead),
             onHold: data.onHold.concat(data.MonHold),
-          }
-         // console.log("hey", userLists);
+          };
+          // console.log("hey", userLists);
           localStorage.setItem("userLists", JSON.stringify(userLists));
         })
         .catch((e) => {
@@ -111,8 +112,7 @@ export function FirebaseProvider({ children }) {
 
   // JUST pass flag=false for manga and flag=true for anime, 'add' and 'remove' are strings with values from [dropped,completed,plan,watching,favourites,onHold], same for anime and manga
 
-
-  async function updateUserLists(details, add, remove, flag = true) {
+  async function updateUserLists(details, add=null, remove=null, flag = true) {
     const prev = "-1";
     if (user === null) return false;
 
@@ -127,23 +127,22 @@ export function FirebaseProvider({ children }) {
           episodes: details.episodes,
           synopsis: details.synopsis,
           type: details.type,
-          type2:"Anime",
+          type2: "Anime",
         };
-   
-       const userLists= JSON.parse(localStorage.getItem("userLists"));
 
-       if(add!=null)
-       userLists[add].push(data);
+        const userLists = JSON.parse(localStorage.getItem("userLists"));
 
-       if(remove!=null)
-       userLists[remove].splice(userLists[remove].findIndex((e)=>{
-        e.type2==="Anime" && e.id===details.id
-       }), 1);
+        if (add != null) userLists[add].push(data);
 
-       
+        if (remove != null)
+          userLists[remove].splice(
+            userLists[remove].findIndex((e) => {
+              e.type2 === "Anime" && e.id === details.id;
+            }),
+            1
+          );
 
         if (remove === "favourites") {
-
           await updateDoc(ref, {
             favourites: arrayRemove(data),
           });
@@ -203,9 +202,7 @@ export function FirebaseProvider({ children }) {
           });
         }
 
-        localStorage.setItem("userLists",JSON.stringify(userLists));
-
-
+        localStorage.setItem("userLists", JSON.stringify(userLists));
       } else {
         const data = {
           id: details.manga_id,
@@ -214,20 +211,20 @@ export function FirebaseProvider({ children }) {
           synopsis: details.synopsis,
           chapters: details.chapters,
           type: details.type,
-          type2:"Manga",
+          type2: "Manga",
         };
 
-       const userLists= JSON.parse(localStorage.getItem("userLists"));
-        
-       if(add!=null)
-       userLists[add].push(data);
+        const userLists = JSON.parse(localStorage.getItem("userLists"));
 
-       if(remove!=null)
-       userLists[remove].splice(userLists[remove].findIndex((e)=>{
-        e.type2==="Manga" && e.id===details.id
-       }), 1);
+        if (add != null) userLists[add].push(data);
 
-       
+        if (remove != null)
+          userLists[remove].splice(
+            userLists[remove].findIndex((e) => {
+              e.type2 === "Manga" && e.id === details.id;
+            }),
+            1
+          );
 
         if (remove === "favourites") {
           await updateDoc(ref, {
@@ -289,10 +286,9 @@ export function FirebaseProvider({ children }) {
           });
         }
 
-        localStorage.setItem("userLists",JSON.stringify(userLists));
+        localStorage.setItem("userLists", JSON.stringify(userLists));
       }
 
-      
       return true;
       //console.log("done");
     } catch (error) {
