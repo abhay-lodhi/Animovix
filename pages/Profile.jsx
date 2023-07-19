@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react'
+import Image from 'next/image';
 import  { useRouter } from 'next/router';
 import { useFirebase } from "@/context/firebaseContext";
 import styles from '@/styles/Profile.module.css'
@@ -12,15 +13,13 @@ const Profile = () => {
     const [data, setData] = useState({});
     
     const router = useRouter();
-    useEffect(() => {      
-        if(!checkUserCookies())router.replace("/");  
-        setName(getUserCookies().details?.name.split(" ")[0]);
-        // setData()
+    useEffect(() => {
+      if(!checkUserCookies())router.replace("/"); 
+      setData(JSON.parse(localStorage.getItem('userLists'))); 
       return () => {       
       }
     }, [])
-
-    const [isFavActive, setIsFavActive] = useState(true);
+    
     const initial = {        
       all:false,
       watch:false,
@@ -29,10 +28,28 @@ const Profile = () => {
       plan:false,
       completed:false      
   }
-
     const [section, setSection] = useState({...initial, all:true})
+    const [isFavActive, setIsFavActive] = useState(true);
+    
+    useEffect(() => {      
+        if(!checkUserCookies())router.replace("/");  
+        setName(getUserCookies().details?.name.split(" ")[0]);
 
-    const handleActive=()=>setIsFavActive(!(isFavActive));
+        //* FETCHING THE USER DATA FROM LOCAL STORAGE
+        
+        setData(JSON.parse(localStorage.getItem('userLists')));
+        console.log("Data Updated",data)
+        
+        
+      return () => {       
+      }
+    }, [section, isFavActive])
+
+    
+
+
+
+    const handleActive=()=>setIsFavActive(!isFavActive);
 
     const handleSection=(e)=>{
       const id = e.target.id;
@@ -44,6 +61,7 @@ const Profile = () => {
 
   return (
     <div className={styles.main}>
+      {data && console.log("This is user Data", data)}
       <h2 className={styles.greeting}> Hi, {name}</h2>
       <div className={styles.tab}>
         <ul>
@@ -60,7 +78,10 @@ const Profile = () => {
       {/** FAVORITES HEADING  */}
         {isFavActive?<><h2><FaHeart  size={30}/>&nbsp;Favourites</h2>
       <div className={styles.container}>
-      <Profilecard/><Profilecard/><Profilecard/><Profilecard/><Profilecard/><Profilecard/><Profilecard/></div>
+      {data?.favourites?.length>0 ? data?.favourites?.map((info, index)=>{
+        return <Profilecard key={index} details={info} badge="favorite"/>
+      }) : <Image src="/no-data-found.png"  height={250} width={300} />}
+      </div>
       </>:
       /* WATCH LATER HEADING  */
       <><h2><FaClockRotateLeft size={30}/>&nbsp;Watch List</h2>
@@ -77,25 +98,35 @@ const Profile = () => {
       
       {(section.all || section.watch) && <><h3>Watching</h3>
       <div className={styles.container}>
-      <Profilecard/><Profilecard/><Profilecard/><Profilecard/><Profilecard/><Profilecard/><Profilecard/></div></>}
-      </>}
+      {data?.watching?.length>0 ?data.watching.map((info, index)=>{
+        return <Profilecard key={index} details={info} badge="Watching"/>
+      }): <div className={styles.image_container}> <Image src="/no-data-found.png"  height={250} width={350} /></div>}</div></> }
+      
 
       {(section.all || section.dropped) && <><h3>Dropped</h3>
       <div className={styles.container}>
-      <Profilecard/><Profilecard/><Profilecard/><Profilecard/><Profilecard/><Profilecard/><Profilecard/></div></>}
+      {data?.dropped?.length>0? data.dropped.map((info, index)=>{
+        return <Profilecard key={index} details={info} badge="Dropped"/>
+      }):<div className={styles.image_container}> <Image src="/no-data-found.png"  height={250} width={350} /></div>}</div></>}
 
       {(section.all || section.hold) && <><h3>On-Hold</h3>
       <div className={styles.container}>
-      <Profilecard/><Profilecard/><Profilecard/><Profilecard/><Profilecard/><Profilecard/><Profilecard/></div></>}
+      {data?.onHold?.length>0 ? data?.onHold?.map((info, index)=>{
+        return <Profilecard key={index} details={info} badge="On Hold"/>
+      }): <div className={styles.image_container}> <Image src="/no-data-found.png"  height={250} width={350} /></div>}</div></>}
 
       {(section.all || section.plan) && <><h3>Plan to Watch</h3>
       <div className={styles.container}>
-      <Profilecard/><Profilecard/><Profilecard/><Profilecard/><Profilecard/><Profilecard/><Profilecard/></div></>}
+      {data?.plan?.length>0 ? data.plan.map((info, index)=>{
+        return <Profilecard key={index} details={info} badge="Plan To Watch"/>
+      }): <div className={styles.image_container}> <Image src="/no-data-found.png"  height={250} width={350} /></div>}</div></>}
 
       {(section.all || section.completed) && <><h3>Completed</h3>
       <div className={styles.container}>
-      <Profilecard/><Profilecard/><Profilecard/><Profilecard/><Profilecard/><Profilecard/><Profilecard/></div></>}
-
+      {data?.completed?.length>0 ? data.completed.map((info, index)=>{
+        return <Profilecard key={index} details={info} badge="Completed"/>
+      }):<div className={styles.image_container}> <Image src="/no-data-found.png"  height={250} width={350} /></div>}</div></>}
+      </>}
       </div>
     </div>
   )

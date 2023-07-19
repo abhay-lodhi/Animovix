@@ -10,6 +10,7 @@ import Link from "next/link";
 const Animemodal = ({ detail }) => {
   const [selected, setSelected] = useState(new Set(["Status"]));
   const [favourite, setFavourite] = useState(false);
+  const [isChanging, setIsChanging] = useState(false);
   const { updateUserLists, checkUserCookies } = useFirebase();
 
   const mapVal = {
@@ -31,18 +32,18 @@ const Animemodal = ({ detail }) => {
 
   const updateFavourite = async () => {
     if (favourite) {
-      setFavourite(false);
       await updateUserLists(detail, null, "favourites");
+      setFavourite(false);
     } else {
-      setFavourite(true);
       await updateUserLists(detail, "favourites", null);
+      setFavourite(true);
     } 
   };
 
-  const updateList = async (key) => {
-    
+  const updateList = async (key) => {    
+    setIsChanging(true);
    await updateUserLists(detail, mapVal[key], mapVal[selectedValue]===undefined?null:mapVal[selectedValue]);
-
+   setIsChanging(false);
   };
 
   useEffect(() => {
@@ -123,7 +124,7 @@ const Animemodal = ({ detail }) => {
           </Badge>
 
           {checkUserCookies() && (
-            <Dropdown>
+            <Dropdown isDisabled={isChanging}>
               <Dropdown.Button
                 flat
                 color="secondary"
