@@ -85,6 +85,7 @@
     color: #252525 !important;
     font-weight: bold;
 }
+
 .box h3{
     margin-left: 1.8rem;
     margin-top: 2rem;
@@ -92,13 +93,20 @@
     /* font-size: larger; */
 }
 .image_container{
-  padding: 1rem;
+  padding: 0.2rem 1rem;
+  margin-right: auto ;
+  margin-left: 1.75rem;
   display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: large;
+  background-color: #ac95ff;
+  justify-self: center;
+  color: #252525;
+  letter-spacing: 1.5px;
   border-radius: 15px;
 }
-.image_container img{
-  border-radius: 15px;
-}
+
 
 /** CARD CSS STARTS HERE */
 

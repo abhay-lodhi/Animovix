@@ -1,14 +1,14 @@
 import "@/styles/globals.css";
 import { createTheme, NextUIProvider } from "@nextui-org/react";
 import Bar from "../Components/Navbar";
-// import { SSRProvider } from "@react-aria/ssr";
+import { SSRProvider } from "@react-aria/ssr";
 import { Analytics } from "@vercel/analytics/react";
-import { extendTheme, ChakraProvider } from "@chakra-ui/react";
 import { FirebaseProvider } from "../context/firebaseContext";
 import TimeAgo from "javascript-time-ago";
 
 import en from "javascript-time-ago/locale/en.json";
 import ru from "javascript-time-ago/locale/ru.json";
+
 
 TimeAgo.addDefaultLocale(en);
 TimeAgo.addLocale(ru);
@@ -50,11 +50,13 @@ export default function App({ Component, pageProps }) {
 
   return (
     <FirebaseProvider>
+        <SSRProvider>
         <NextUIProvider theme={theme}>
           <Bar />
           <Component {...pageProps} />
           <Analytics />
         </NextUIProvider>
-    </FirebaseProvider>
+    </SSRProvider>
+      </FirebaseProvider>
   );
 }

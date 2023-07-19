@@ -1,5 +1,6 @@
 import React from "react";
 import Document, { Html, Head, Main, NextScript } from "next/document";
+import { SSRProvider } from "@react-aria/ssr";
 import { CssBaseline } from "@nextui-org/react";
 
 class MyDocument extends Document {
@@ -13,6 +14,7 @@ class MyDocument extends Document {
 
   render() {
     return (
+      // <SSRProvider>
       <Html lang="en">
         <Head>{CssBaseline.flush()}</Head>
         <body>
@@ -20,6 +22,7 @@ class MyDocument extends Document {
           <NextScript />
         </body>
       </Html>
+      // </SSRProvider>
     );
   }
 }

@@ -138,7 +138,7 @@ const Bar = () => {
                 Help & Feedback
               </Dropdown.Item> */}
               <Dropdown.Item key="logout" withDivider color="error">
-                <button onPress={signout} style={{background:"none", border:"none"}}>Log Out</button>
+                <button onClick={signout} style={{background:"none", border:"none"}}>Log Out</button>
               </Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
