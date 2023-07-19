@@ -6,7 +6,6 @@ import dynamic from "next/dynamic";
 import axios from "axios";
 import { Button, Loading } from "@nextui-org/react";
 import CommentsSection from "@/Components/discussion/CommentsSection";
-import { Center } from "@chakra-ui/react";
 import styles from "../../styles/AnimeSeries.module.css";
 import Recommendations from "@/Components/Recommendations";
 

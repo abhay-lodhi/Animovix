@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import dynamic from "next/dynamic";
 import styles from "../styles/Resultcard.module.css";
 import {
-  Modal,
   Card,
   Row,
   Col,
@@ -14,9 +13,6 @@ import {
 import { BsFillInfoCircleFill } from "react-icons/bs";
 import Link from "next/link";
 
-const Animemodal = dynamic(() => import("./Animemodal"), {
-  ssr: false,
-});
 
 const Animeresultcard = ({ detail }) => {
   const [visible, setVisible] = useState(false);
@@ -29,7 +25,7 @@ const Animeresultcard = ({ detail }) => {
   // console.log(detail);
   // },[])
 
-  const handleOnClick = () => {};
+  
 
   return (
     <Link legacyBehavior href={`/AnimeSeries/${detail.ID}`} passHref>

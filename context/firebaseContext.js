@@ -11,11 +11,7 @@ import {
   updateDoc,
   arrayUnion,
   arrayRemove,
-  query,
-  where,
   serverTimestamp,
-  collectionGroup,
-  onSnapshot,
 } from "firebase/firestore";
 import {
   onAuthStateChanged,
@@ -23,9 +19,6 @@ import {
   getAuth,
   signInWithPopup,
   signOut,
-  setPersistence,
-  browserSessionPersistence,
-  inMemoryPersistence,
 } from "firebase/auth";
 
 const FirebaseContext = createContext();

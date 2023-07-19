@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useFirebase } from "@/context/firebaseContext";
-import dynamic from "next/dynamic";
 import axios from "axios";
 import { Button, Loading } from "@nextui-org/react";
 import CommentsSection from "@/Components/discussion/CommentsSection";

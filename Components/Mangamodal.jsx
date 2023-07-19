@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Text, Badge, Dropdown } from "@nextui-org/react";
+import { Text, Badge, Dropdown,Tooltip} from "@nextui-org/react";
 import Image from "next/image";
 import styles from "../styles/Animemodal.module.css";
 import { useFirebase } from "@/context/firebaseContext";

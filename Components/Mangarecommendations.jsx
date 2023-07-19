@@ -1,6 +1,4 @@
 import React from "react";
-import { useEffect, useState } from "react";
-
 import Mangaresultcard from "./Mangaresultcard";
 import { Text } from "@nextui-org/react";
 

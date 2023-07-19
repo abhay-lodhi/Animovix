@@ -4,7 +4,7 @@ import axios from "axios";
 import { Inter } from "@next/font/google";
 import styles from "@/styles/Home.module.css";
 import Link from "next/link";
-import { Card, Text, Row, Loading } from "@nextui-org/react";
+import { Loading } from "@nextui-org/react";
 import Presscard from "@/Components/Presscard";
 import data from "../public/anime_list";
 import data2 from "../public/manga_list";
