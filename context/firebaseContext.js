@@ -146,10 +146,10 @@ export function FirebaseProvider({ children }) {
         const data = {
           id: details.id,
           imageUrl: details.main_picture,
-          title: details.title_english,
-          episodes: details.episodes,
-          synopsis: details.synopsis,
-          type: details.type,
+          title: details.title_english?details.title_english:"NA",
+          episodes: details.episodes? details.episodes:null,
+          synopsis: details.synopsis?details.synopsis:"Not Available!!",
+          type: details.type?details.type:"NA",
           type2: "Anime",
         };
 
@@ -162,6 +162,7 @@ export function FirebaseProvider({ children }) {
             }),
             1
           );
+
 
         if (remove === "favourites") {
           await updateDoc(ref, {
@@ -222,10 +223,7 @@ export function FirebaseProvider({ children }) {
             watching: arrayRemove(data),
           });
         }
-
-       
-
-        localStorage.setItem("userLists", JSON.stringify(userLists));
+      localStorage.setItem("userLists", JSON.stringify(userLists));
 
       } else {
         
@@ -233,9 +231,9 @@ export function FirebaseProvider({ children }) {
           id: details.manga_id,
           imageUrl: details.main_picture,
           title: details.title_english ? details.title_english : details.title,
-          synopsis: details.synopsis,
-          chapters: details.chapters,
-          type: details.type,
+          synopsis: details.synopsis?details.synopsis:"NOT Available",
+          chapters: details.chapters?details.chapters:null,
+          type: details.type?details.type:"NA",
           type2: "Manga",
         };
 
@@ -248,6 +246,7 @@ export function FirebaseProvider({ children }) {
             }),
             1
           );
+        
 
         if (remove === "favourites") {
           await updateDoc(ref, {
@@ -308,7 +307,6 @@ export function FirebaseProvider({ children }) {
             Mreading: arrayRemove(data),
           });
         }
-
         localStorage.setItem("userLists", JSON.stringify(userLists));
       }
 

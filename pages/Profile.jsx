@@ -169,7 +169,7 @@ const Profile = () => {
                     </li>
                     <li
                       id="completed"
-                      className={section.completed ? styles.sectionActive : ""}
+                      className={section.completed ? styles.section_active : ""}
                       onClick={(e) => handleSection(e)}
                     >
                       Completed
