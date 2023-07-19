@@ -51,7 +51,7 @@ const MangawithID = () => {
         })
         .then(function (response) {
           setLoading(false);
-          setResults(response.data.slice(0, 20));
+          setResults(response.data.slice(0, 48));
         })
         .catch(function (error) {
           console.log(error);
