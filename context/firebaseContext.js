@@ -45,34 +45,55 @@ export function FirebaseProvider({ children }) {
       setCurrentUser(user);
       setLoading(false);
     });
-
     return unsubscribe;
   }, []);
 
   //console.log("hyyy",user);
 
-  useEffect(() => {
-    //console.log("listerer", auth.currentUser);
-    localStorage.getItem("userLists") === null &&
-      auth.currentUser &&
-      getUserData()
-        .then((data) => {
-          //console.log("revodeing");
-          const userLists = {
-            favourites: data.favourites.concat(data.Mfavourites),
-            completed: data.completed.concat(data.Mcompleted),
-            dropped: data.dropped.concat(data.Mdropped),
-            watching: data.watching.concat(data.Mreading),
-            plan: data.planToWatch.concat(data.MplanToRead),
-            onHold: data.onHold.concat(data.MonHold),
-          };
-          // console.log("hey", userLists);
-          localStorage.setItem("userLists", JSON.stringify(userLists));
-        })
-        .catch((e) => {
-          console.log(e);
-        });
-  }, [auth.currentUser]);
+  // useEffect(() => {
+  //   //console.log("listerer", auth.currentUser);
+  //   localStorage.getItem("userLists") === null &&
+  //     auth.currentUser &&
+  //     getUserData()
+  //       .then((data) => {
+  //         //console.log("revodeing");
+  //         const userLists = {
+  //           favourites: data.favourites.concat(data.Mfavourites),
+  //           completed: data.completed.concat(data.Mcompleted),
+  //           dropped: data.dropped.concat(data.Mdropped),
+  //           watching: data.watching.concat(data.Mreading),
+  //           plan: data.planToWatch.concat(data.MplanToRead),
+  //           onHold: data.onHold.concat(data.MonHold),
+  //         };
+  //         // console.log("hey", userLists);
+  //         localStorage.setItem("userLists", JSON.stringify(userLists));
+  //       })
+  //       .catch((e) => {
+  //         console.log(e);
+  //       });
+  // }, [auth.currentUser]);
+
+
+  const updateLocalStorage=async()=>{
+    try{
+      const data= await getUserData();
+
+      const userLists = {
+        favourites: data.favourites.concat(data.Mfavourites),
+        completed: data.completed.concat(data.Mcompleted),
+        dropped: data.dropped.concat(data.Mdropped),
+        watching: data.watching.concat(data.Mreading),
+        plan: data.planToWatch.concat(data.MplanToRead),
+        onHold: data.onHold.concat(data.MonHold),
+      };
+      // console.log("hey", userLists);
+      localStorage.setItem("userLists", JSON.stringify(userLists));
+
+    }catch(e){
+      console.log(e);
+    }
+    
+  }
 
   async function getAnime(id) {
     try {
@@ -113,13 +134,21 @@ export function FirebaseProvider({ children }) {
   // JUST pass flag=false for manga and flag=true for anime, 'add' and 'remove' are strings with values from [dropped,completed,plan,watching,favourites,onHold], same for anime and manga
 
   async function updateUserLists(details, add=null, remove=null, flag = true) {
+
     const prev = "-1";
     if (user === null) return false;
 
+    const userLists = JSON.parse(localStorage.getItem("userLists"));
+
+    if(userLists===null){ 
+      await updateLocalStorage();
+      await updateUserLists(details,add,remove,flag);
+    }else{
+    
     try {
       const ref = doc(db, "users", user.email);
 
-      if (flag) {
+      if (flag) {   
         const data = {
           id: details.id,
           imageUrl: details.main_picture,
@@ -129,8 +158,6 @@ export function FirebaseProvider({ children }) {
           type: details.type,
           type2: "Anime",
         };
-
-        const userLists = JSON.parse(localStorage.getItem("userLists"));
 
         if (add != null) userLists[add].push(data);
 
@@ -202,8 +229,12 @@ export function FirebaseProvider({ children }) {
           });
         }
 
+       
+
         localStorage.setItem("userLists", JSON.stringify(userLists));
+
       } else {
+        
         const data = {
           id: details.manga_id,
           imageUrl: details.main_picture,
@@ -213,8 +244,6 @@ export function FirebaseProvider({ children }) {
           type: details.type,
           type2: "Manga",
         };
-
-        const userLists = JSON.parse(localStorage.getItem("userLists"));
 
         if (add != null) userLists[add].push(data);
 
@@ -294,15 +323,13 @@ export function FirebaseProvider({ children }) {
     } catch (error) {
       console.log(error);
     }
+
+  }
   }
 
   async function getUserData() {
     try {
-      //
-      //
-      //console.log(user);
-
-      if (user == null) return null;
+      if (user == null) return false;
 
       const docRef = doc(db, "users", user.email);
 
@@ -350,6 +377,17 @@ export function FirebaseProvider({ children }) {
           Mdropped: [],
         });
 
+        const userLists = {
+          favourites: [],
+          completed: [],
+          dropped: [],
+          watching: [],
+          plan: [],
+          onHold: [],
+        };
+       
+        localStorage.setItem("userLists", JSON.stringify(userLists));
+
         Cookies.set(
           "user",
           JSON.stringify({
@@ -361,6 +399,17 @@ export function FirebaseProvider({ children }) {
           { expires: 20 }
         );
       } else {
+        const data= checkUser.data();
+        const userLists = {
+          favourites: data.favourites.concat(data.Mfavourites),
+          completed: data.completed.concat(data.Mcompleted),
+          dropped: data.dropped.concat(data.Mdropped),
+          watching: data.watching.concat(data.Mreading),
+          plan: data.planToWatch.concat(data.MplanToRead),
+          onHold: data.onHold.concat(data.MonHold),
+        };
+       
+        localStorage.setItem("userLists", JSON.stringify(userLists));
         Cookies.set(
           "user",
           JSON.stringify({
@@ -419,18 +468,18 @@ export function FirebaseProvider({ children }) {
     isReply = false
   ) => {
     //needs to be updated
-    const user = auth.currentUser;
+    
 
-    if (user == undefined) return false;
+    if (user == null) return false;
 
     if (isReply) {
       if (!commentId || !replyId) {
         // console.log("Please Provide commendId and replyId !!");
         return null;
       }
-      const user = auth.currentUser;
+      
 
-      if (user == undefined) return false;
+      if (user == null) return false;
 
       const replyRef = doc(
         db,
@@ -572,6 +621,7 @@ export function FirebaseProvider({ children }) {
     getOthersData,
     checkUserCookies,
     getManga,
+    updateLocalStorage,
   };
 
   return (

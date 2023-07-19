@@ -9,7 +9,8 @@ import { AiFillHeart } from "react-icons/ai";
 const Mangamodal = ({ detail }) => {
   const [selected, setSelected] = useState(new Set(["Status"]));
   const [favourite, setFavourite] = useState(false);
-  const { updateUserLists, checkUserCookies } = useFirebase();
+  const [isChanging, setIsChanging]=useState(false);
+  const { updateUserLists, checkUserCookies,updateLocalStorage } = useFirebase();
 
   //console.log(detail);
 
@@ -30,23 +31,23 @@ const Mangamodal = ({ detail }) => {
 
   const updateFavourite = async () => {
     if (favourite) {
-      setFavourite(false);
       await updateUserLists(detail, null, "favourites", false);
+      setFavourite(false);
     } else {
-      setFavourite(true);
       await updateUserLists(detail, "favourites", null, false);
+      setFavourite(true);
     }   
   };
 
   const updateList = async (key) => {
+    setIsChanging(true);
     await updateUserLists(detail, mapVal[key], mapVal[selectedValue]===undefined?null:mapVal[selectedValue],false);
+    setIsChanging(false);
   };
 
-  useEffect(() => {
-    // console.log(detail);
-    if (checkUserCookies()) {
-
-      const List= JSON.parse(localStorage.getItem("userLists"));
+  const initalState =() =>{
+    
+    const List= JSON.parse(localStorage.getItem("userLists"));
 
       List.completed.find((e) => e.id === Number(detail.manga_id) && e.type2==="Manga") &&
         setSelected(new Set(["Completed"]));
@@ -63,6 +64,17 @@ const Mangamodal = ({ detail }) => {
         setSelected(new Set(["On Hold"]));
       
       List.favourites.find((e) => e.id === Number(detail.manga_id) && e.type2==="Manga") && setFavourite(true);
+  }
+
+  useEffect(() => {
+    const List= JSON.parse(localStorage.getItem("userLists"));
+
+    if (checkUserCookies() && List) {
+      initalState();
+    }else if(checkUserCookies()){
+      updateLocalStorage().then(()=>{
+        initalState();
+        })
     }
   }, []);
 
@@ -110,7 +122,7 @@ const Mangamodal = ({ detail }) => {
           {/* <Badge size="md" css={{  margin:"0.1rem 0.2rem 1.5rem 0", padding:"0.5rem 1rem 0.5rem 1rem"}} color="primary" variant="flat" className={styles.head2}>{detail.sfw}</Badge> */}
 
           {checkUserCookies() && (
-            <Dropdown>
+            <Dropdown isDisabled={isChanging}>
               <Dropdown.Button
                 flat
                 color="secondary"

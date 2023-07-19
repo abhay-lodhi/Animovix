@@ -10232,7 +10232,7 @@ const data=[
     {
       "manga_id": 2179,
       "title": "Heads",
-      "main_picture": "https://cdn.myanimelist.net/images/manga/4/25739l.jpg",
+      "main_picture": "https://cdn.myanimelist.net/images/manga/1/266962.jpg",
       "start_date": "2002-07-18"
     },
     {
