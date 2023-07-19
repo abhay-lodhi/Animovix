@@ -160,33 +160,25 @@ const Mangamodal = ({ detail }) => {
         <div className={styles.lY}>
           <div className={styles.car}>
             <div className={styles.head}>Chapters</div>
-            {detail.chapters ? (
-              <>
-                <div className={styles.bod}>{detail.chapters}</div>
-              </>
-            ) : (
-              <>
-                <div className={styles.bod}>N/A</div>
-              </>
-            )}
+            {detail.chapters ?detail.chapters:"NA"}
           </div>
 
           <div className={styles.car}>
             <div className={styles.head}>Released</div>
-            <div className={styles.bod}>{detail.start_date}</div>
+            <div className={styles.bod}>{detail.start_date? detail.start_date:"NA"}</div>
           </div>
           <div className={styles.car}>
             <div className={styles.head}>Status</div>
-            <div className={styles.bod}>{detail.status}</div>
+            <div className={styles.bod}>{detail.status?detail.status:"NA"}</div>
           </div>
           <div className={styles.car}>
             <div className={styles.head}>Type</div>
-            <div className={styles.bod}>{detail.type}</div>
+            <div className={styles.bod}>{detail.type?detail.type:"NA"}</div>
           </div>
 
           <div className={styles.car}>
             <div className={styles.head}>MAL Score</div>
-            <div className={styles.bod}>{detail.score}</div>
+            <div className={styles.bod}>{detail.score?detail.score:"NA"}</div>
           </div>
         </div>
         <div className={styles.last}>
@@ -235,7 +227,7 @@ const Mangamodal = ({ detail }) => {
 
           <div className={styles.genre}>Synopsis</div>
           {/* <div className="hidden" style={{height:"10vh", overflow:'hidden'}}> */}
-          <div className={styles.scroll}>{detail.synopsis}</div>
+          <div className={styles.scroll}>{detail.synopsis?detail.synopsis:"Not Available"}</div>
           {/* </div> */}
 
           {/* <div style={{marginBottom:"24px"}}>
