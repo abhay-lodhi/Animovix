@@ -133,7 +133,8 @@ export default function Home({ quotes }) {
       {loading ? (
         <>
           <Head>
-            <title>🎬 Animovix Recommendations</title>
+          <link rel="shortcut icon" href="/goku.svg" />
+            <title> Animovix Recommendations</title>
             <meta
               name="description"
               content="Anime and Movies Recommendation system and can also be used for recommendations based on multiple anime or movies input. It is a static website and user can use this website to get recommendations for their next Anime to watch or next Movie to watch."
