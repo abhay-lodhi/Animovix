@@ -120,7 +120,7 @@ const Profilecard = ({ details, badge }) => {
         </span>
         <div className={styles.card_description}>
           <p className={styles.synopsis}>
-            {synopsis.substr(0, 70) + (synopsis.length > 70 ? "..." : "")}
+            {(synopsis?synopsis:"NA").substr(0, 70) + (synopsis.length > 70 ? "..." : "")}
           </p>{" "}
           <br></br>
           <div className={styles.under_synopsis}>
