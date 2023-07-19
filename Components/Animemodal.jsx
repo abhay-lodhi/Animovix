@@ -10,8 +10,8 @@ import Link from "next/link";
 const Animemodal = ({ detail }) => {
   const [selected, setSelected] = useState(new Set(["Status"]));
   const [favourite, setFavourite] = useState(false);
-  const [isChanging, setIsChanging] = useState(false);
-  const { updateUserLists, checkUserCookies } = useFirebase();
+  const [isChanging, setIsChanging]=useState(false);
+  const { updateUserLists, checkUserCookies,updateLocalStorage } = useFirebase();
 
   const mapVal = {
     "Watching": "watching",
@@ -40,32 +40,44 @@ const Animemodal = ({ detail }) => {
     } 
   };
 
-  const updateList = async (key) => {    
+ // console.log((detail.title_english ? detail.title_english : detail.title).replace(/ /g, "-"));
+
+  const updateList = async (key) => {
     setIsChanging(true);
    await updateUserLists(detail, mapVal[key], mapVal[selectedValue]===undefined?null:mapVal[selectedValue]);
-   setIsChanging(false);
+    setIsChanging(false);
+
   };
 
+  const initalState =() =>{
+    const List= JSON.parse(localStorage.getItem("userLists"));
+      
+    List.completed.find((e) => e.id === Number(detail.id) && e.type2==="Anime") &&
+      setSelected(new Set(["Completed"]));
+    List.plan.find((e) => e.id ===Number(detail.id) && e.type2==="Anime") &&
+      setSelected(new Set(["Plan To Watch"]));
+
+    List.watching.find((e) => e.id === Number(detail.id) && e.type2==="Anime") &&
+      setSelected(new Set(["Watching"]));
+    
+    List.dropped.find((e) => e.id === Number(detail.id) && e.type2==="Anime") &&
+      setSelected(new Set(["Dropped"]));
+    
+    List.onHold.find((e) =>  e.id === Number(detail.id) && e.type2==="Anime") &&
+      setSelected(new Set(["On Hold"]));
+    
+    List.favourites.find((e) => e.id === Number(detail.id) && e.type2==="Anime") && setFavourite(true);
+  }
+
   useEffect(() => {
-    // console.log(detail);
-    if (checkUserCookies()) {
-     const List= JSON.parse(localStorage.getItem("userLists"));
+    const List= JSON.parse(localStorage.getItem("userLists"));
 
-      List.completed.find((e) => e.id === Number(detail.id) && e.type2==="Anime") &&
-        setSelected(new Set(["Completed"]));
-      List.plan.find((e) => e.id ===Number(detail.id) && e.type2==="Anime") &&
-        setSelected(new Set(["Plan To Watch"]));
-
-      List.watching.find((e) => e.id === Number(detail.id) && e.type2==="Anime") &&
-        setSelected(new Set(["Watching"]));
-      
-      List.dropped.find((e) => e.id === Number(detail.id) && e.type2==="Anime") &&
-        setSelected(new Set(["Dropped"]));
-      
-      List.onHold.find((e) =>  e.id === Number(detail.id) && e.type2==="Anime") &&
-        setSelected(new Set(["On Hold"]));
-      
-      List.favourites.find((e) => e.id === Number(detail.id) && e.type2==="Anime") && setFavourite(true);
+    if (checkUserCookies() && List) {
+      initalState();
+    }else if(checkUserCookies()){
+      updateLocalStorage().then(()=>{
+        initalState();
+        })
     }
   }, []);
 
@@ -75,10 +87,11 @@ const Animemodal = ({ detail }) => {
         <Image
           css={{ borderRadius: "15px" }}
           src={detail.main_picture}
-          unoptimized={true}
+          unoptimized={false}
           width={350}
           height={470}
           alt="NA"
+          priority
         />
       </div>
 
@@ -102,13 +115,13 @@ const Animemodal = ({ detail }) => {
 
         <div className={styles.badges}>
           {checkUserCookies() && (
-            <div className={styles.fav} onClick={updateFavourite}>
+            <a className={styles.fav} onClick={updateFavourite}>
               {favourite ? (
                 <AiFillHeart color="red" className={styles.fav} />
               ) : (
                 <AiOutlineHeart color="red" className={styles.fav} />
               )}
-            </div>
+            </a>
           )}
           <Badge
             size="md"
@@ -233,7 +246,7 @@ const Animemodal = ({ detail }) => {
 
           <div style={{ marginBottom: "24px" }}>
             <div>Studios</div>
-            {detail.studios.split(",").map((gen, i) => {
+            {JSON.parse(detail.studios.replace(/'/g, '"')).map((gen, i) => {
               if (gen !== "Unknown" && val == 0)
                 return (
                   <Badge
@@ -273,12 +286,10 @@ const Animemodal = ({ detail }) => {
               </Link>
             )}
 
-            {detail.title_english && (
+            {(detail.title_english || detail.title)  && (
               <Link
                 legacyBehavior
-                href={`https://masteranime.tv/anime/watch/${detail.title_english
-                  .slice(0, 8)
-                  .replace(" ", "-")}`}
+                href={`https://aniwatch.to/search?keyword=${(detail.title_english ? detail.title_english : detail.title).replace(/ /g, "-")}`}
                 passHref
               >
                 <a target="_blank" rel="noopener noreferrer">
