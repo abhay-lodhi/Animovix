@@ -47,7 +47,7 @@ const MangawithID = () => {
       //console.log("name: ",details.title_english?(details.title_english):(details.title))
       axios
         .post("https://animovixrecommendations.onrender.com/manga", {
-          names: details.title,
+          names: (details.title? details.title : details.title_english).replace(/:/g,''),
         })
         .then(function (response) {
           setLoading(false);

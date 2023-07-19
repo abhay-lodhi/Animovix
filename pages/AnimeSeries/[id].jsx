@@ -47,7 +47,7 @@ const AnimewithID = () => {
       // console.log("details: ", details.title_english?(details.title_english):(details.title));
       axios
         .post("https://animovixrecommendations.onrender.com/anime", {
-          names: details.title_english ? details.title_english : details.title,
+          names: (details.title_english ? details.title_english : details.title).replace(/:/g,''),
         })
         .then(function (response) {
           //console.log("res: ",response);
