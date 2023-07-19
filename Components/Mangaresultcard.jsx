@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import dynamic from "next/dynamic";
 import styles from "../styles/Resultcard.module.css";
 import {
   Card,
