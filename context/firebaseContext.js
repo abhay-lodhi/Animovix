@@ -143,6 +143,7 @@ export function FirebaseProvider({ children }) {
     if(userLists===null){ 
       await updateLocalStorage();
       await updateUserLists(details,add,remove,flag);
+
     }else{
     
     try {
