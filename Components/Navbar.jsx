@@ -1,4 +1,5 @@
 import React from "react";
+import { useRouter } from "next/router";
 import {
   Navbar,
   Link,
@@ -25,6 +26,7 @@ const Bar = () => {
   const { signIn, signout, auth, getUserCookies } = useFirebase();
   const { isDark } = useTheme();
   const [user, setUser] = React.useState(null);
+  const router = useRouter();
 
   React.useEffect(() => {
     const useData = getUserCookies();
@@ -129,14 +131,14 @@ const Bar = () => {
                 </Text>
               </Dropdown.Item>
 
-              <Dropdown.Item key="settings" hideIn="xs" withDivider>
-                Profile
+              <Dropdown.Item  key="settings" hideIn="xs" withDivider>
+                <div onClick={()=>router.push("/Profile")}>Profile</div>
               </Dropdown.Item>
-              <Dropdown.Item key="help_and_feedback" withDivider>
+              {/* <Dropdown.Item key="help_and_feedback" withDivider>
                 Help & Feedback
-              </Dropdown.Item>
+              </Dropdown.Item> */}
               <Dropdown.Item key="logout" withDivider color="error">
-                <button onPress={signout} style={{background:"none", border:"none"}}>Log Out</button>
+                <button onClick={signout} style={{background:"none", border:"none"}}>Log Out</button>
               </Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>

@@ -76,6 +76,7 @@ export function FirebaseProvider({ children }) {
 
   const updateLocalStorage=async()=>{
     try{
+      
       const data= await getUserData();
 
       const userLists = {
@@ -86,7 +87,7 @@ export function FirebaseProvider({ children }) {
         plan: data.planToWatch.concat(data.MplanToRead),
         onHold: data.onHold.concat(data.MonHold),
       };
-      // console.log("hey", userLists);
+      
       localStorage.setItem("userLists", JSON.stringify(userLists));
 
     }catch(e){
@@ -136,7 +137,7 @@ export function FirebaseProvider({ children }) {
   async function updateUserLists(details, add=null, remove=null, flag = true) {
 
     const prev = "-1";
-    if (user === null) return false;
+    if (checkUserCookies() === false) return false;
 
     const userLists = JSON.parse(localStorage.getItem("userLists"));
 
@@ -147,6 +148,7 @@ export function FirebaseProvider({ children }) {
     }else{
     
     try {
+      console.log("These are some details ",details, add, remove, flag);
       const ref = doc(db, "users", user.email);
 
       if (flag) {   
@@ -241,10 +243,11 @@ export function FirebaseProvider({ children }) {
           imageUrl: details.main_picture,
           title: details.title_english ? details.title_english : details.title,
           synopsis: details.synopsis,
-          chapters: details.chapters,
+          chapters: details.chapters?details.chapters:null,
           type: details.type,
           type2: "Manga",
         };
+        console.log(data)
 
         if (add != null) userLists[add].push(data);
 
@@ -330,13 +333,12 @@ export function FirebaseProvider({ children }) {
 
   async function getUserData() {
     try {
-      if (user == null) return false;
-
-      const docRef = doc(db, "users", user.email);
+      if (!checkUserCookies()) return false;
+      const docRef = doc(db, "users", getUserCookies().details.email);
 
       const data = await getDoc(docRef);
 
-      //console.log("heyy");
+      
       if (data.exists()) return data.data();
     } catch (error) {
       console.log("erroror: ", error);

@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Text, Badge, Dropdown } from "@nextui-org/react";
+import { Text, Badge, Dropdown, Tooltip } from "@nextui-org/react";
 import Image from "next/image";
 import styles from "../styles/Animemodal.module.css";
 import { useFirebase } from "@/context/firebaseContext";
-import { AiOutlineHeart } from "react-icons/ai";
-import { AiFillHeart } from "react-icons/ai";
+import {PiHeartStraightBold, PiHeartStraightFill} from 'react-icons/pi'
 import Link from "next/link";
 
 const Animemodal = ({ detail }) => {
@@ -116,10 +115,20 @@ const Animemodal = ({ detail }) => {
         <div className={styles.badges}>
           {checkUserCookies() && (
             <a className={styles.fav} onClick={updateFavourite}>
-              {favourite ? (
-                <AiFillHeart color="red" className={styles.fav} />
-              ) : (
-                <AiOutlineHeart color="red" className={styles.fav} />
+              {favourite ?  (<Tooltip
+                  content={"Remove from Favorites"}
+                  rounded
+                  color="secondary"
+                >
+                <PiHeartStraightFill color="#c90000ef" className={styles.fav} />
+                </Tooltip>) : (
+                   <Tooltip
+                   content={"Add to Favorites"}
+                   rounded
+                   color="secondary"
+                 >
+                <PiHeartStraightBold color="#c90000ef" className={styles.fav} />
+                </Tooltip>
               )}
             </a>
           )}
