@@ -12,7 +12,7 @@ const CommentForm = ({
   placeholder,
 }) => {
   const [text, setText] = useState("");
-  const { addComment, getCommentsAgain, setGetCommentsAgain, signIn } =
+  const { addComment, getCommentsAgain, setGetCommentsAgain, signIn, checkUserCookies } =
     useFirebase();
   const [textStatus, setStatus] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -26,7 +26,8 @@ const CommentForm = ({
     setLoading(true);
     
     const res = await addComment(text, animeId, commentId);
-    if (res != false) {
+
+    if (res) {
       setLoading(false);
       setOpenBox && setOpenBox(false);
       setOpenReplies && setOpenReplies(true);

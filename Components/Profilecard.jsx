@@ -5,6 +5,8 @@ import { useRouter } from "next/router";
 import { Dropdown, Tooltip } from "@nextui-org/react";
 import { PiHeartStraightBold, PiHeartStraightFill } from "react-icons/pi";
 import styles from "@/styles/Profile.module.css";
+import Link from "next/link";
+
 
 const Profilecard = ({ details, badge }) => {
   const { id, imageUrl, title, type, type2, synopsis } = details;
@@ -80,15 +82,18 @@ const Profilecard = ({ details, badge }) => {
   //* DETAILS THAT WE ARE GETTING FROM THE PARENT COMPONENT
   // console.log(details)
   const router = useRouter();
-  const reRoute = () => {
-    router.push(
-      type2 === "Manga" ? `/MangaSeries/${id}` : `/AnimeSeries/${id}`
-    );
-  };
+  // const reRoute = () => {
+  //   router.push(
+      
+  //   );
+  // };
 
   return (
+    
     <article className={styles.card}>
-      <div className={styles.temporary_text} onClick={() => reRoute()}>
+      <Link legacyBehavior href={type2 === "Manga" ? `/MangaSeries/${id}` : `/AnimeSeries/${id}`} passHref>
+      <a target="_blank" rel="noopener noreferrer">
+      <div className={styles.temporary_text} >
         <Image
           src={imageUrl}
           fill
@@ -96,6 +101,9 @@ const Profilecard = ({ details, badge }) => {
           sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 20vw"
         />
       </div>
+      </a>
+      </Link>
+      
       <div className={styles.card_content}>
         <p className={styles.card_title}>
           {title.substr(0, 35) + (title.length > 35 ? "..." : "")}{" "}

@@ -1,5 +1,4 @@
 import React from "react";
-import { useEffect, useState } from "react";
 
 import Animeresultcard from "./Animeresultcard";
 import { Text } from "@nextui-org/react";

@@ -11,11 +11,7 @@ import {
   updateDoc,
   arrayUnion,
   arrayRemove,
-  query,
-  where,
   serverTimestamp,
-  collectionGroup,
-  onSnapshot,
 } from "firebase/firestore";
 import {
   onAuthStateChanged,
@@ -23,9 +19,6 @@ import {
   getAuth,
   signInWithPopup,
   signOut,
-  setPersistence,
-  browserSessionPersistence,
-  inMemoryPersistence,
 } from "firebase/auth";
 
 const FirebaseContext = createContext();
@@ -76,7 +69,6 @@ export function FirebaseProvider({ children }) {
 
   const updateLocalStorage=async()=>{
     try{
-      
       const data= await getUserData();
 
       const userLists = {
@@ -87,7 +79,7 @@ export function FirebaseProvider({ children }) {
         plan: data.planToWatch.concat(data.MplanToRead),
         onHold: data.onHold.concat(data.MonHold),
       };
-      
+      // console.log("hey", userLists);
       localStorage.setItem("userLists", JSON.stringify(userLists));
 
     }catch(e){
@@ -137,17 +129,17 @@ export function FirebaseProvider({ children }) {
   async function updateUserLists(details, add=null, remove=null, flag = true) {
 
     const prev = "-1";
-    if (checkUserCookies() === false) return false;
+    if (user === null) return false;
 
     const userLists = JSON.parse(localStorage.getItem("userLists"));
 
     if(userLists===null){ 
       await updateLocalStorage();
       await updateUserLists(details,add,remove,flag);
+
     }else{
     
     try {
-      console.log("These are some details ",details, add, remove, flag);
       const ref = doc(db, "users", user.email);
 
       if (flag) {   
@@ -242,11 +234,10 @@ export function FirebaseProvider({ children }) {
           imageUrl: details.main_picture,
           title: details.title_english ? details.title_english : details.title,
           synopsis: details.synopsis,
-          chapters: details.chapters?details.chapters:null,
+          chapters: details.chapters,
           type: details.type,
           type2: "Manga",
         };
-        console.log(data)
 
         if (add != null) userLists[add].push(data);
 
@@ -332,12 +323,13 @@ export function FirebaseProvider({ children }) {
 
   async function getUserData() {
     try {
-      if (!checkUserCookies()) return false;
-      const docRef = doc(db, "users", getUserCookies().details.email);
+      if (user == null) return false;
+
+      const docRef = doc(db, "users", user.email);
 
       const data = await getDoc(docRef);
 
-      
+      //console.log("heyy");
       if (data.exists()) return data.data();
     } catch (error) {
       console.log("erroror: ", error);
@@ -439,7 +431,8 @@ export function FirebaseProvider({ children }) {
     try {
       const userData = await getUserData();
 
-      if (userData == null) return false;
+      if (!checkUserCookies()) return false;
+
       const commentRef = await addDoc(
         collection(db, "discussion", animeId, "comments"),
         {

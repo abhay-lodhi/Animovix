@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useFirebase } from "@/context/firebaseContext";
 import CommentDesign from "./CommentDesign";
 import CommentForm from "./CommentForm";
 import styles from "../../styles/comment.module.css";

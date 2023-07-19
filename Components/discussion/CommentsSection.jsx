@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useFirebase } from "@/context/firebaseContext";
 import Comment from "./Comment";
 import CommentForm from "./CommentForm";
 

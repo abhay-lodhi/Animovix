@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Row, Text, Col, Button, Container } from "@nextui-org/react";
+import { Card, Text, Container } from "@nextui-org/react";
 import styles from "../styles/Animecardquery.module.css";
 
 const Animecardquery = (props) => {

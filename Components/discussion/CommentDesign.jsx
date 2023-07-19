@@ -1,7 +1,4 @@
-import React, { useEffect, useState } from "react";
-import Image from "next/image";
-import { useFirebase } from "@/context/firebaseContext";
-import { auth } from "../../firebase/firebaseinit";
+import React from "react";
 import { Avatar } from "@nextui-org/react";
 import styles from "../../styles/CommentDesign.module.css";
 import ReactTimeAgo from "react-time-ago";

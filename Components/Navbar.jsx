@@ -8,16 +8,13 @@ import {
   Dropdown,
   useTheme,
   Button,
-  red,
 } from "@nextui-org/react";
 //import { Layout } from "./Layout.js";
 //import { AcmeLogo } from "./AcmeLogo.js";
 
 //import {db, auth} from "../firebase/firebaseinit"
 import { useFirebase } from "../context/firebaseContext";
-import styles from "../styles/Navbar.module.css";
 
-import { getAuth, onAuthStateChanged } from "firebase/auth";
 import Image from "next/image";
 
 const Bar = () => {

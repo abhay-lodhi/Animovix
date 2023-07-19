@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useFirebase } from "@/context/firebaseContext";
-import dynamic from "next/dynamic";
 import axios from "axios";
 import { Button, Loading } from "@nextui-org/react";
 import CommentsSection from "@/Components/discussion/CommentsSection";
@@ -13,7 +12,7 @@ import Mangamodal from "@/Components/Mangamodal";
 //   ssr: false,
 // });
 
-const mangawithID = () => {
+const MangawithID = () => {
   const router = useRouter();
   const id = router.query.id;
   const [details, setDetails] = useState();
@@ -162,6 +161,6 @@ const mangawithID = () => {
   );
 };
 
-export default mangawithID;
+export default MangawithID;
 
 

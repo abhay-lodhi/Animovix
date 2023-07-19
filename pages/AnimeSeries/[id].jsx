@@ -6,7 +6,6 @@ import dynamic from "next/dynamic";
 import axios from "axios";
 import { Button, Loading } from "@nextui-org/react";
 import CommentsSection from "@/Components/discussion/CommentsSection";
-import { Center } from "@chakra-ui/react";
 import styles from "../../styles/AnimeSeries.module.css";
 import Recommendations from "@/Components/Recommendations";
 
@@ -14,7 +13,7 @@ const Animemodal = dynamic(() => import("../../Components/Animemodal"), {
   ssr: false,
 });
 
-const animewithID = () => {
+const AnimewithID = () => {
   const router = useRouter();
   const id = router.query.id;
   const { getAnime } = useFirebase();
@@ -158,6 +157,6 @@ const animewithID = () => {
   );
 };
 
-export default animewithID;
+export default AnimewithID;
 
 

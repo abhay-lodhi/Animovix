@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import dynamic from "next/dynamic";
 import styles from "../styles/Resultcard.module.css";
 import {
-  Modal,
   Card,
   Row,
   Col,
@@ -14,9 +13,6 @@ import {
 import { BsFillInfoCircleFill } from "react-icons/bs";
 import Link from "next/link";
 
-const Mangamodal = dynamic(() => import("./Animemodal"), {
-  ssr: false,
-});
 
 const Mangaresultcard = ({ detail }) => {
   const [visible, setVisible] = useState(false);
