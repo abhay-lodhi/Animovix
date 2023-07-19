@@ -14,7 +14,7 @@ const Animemodal = dynamic(() => import("../../Components/Animemodal"), {
   ssr: false,
 });
 
-const animewithID = () => {
+const AnimewithID = () => {
   const router = useRouter();
   const id = router.query.id;
   const { getAnime } = useFirebase();
@@ -158,6 +158,6 @@ const animewithID = () => {
   );
 };
 
-export default animewithID;
+export default AnimewithID;
 
 

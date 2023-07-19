@@ -13,7 +13,7 @@ import Mangamodal from "@/Components/Mangamodal";
 //   ssr: false,
 // });
 
-const mangawithID = () => {
+const MangawithID = () => {
   const router = useRouter();
   const id = router.query.id;
   const [details, setDetails] = useState();
@@ -162,6 +162,6 @@ const mangawithID = () => {
   );
 };
 
-export default mangawithID;
+export default MangawithID;
 
 
