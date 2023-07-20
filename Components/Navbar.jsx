@@ -49,7 +49,7 @@ const Bar = () => {
     "underline-rounded",
   ];
 
-  const collapseItems = ["Home", "Anime", "Movies"];
+  const collapseItems = ["Home", "Anime", "Manga"];
 
   const colors = ["primary", "secondary", "success", "warning", "error"];
   return (
@@ -157,7 +157,7 @@ const Bar = () => {
               css={{
                 minWidth: "100%",
               }}
-              href={item == "Home" ? "/" : item}
+              href={item == "Home" ? "/" : "/"+item}
             >
               {item}
             </Link>
