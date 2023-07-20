@@ -16,7 +16,7 @@ class MyDocument extends Document {
       // <SSRProvider>
       <Html lang="en">
         <Head>{CssBaseline.flush()}
-        <link rel="shortcut icon" href="/goku.svg" />
+        <link rel="shortcut icon" href="/surverycorps.ico" />
         </Head>
         <body>
           <Main />
