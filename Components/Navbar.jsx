@@ -129,7 +129,7 @@ const Bar = () => {
               </Dropdown.Item>
 
               <Dropdown.Item  key="settings" hideIn="xs" withDivider>
-                <div onClick={()=>router.push("/Profile")}>Profile</div>
+                <div onClick={()=>router.push("/Profile")}>Watch List</div>
               </Dropdown.Item>
               <Dropdown.Item key="help_and_feedback" withDivider>
               <div onClick={()=>router.push("/Feedback")}>Feedback</div>
