@@ -65,7 +65,7 @@ const Feedback = () => {
 const handleChange=(e)=>{
     const val = e.target.value;
     if(val.trim().length>400){
-        toast.warn("Maximum of 200 characters are allowed !", {
+        toast.warn("Maximum of 400 characters are allowed !", {
             position:"top-center",
             theme:"light",
             autoClose: 2000,
