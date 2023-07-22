@@ -12,6 +12,7 @@ import {
   arrayUnion,
   arrayRemove,
   serverTimestamp,
+  Timestamp,
 } from "firebase/firestore";
 import {
   onAuthStateChanged,
@@ -561,6 +562,26 @@ export function FirebaseProvider({ children }) {
     return false;
   }
 
+ async  function submitFeedback(starCnt, feed=""){
+  if(starCnt===null)return;
+  const {name, email} = getUserCookies().details;
+  const promise = new Promise((resolve, reject)=>{
+    try {
+      resolve(setDoc(doc(db, "feedback", email),{
+        name,
+        stars:starCnt,
+        feedback:feed,
+        sumbittedAt: serverTimestamp(),
+      }));
+    } catch (error) {
+      console.log("This is error",error)
+      reject(error)
+    }
+
+  })
+    return promise;
+  }
+
   // const addComment = async (text, animeId, isReply=false, commentId=null)=>{
   //   const user= auth.currentUser;
 
@@ -613,6 +634,7 @@ export function FirebaseProvider({ children }) {
     getUserCookies,
     getOthersData,
     checkUserCookies,
+    submitFeedback,
     getManga,
     updateLocalStorage,
   };

@@ -16,7 +16,7 @@ import { useRouter } from "next/navigation";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export default function Home({ quotes }) {
+export default function Home() {
   const [tab, setTab] = useState(false);
 
   useEffect(() => {
@@ -133,7 +133,8 @@ export default function Home({ quotes }) {
       {loading ? (
         <>
           <Head>
-          <link rel="shortcut icon" href="/goku.svg" />
+          <link rel="shortcut icon" href="/surveycorps.svg" />
+          
             <title> Animovix Recommendations</title>
             <meta
               name="description"
@@ -291,11 +292,9 @@ export default function Home({ quotes }) {
 
 export async function getStaticProps() {
 
-  axios.get('https://animovixrecommendations.onrender.com/')
   
   return {
     props: {  
     },
-    revalidate: 100,
   }
 }

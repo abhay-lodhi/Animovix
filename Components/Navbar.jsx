@@ -131,11 +131,11 @@ const Bar = () => {
               <Dropdown.Item  key="settings" hideIn="xs" withDivider>
                 <div onClick={()=>router.push("/Profile")}>Profile</div>
               </Dropdown.Item>
-              {/* <Dropdown.Item key="help_and_feedback" withDivider>
-                Help & Feedback
-              </Dropdown.Item> */}
-              <Dropdown.Item key="logout" withDivider color="error">
-                <button onClick={signout} style={{background:"none", border:"none"}}>Log Out</button>
+              <Dropdown.Item key="help_and_feedback" withDivider>
+              <div onClick={()=>router.push("/Feedback")}>Feedback</div>
+              </Dropdown.Item>
+              <Dropdown.Item key="logout" withDivider color="error" onClick={signout}>
+                <button onClick={signout}  style={{background:"none", border:"none", width:"100%",textAlign:"left", cursor:"pointer"} }>Log Out</button>
               </Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
