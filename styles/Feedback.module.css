@@ -197,3 +197,13 @@
   
 
 /** STAR REVIEW CSS ENDS HERE */
+
+@media only screen and (max-width: 600px){
+    .container{
+        width: 100vw;
+    }
+    .feedback textarea{
+        width: 90vw;
+        height: 30vh;
+    }
+}
