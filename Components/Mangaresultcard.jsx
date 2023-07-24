@@ -49,6 +49,7 @@ const Mangaresultcard = ({ detail }) => {
               height="100%"
               alt="Anime Poster"
               quality={100}
+              unoptimised={true}
             />
           </Card.Body>
 

@@ -76,7 +76,7 @@ const AnimewithID = () => {
             <div className={styles.tabs}>
               <Button
                 size="sm"
-                onClick={() => setTab(true)}
+                onPress={() => setTab(true)}
                 color={tab ? "success" : "#808080"}
                 className={styles.button}
               >
@@ -86,7 +86,7 @@ const AnimewithID = () => {
 
               <Button
                 size="sm"
-                onClick={() => setTab(false)}
+                onPress={() => setTab(false)}
                 color={!tab ? "success" : "#808080"}
                 className={styles.button}
               >
