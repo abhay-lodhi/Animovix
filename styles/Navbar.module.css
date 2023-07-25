@@ -13,3 +13,9 @@
 .nextui-c-egxOLa {
   max-width: 100% !important;
 }
+
+.active{
+  color: #67046c;
+  font-weight: bolder;
+  font-size: 1.3rem;
+}

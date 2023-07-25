@@ -8,12 +8,14 @@ import {
   Dropdown,
   useTheme,
   Button,
+  purple,
 } from "@nextui-org/react";
 //import { Layout } from "./Layout.js";
 //import { AcmeLogo } from "./AcmeLogo.js";
 
 //import {db, auth} from "../firebase/firebaseinit"
 import { useFirebase } from "../context/firebaseContext";
+import styles from "../styles/Navbar.module.css"
 
 import Image from "next/image";
 
@@ -24,7 +26,7 @@ const Bar = () => {
   const { isDark } = useTheme();
   const [user, setUser] = React.useState(null);
   const router = useRouter();
-
+console.log("router: ",router);
   React.useEffect(() => {
     const useData = getUserCookies();
     setUser(useData.details);
@@ -49,7 +51,7 @@ const Bar = () => {
     "underline-rounded",
   ];
 
-  const collapseItems = ["Home", "Anime", "Manga"];
+  const collapseItems = ["Home", "Anime", "Manga","About"];
 
   const colors = ["primary", "secondary", "success", "warning", "error"];
   return (
@@ -81,14 +83,18 @@ const Bar = () => {
         hideIn="xs"
         variant="highlight-rounded"
       >
-        <Navbar.Link href="/">
-          <Text size={20}>Home</Text>
+        
+        <Navbar.Link href="/"  >
+        <Text size={20} className={router.route==="/"?styles.active:""}> Home </Text>
         </Navbar.Link>
-        <Navbar.Link href="/Anime">
-          <Text size={20}> Anime</Text>
+        <Navbar.Link href="/Anime" >
+          <Text size={20} className={router.route==="/Anime"?styles.active:""}> Anime</Text>
         </Navbar.Link>
-        <Navbar.Link href="/Manga">
-          <Text size={20}>Manga</Text>
+        <Navbar.Link href="/Manga" >
+          <Text size={20} className={router.route==="/Manga"?styles.active:""}>Manga</Text>
+        </Navbar.Link>
+        <Navbar.Link href="/About" >
+          <Text size={20} className={router.route==="/About"?styles.active:""}>About</Text>
         </Navbar.Link>
       </Navbar.Content>
 

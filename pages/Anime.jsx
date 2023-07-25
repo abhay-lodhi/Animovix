@@ -86,6 +86,7 @@ const Anime = () => {
                 height={65}
                 alt="N/A"
                 quality={20}
+                unoptimized={true}
               />
             </span>
           )}

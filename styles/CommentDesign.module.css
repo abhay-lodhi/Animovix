@@ -23,17 +23,15 @@
 }
 
 .title {
-  display: flex;
-  font-size: 12px;
-  font-weight: 500;
-  align-items: center;
-  justify-content: center;
+  font-size: 16px;
+  font-weight: bold;
 }
 
 .text {
   overflow-wrap: break-word;
   width: fit-content;
-  font-size: 15px;
+  font-size: 12px;
+  font-weight: lighter;
   max-width: 500px;
   min-width: 500px;
 }
@@ -47,7 +45,7 @@
   margin-left: 1.5rem;
   align-items: center;
   justify-content: center;
-  font-size: 12px;
+  font-size: 10px;
 }
 
 @media only screen and (max-width: 600px) {
@@ -74,8 +72,8 @@
 
   .title {
     display: flex;
-    font-size: 1rem;
-    font-weight: 700;
+    font-size: 16px;
+    font-weight: bold;
     align-items: center;
     justify-content: center;
   }
@@ -86,7 +84,8 @@
     width: fit-content;
     max-width: 220px;
     min-width: 220px;
-    font-size: 1rem;
+    font-size: 15px;
+    font-weight: lighter;
   }
   .titleHead {
     display: flex;
@@ -98,6 +97,6 @@
     margin-left: 1.5rem;
     align-items: center;
     justify-content: center;
-    font-size: 0.8;
+    font-size: 12px;
   }
 }
