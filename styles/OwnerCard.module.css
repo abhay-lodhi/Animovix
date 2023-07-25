@@ -1,5 +1,5 @@
 .card {
-    width: 25vw;
+    width: 320px;
     height: fit-content;
     background: #101010;
     transition: 1s ease-in-out;
@@ -8,7 +8,7 @@
     border-bottom-left-radius: 20px;
     display: flex;
     flex-direction: column;
-    padding: 2em 1em;
+    padding: 1rem 1rem;
   }
 
   .card span {
@@ -21,13 +21,15 @@
   }
   
   .card .info {
-    font-weight: 400;
-    color: white;
+    font-weight: 600;
+    color: #e1d3e2;
     display: block;
     text-align: center;
-    font-size: 0.8em;
+    font-size: 12px;
     margin: 1em 1em;
     letter-spacing: 0.5px;
+    text-align: justify;
+    /* min-height: 200px; */
   }
   
   .card .img {
@@ -84,7 +86,7 @@
   @media only screen and (max-width: 600px) {
     .card {
       width: 78vw;
-      height: 55vh;
+      height: 75vh;
       background: #101010;
       transition: 1s ease-in-out;
       clip-path: polygon(30px 0%, 100% 0, 100% calc(100% - 30px), calc(100% - 30px) 100%, 0 100%, 0% 30px);
@@ -105,17 +107,18 @@
     }
 
     .card .info {
-      font-weight: 400;
+      font-weight: 600;
       color: white;
       display: block;
       text-align: justify;
       font-size: 0.6em;
       margin: 1em 1em;
       letter-spacing: 0.5px;
+      
     }
 
     .card .button {
-      padding: 0em 1.5em;
+      padding: 0.5em 1.5em;
       display: block;
       margin: auto;
       margin-top: 10px;

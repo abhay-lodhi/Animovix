@@ -85,16 +85,16 @@ console.log("router: ",router);
       >
         
         <Navbar.Link href="/"  >
-        <Text size={20} className={router.route==="/"?styles.active:""}> Home </Text>
+        <Text size={20} css={{letterSpacing:"1px"}} className={router.route==="/"?styles.active:""}> Home </Text>
         </Navbar.Link>
         <Navbar.Link href="/Anime" >
-          <Text size={20} className={router.route==="/Anime"?styles.active:""}> Anime</Text>
+          <Text size={20} css={{letterSpacing:"1px"}} className={router.route==="/Anime"?styles.active:""}> Anime</Text>
         </Navbar.Link>
         <Navbar.Link href="/Manga" >
-          <Text size={20} className={router.route==="/Manga"?styles.active:""}>Manga</Text>
+          <Text size={20} css={{letterSpacing:"1px"}} className={router.route==="/Manga"?styles.active:""}>Manga</Text>
         </Navbar.Link>
         <Navbar.Link href="/About" >
-          <Text size={20} className={router.route==="/About"?styles.active:""}>About</Text>
+          <Text size={20} css={{letterSpacing:"1px"}} className={router.route==="/About"?styles.active:""}>About</Text>
         </Navbar.Link>
       </Navbar.Content>
 
