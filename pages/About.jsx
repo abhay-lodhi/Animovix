@@ -24,7 +24,7 @@ const About = () => {
       resume:"https://drive.google.com/u/0/uc?id=1t6lYTITpQOTPY9ptFDdiEANU0E2yZSof&export=download",
       github:"https://github.com/shivang2607",
       leetcode:"https://leetcode.com/abhaylodhiab11/",
-      bio:"Shivang Khandelwal is an entry-level software developer with expertise in web development and ML model development . The idea of this Project belongs to him, shivang developed the Recommendation Engine and played vital role in frontend as well,  initially which was meant to be just recommendation system for anime and movies has now become a whole platform for Anime Lovers as himself.",
+      bio:"Shivang Khandelwal is an entry-level software developer with expertise in web development and Machine Learning . The idea of this Project belongs to him, shivang developed the Recommendation Engine and played vital role in frontend as well,  initially which was meant to be just recommendation system for anime and movies has now become a whole platform for Anime Lovers as himself.",
       worked:[
       ]
   }
