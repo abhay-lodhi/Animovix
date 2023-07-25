@@ -26,7 +26,7 @@ const CommentDesign = ({ comment, animeId }) => {
     // </>
     <div className={styles.main}>
       <div className={styles.image}>
-        <Avatar squared color="secondary" size="sm" src={comment.userPhoto} />
+        <Avatar color="secondary" size="md" src={comment.userPhoto} />
       </div>
       <div className={styles.commentBody}>
         <div className={styles.titleHead}>

@@ -47,7 +47,7 @@ const AnimewithID = () => {
       // console.log("details: ", details.title_english?(details.title_english):(details.title));
       axios
         .post("https://animovixrecommendations.onrender.com/anime", {
-          names: details.title_english ? details.title_english : details.title,
+          names: (details.title_english ? details.title_english : details.title).replace(/:/g,''),
         })
         .then(function (response) {
           //console.log("res: ",response);
@@ -76,7 +76,7 @@ const AnimewithID = () => {
             <div className={styles.tabs}>
               <Button
                 size="sm"
-                onClick={() => setTab(true)}
+                onPress={() => setTab(true)}
                 color={tab ? "success" : "#808080"}
                 className={styles.button}
               >
@@ -86,7 +86,7 @@ const AnimewithID = () => {
 
               <Button
                 size="sm"
-                onClick={() => setTab(false)}
+                onPress={() => setTab(false)}
                 color={!tab ? "success" : "#808080"}
                 className={styles.button}
               >

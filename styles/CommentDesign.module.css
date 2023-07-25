@@ -1,13 +1,13 @@
 .main {
   display: flex;
   margin-top: 1.2rem;
-  padding-left: 2rem;
+  /* padding-left: 2rem; */
   padding-right: 2rem;
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
-  border-radius: 10px;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.55);
-  background: #202121;
+  /* border-radius: 10px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.55); */
+  /* background: #202121; */
   width: fit-content;
   min-height: 9vh;
 }
@@ -18,21 +18,20 @@
 
 .commentBody {
   display: flex;
+  margin-top: 1vh;
   flex-direction: column;
 }
 
 .title {
-  display: flex;
-  font-size: 12px;
-  font-weight: 500;
-  align-items: center;
-  justify-content: center;
+  font-size: 16px;
+  font-weight: bold;
 }
 
 .text {
   overflow-wrap: break-word;
   width: fit-content;
-  font-size: 15px;
+  font-size: 12px;
+  font-weight: lighter;
   max-width: 500px;
   min-width: 500px;
 }
@@ -46,7 +45,7 @@
   margin-left: 1.5rem;
   align-items: center;
   justify-content: center;
-  font-size: 12px;
+  font-size: 10px;
 }
 
 @media only screen and (max-width: 600px) {
@@ -54,7 +53,7 @@
     display: flex;
     margin-top: 1.2rem;
     background: rgb(57, 56, 56);
-    padding-left: 2rem;
+    padding-left: 1rem;
     padding-top: 1rem;
     padding-bottom: 1rem;
     border-radius: 0.8rem;
@@ -73,19 +72,20 @@
 
   .title {
     display: flex;
-    font-size: 1rem;
-    font-weight: 700;
+    font-size: 16px;
+    font-weight: bold;
     align-items: center;
     justify-content: center;
   }
 
   .text {
-    margin-left: 1rem;
+    margin-left: 0.3rem;
     overflow-wrap: break-word;
     width: fit-content;
-    max-width: 150px;
-    min-width: 150px;
-    font-size: 0.6rem;
+    max-width: 220px;
+    min-width: 220px;
+    font-size: 15px;
+    font-weight: lighter;
   }
   .titleHead {
     display: flex;
@@ -97,6 +97,6 @@
     margin-left: 1.5rem;
     align-items: center;
     justify-content: center;
-    font-size: 0.8;
+    font-size: 12px;
   }
 }
