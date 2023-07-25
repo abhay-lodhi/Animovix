@@ -86,6 +86,7 @@
 }
 
 .image {
+  z-index: 3;
 }
 
 .searchbar {

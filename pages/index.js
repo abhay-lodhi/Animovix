@@ -93,6 +93,7 @@ export default function Home() {
                 height={65}
                 alt="N/A"
                 quality={20}
+                unoptimized={true}
               />
             </span>
           )}
@@ -121,6 +122,7 @@ export default function Home() {
               height={65}
               alt="N/A"
               quality={10}
+              unoptimized={true}
             />
           </span>
         </div>
@@ -224,6 +226,7 @@ export default function Home() {
                         src={"https://aniwatch.to/images/anw-min.webp"}
                         width={520}
                         height={450}
+                        alt="NA"
                       />
                     </div>
                   </div>

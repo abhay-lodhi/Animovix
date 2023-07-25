@@ -1,5 +1,4 @@
-.main {
-}
+
 
 .commentContainer {
   display: flex;
@@ -12,7 +11,7 @@
 .buttonContainer {
   display: flex;
   width: fit-content;
-  margin-left: 0.8rem;
+  margin-left: 1.8vw;
 }
 
 .buttonContainer Button {
@@ -32,6 +31,6 @@
 
 @media only screen and (max-width: 600px) {
   .replies {
-    margin-left: 20vw;
+    margin-left: 15vw;
   }
 }

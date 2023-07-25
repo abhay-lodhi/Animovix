@@ -1,0 +1,20 @@
+.main{
+    display: flex;
+    padding: 1rem 15vw;
+    flex-direction: column;
+    /* justify-content: center; */
+    align-items: center;
+    
+}
+
+.title{
+    margin-bottom: 5vh;
+    font-size: xx-large;
+
+}
+
+.para{
+    margin-bottom: 4vh;
+    text-align: justify;
+    font-size: larger;
+}
