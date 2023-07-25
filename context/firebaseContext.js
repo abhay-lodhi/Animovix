@@ -35,6 +35,7 @@ export function FirebaseProvider({ children }) {
   const [user, setCurrentUser] = useState();
 
   useEffect(() => {
+    
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setCurrentUser(user);
       setLoading(false);
@@ -45,31 +46,13 @@ export function FirebaseProvider({ children }) {
   //console.log("hyyy",user);
 
   // useEffect(() => {
-  //   //console.log("listerer", auth.currentUser);
-  //   localStorage.getItem("userLists") === null &&
-  //     auth.currentUser &&
-  //     getUserData()
-  //       .then((data) => {
-  //         //console.log("revodeing");
-  //         const userLists = {
-  //           favourites: data.favourites.concat(data.Mfavourites),
-  //           completed: data.completed.concat(data.Mcompleted),
-  //           dropped: data.dropped.concat(data.Mdropped),
-  //           watching: data.watching.concat(data.Mreading),
-  //           plan: data.planToWatch.concat(data.MplanToRead),
-  //           onHold: data.onHold.concat(data.MonHold),
-  //         };
-  //         // console.log("hey", userLists);
-  //         localStorage.setItem("userLists", JSON.stringify(userLists));
-  //       })
-  //       .catch((e) => {
-  //         console.log(e);
-  //       });
-  // }, [auth.currentUser]);
+  //   //updateLocalStorage(); 
+  // }, []);
 
 
   const updateLocalStorage=async()=>{
     try{
+      
       const data= await getUserData();
 
       const userLists = {
@@ -80,7 +63,6 @@ export function FirebaseProvider({ children }) {
         plan: data.planToWatch.concat(data.MplanToRead),
         onHold: data.onHold.concat(data.MonHold),
       };
-      // console.log("hey", userLists);
       localStorage.setItem("userLists", JSON.stringify(userLists));
 
     }catch(e){
@@ -130,7 +112,7 @@ export function FirebaseProvider({ children }) {
   async function updateUserLists(details, add=null, remove=null, flag = true) {
 
     const prev = "-1";
-    if (user === null) return false;
+    if (!checkUserCookies()) return false;
 
     const userLists = JSON.parse(localStorage.getItem("userLists"));
 
@@ -141,7 +123,7 @@ export function FirebaseProvider({ children }) {
     }else{
     
     try {
-      const ref = doc(db, "users", user.email);
+      const ref = doc(db, "users", getUserCookies().details.email);
 
       if (flag) {   
         const data = {
@@ -322,9 +304,11 @@ export function FirebaseProvider({ children }) {
 
   async function getUserData() {
     try {
-      if (user == null) return false;
+      
+      if (!checkUserCookies()) return false;
+    //  console.log("cookies",getUserCookies());
 
-      const docRef = doc(db, "users", user.email);
+      const docRef = doc(db, "users", getUserCookies().details.email);
 
       const data = await getDoc(docRef);
 

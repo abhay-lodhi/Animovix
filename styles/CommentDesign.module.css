@@ -30,8 +30,8 @@
 .text {
   overflow-wrap: break-word;
   width: fit-content;
-  font-size: 12px;
-  font-weight: lighter;
+  font-size: 14px;
+  font-weight: light;
   max-width: 500px;
   min-width: 500px;
 }

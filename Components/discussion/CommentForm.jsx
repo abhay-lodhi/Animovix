@@ -22,7 +22,7 @@ const CommentForm = ({
       setStatus(true);
       return false;
     }
-    setText("");
+    
     setLoading(true);
     
     const res = await addComment(text, animeId, commentId);
@@ -33,6 +33,7 @@ const CommentForm = ({
       setOpenReplies && setOpenReplies(true);
 
       setGetCommentsAgain(!getCommentsAgain);
+      setText("");
     } else {
       signIn();
     }
@@ -41,11 +42,12 @@ const CommentForm = ({
   return (
     <div className={styles.main}>
       <Textarea
-        onChange={(e) => {
+         value={text}
+         onChange={(e) => {
           setText(e.target.value);
+          console.log(e.target.value);
           e.target.value != "" ? setStatus(false) : setStatus(true);
         }}
-        value={text}
         placeholder={[placeholder]}
         maxRows={4}
         status={textStatus ? "error" : "default"}

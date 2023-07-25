@@ -28,6 +28,7 @@
     font-size: large;
     letter-spacing: 0.65px;
     font-style: oblique;
+    resize: none;
 }
 .btn{
     display: flex;

@@ -21,12 +21,12 @@ const Profile = () => {
     }
 
     //* FETCHING THE USER DATA FROM LOCAL STORAGE
-    if (localStorage.getItem("userLists") === null) {
+    // if (localStorage.getItem("userLists") === null) {
       // console.log("hey");
       updateLocalStorage().then(() => {
         setData(JSON.parse(localStorage.getItem("userLists")));
       });
-    } else setData(JSON.parse(localStorage.getItem("userLists")));
+    // } else setData(JSON.parse(localStorage.getItem("userLists")));
     // console.log("Data Updated",data)
     return () => {};
   }, []);

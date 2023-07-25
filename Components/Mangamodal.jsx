@@ -66,15 +66,15 @@ const Mangamodal = ({ detail }) => {
   }
 
   useEffect(() => {
-    const List= JSON.parse(localStorage.getItem("userLists"));
+    // const List= JSON.parse(localStorage.getItem("userLists"));
 
-    if (checkUserCookies() && List) {
-      initalState();
-    }else if(checkUserCookies()){
+    // if (checkUserCookies() && List) {
+    //   initalState();
+    // }else if(checkUserCookies()){
       updateLocalStorage().then(()=>{
         initalState();
         })
-    }
+    // }
   }, []);
 
   return (

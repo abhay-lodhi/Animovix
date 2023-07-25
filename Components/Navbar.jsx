@@ -26,7 +26,7 @@ const Bar = () => {
   const { isDark } = useTheme();
   const [user, setUser] = React.useState(null);
   const router = useRouter();
-console.log("router: ",router);
+  
   React.useEffect(() => {
     const useData = getUserCookies();
     setUser(useData.details);
