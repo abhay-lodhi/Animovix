@@ -16,6 +16,7 @@ const CommentForm = ({
     useFirebase();
   const [textStatus, setStatus] = useState(false);
   const [loading, setLoading] = useState(false);
+  const textareaRef = React.useRef(null);
 
   const postComment = async () => {
     if (text.trim() === "") {
@@ -33,6 +34,9 @@ const CommentForm = ({
       setOpenReplies && setOpenReplies(true);
 
       setGetCommentsAgain(!getCommentsAgain);
+      if (textareaRef.current) {
+        textareaRef.current.value = "";
+      }
       setText("");
     } else {
       signIn();
@@ -42,10 +46,9 @@ const CommentForm = ({
   return (
     <div className={styles.main}>
       <Textarea
-         value={text}
+         ref={textareaRef}
          onChange={(e) => {
           setText(e.target.value);
-          console.log(e.target.value);
           e.target.value != "" ? setStatus(false) : setStatus(true);
         }}
         placeholder={[placeholder]}
