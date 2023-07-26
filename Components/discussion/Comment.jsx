@@ -31,7 +31,7 @@ const Comment = ({ data, currComment, animeId }) => {
             >
               {openReplies ? <>Hide Replies</> : <>Show Replies</>}
             </Button>
-
+               |
             <Button
               size="xs"
               icon={<BsReplyFill />}

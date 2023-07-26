@@ -86,7 +86,7 @@
   @media only screen and (max-width: 600px) {
     .card {
       width: 78vw;
-      height: 75vh;
+      height: fit-content;
       background: #101010;
       transition: 1s ease-in-out;
       clip-path: polygon(30px 0%, 100% 0, 100% calc(100% - 30px), calc(100% - 30px) 100%, 0 100%, 0% 30px);
@@ -111,9 +111,9 @@
       color: white;
       display: block;
       text-align: justify;
-      font-size: 0.6em;
+      font-size: 0.78em;
       margin: 1em 1em;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.43px;
       
     }
 

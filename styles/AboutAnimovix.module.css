@@ -34,3 +34,14 @@
     letter-spacing: 0.5px;
     color: #e1d3e2;
 }
+@media only screen and (max-width: 600px) {
+    .main{
+        display: flex;
+        padding: 1rem 8vw;
+        flex-direction: column;
+        /* justify-content: center; */
+        align-items: center;
+        
+    }
+  }
+  
