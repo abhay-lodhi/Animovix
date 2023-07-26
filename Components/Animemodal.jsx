@@ -5,6 +5,7 @@ import styles from "../styles/Animemodal.module.css";
 import { useFirebase } from "@/context/firebaseContext";
 import {PiHeartStraightBold, PiHeartStraightFill} from 'react-icons/pi'
 import Link from "next/link";
+import json5 from "json5";
 
 const Animemodal = ({ detail }) => {
   const [selected, setSelected] = useState(new Set(["Status"]));
@@ -207,7 +208,7 @@ const Animemodal = ({ detail }) => {
         <div className={styles.last}>
           <div className={styles.genre}>Genre</div>
           <div style={{ marginBottom: "24px" }}>
-            {JSON.parse(detail.genres.replace(/'/g, '"')).map((gen, i) => {
+            {json5.parse(detail.genres).map((gen, i) => {
               if (gen !== "Unknown" && val == 0)
                 return (
                   <Badge
@@ -226,7 +227,7 @@ const Animemodal = ({ detail }) => {
                   </Badge>
                 );
             })}
-            {JSON.parse(detail.themes.replace(/'/g, '"')).map((gen, i) => {
+            {json5.parse(detail.themes).map((gen, i) => {
               if (gen !== "Unknown" && val2 == 0)
                 return (
                   <Badge
@@ -255,7 +256,7 @@ const Animemodal = ({ detail }) => {
 
           <div style={{ marginBottom: "24px" }}>
             <div>Studios</div>
-            {JSON.parse(detail.studios.replace(/'/g, '"')).map((gen, i) => {
+            {json5.parse(detail.studios).map((gen, i) => {
               if (gen !== "Unknown" && val == 0)
                 return (
                   <Badge
