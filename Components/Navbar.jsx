@@ -84,16 +84,24 @@ const Bar = () => {
         variant="highlight-rounded"
       >
         
-        <Navbar.Link href="/"  >
+        <Navbar.Link onPress={()=>{
+          router.push("/")
+        }}  >
         <Text size={20} css={{letterSpacing:"1px"}} className={router.route==="/"?styles.active:""}> Home </Text>
         </Navbar.Link>
-        <Navbar.Link href="/Anime" >
+        <Navbar.Link onPress={()=>{
+          router.push("/Anime")
+        }}  >
           <Text size={20} css={{letterSpacing:"1px"}} className={router.route==="/Anime"?styles.active:""}> Anime</Text>
         </Navbar.Link>
-        <Navbar.Link href="/Manga" >
+        <Navbar.Link onPress={()=>{
+          router.push("/Manga")
+        }}  >
           <Text size={20} css={{letterSpacing:"1px"}} className={router.route==="/Manga"?styles.active:""}>Manga</Text>
         </Navbar.Link>
-        <Navbar.Link href="/About" >
+        <Navbar.Link onPress={()=>{
+          router.push("/About")
+        }} >
           <Text size={20} css={{letterSpacing:"1px"}} className={router.route==="/About"?styles.active:""}>About</Text>
         </Navbar.Link>
       </Navbar.Content>
